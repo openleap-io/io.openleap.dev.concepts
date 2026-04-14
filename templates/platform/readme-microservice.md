@@ -3,7 +3,7 @@
 > **Conceptual Stack Layer:** Implementation Artifact (README)
 > **Space:** Platform
 > **Owner:** Development Team
-> **Spec reference:** `io.openleap.spec/spec/{Tier}/{SUITE}/{domain}-service-spec.md`
+> **Spec reference:** `io.openleap.dev.spec/{Tier}/{SUITE}/{domain}-service-spec.md`
 > **Guidelines reference:** `io.openleap.dev.guidelines`
 
 > **Meta Information**
@@ -24,7 +24,7 @@
      This template defines the standard README structure for OpenLeap
      microservice repositories. It covers operational and developer-
      facing concerns — the domain specification (business rules,
-     domain model, event payloads) lives in io.openleap.spec.
+     domain model, event payloads) lives in io.openleap.dev.spec.
 
      Principles:
      • Spec referenzieren, nicht duplizieren.
@@ -46,7 +46,7 @@
 {Service Display Name} is the ... service within the {Suite Display Name} suite.
 It owns the `{domain}` bounded context and provides ...
 
-> **Specification:** [`{suite}-{domain}-service-spec.md`](https://github.com/openleap-io/io.openleap.spec/blob/main/spec/{Tier}/{SUITE}/{domain}/{file}.md)
+> **Specification:** [`{suite}-{domain}-service-spec.md`](https://github.com/openleap-io/io.openleap.dev.spec/blob/main/{Tier}/{SUITE}/{domain}/{file}.md)
 
 ### 0.2 Key Capabilities
 
@@ -319,7 +319,7 @@ Events are published via the **transactional outbox** pattern (ADR-013) to guara
 <!-- Brief description of main tables/schemas.
      Link to the spec's §8 Data Model for the full ERD — do not duplicate it here. -->
 
-> **Data model:** See [Domain Service Spec §8](https://github.com/openleap-io/io.openleap.spec/blob/main/spec/{Tier}/{SUITE}/{domain}/{file}.md#8-data-model)
+> **Data model:** See [Domain Service Spec §8](https://github.com/openleap-io/io.openleap.dev.spec/blob/main/{Tier}/{SUITE}/{domain}/{file}.md#8-data-model)
 
 ### 7.2 Migrations
 
@@ -420,7 +420,7 @@ curl -X POST http://localhost:{port}/actuator/loggers/{package} \
 
 ### 10.1 Specification
 
-- [Domain Service Spec](https://github.com/openleap-io/io.openleap.spec/blob/main/spec/{Tier}/{SUITE}/{domain}/{file}.md) — Authoritative domain model, business rules, event contracts
+- [Domain Service Spec](https://github.com/openleap-io/io.openleap.dev.spec/blob/main/{Tier}/{SUITE}/{domain}/{file}.md) — Authoritative domain model, business rules, event contracts
 
 ### 10.2 Guidelines
 

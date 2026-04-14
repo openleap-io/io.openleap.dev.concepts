@@ -1,6 +1,6 @@
 # KPI: KPI-003 Warehouse Utilization
 
-> **Template:** [KPI](../../../../concepts/artifacts/product/kpi.md)
+> **Template:** [KPI](../../../../artifacts/product/kpi.md)
 
 ---
 

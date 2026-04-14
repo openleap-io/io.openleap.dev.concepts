@@ -2,7 +2,7 @@
 
 > **Space:** Product
 > **Embedded in:** [Product](product.md)
-> **Source:** Elara Enhancement `concepts/agora/elara-product-discovery-enhancement.md` §3.2
+> **Source:** Elara Enhancement `artifacts/elara-product-discovery-enhancement.md` §3.2
 
 ---
 

@@ -155,9 +155,9 @@ A Suite Spec is the top-level grouping artifact of the Platform Space. A Suite c
 | Source | Location | Status |
 |--------|----------|--------|
 | Suite Layer Schema | `io.openleap.telos/schemas/suite-layer.schema.json` | ✅ Comprehensive (649 lines), authoritative field definitions |
-| Suite Spec Template | `concepts/ui-sple/SUITE_SPEC_TEMPLATE.md` | ⚠️ Sparse — needs major rework to match schema |
-| Conceptual Stack §3.1 | `concepts/CONCEPTUAL_STACK.md` | ✅ Defines suite = UBL boundary |
-| Artifact Catalog §3.1 | `concepts/ARTIFACT_CATALOG.md` | ✅ Summary of suite fields and relationships |
+| Suite Spec Template | `templates/SUITE_SPEC_TEMPLATE.md` | ⚠️ Sparse — needs major rework to match schema |
+| Conceptual Stack §3.1 | `conceptual-stack.md` | ✅ Defines suite = UBL boundary |
+| Artifact Catalog §3.1 | `artifact-catalog.md` | ✅ Summary of suite fields and relationships |
 
 ---
 

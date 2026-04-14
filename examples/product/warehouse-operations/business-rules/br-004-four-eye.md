@@ -1,6 +1,6 @@
 # Business Rule: BR-004 Four-Eye Principle for High-Value Goods
 
-> **Template:** [Business Rule](../../../../concepts/artifacts/product/business-rule.md)
+> **Template:** [Business Rule](../../../../artifacts/product/business-rule.md)
 
 ---
 

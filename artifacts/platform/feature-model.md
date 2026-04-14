@@ -79,10 +79,10 @@ A Feature Model is a machine-readable variability declaration in the Universal V
 
 | Source | Location | Status |
 |--------|----------|--------|
-| Leaf Feature UVL Template | `concepts/ui-sple/LEAF_FEATURE_TEMPLATE.uvl` | ✅ Covers tree position, group types, attributes |
+| Leaf Feature UVL Template | `templates/LEAF_FEATURE_TEMPLATE.uvl` | ✅ Covers tree position, group types, attributes |
 | UVL Standard | Sundermann et al. (2021), MODEVAR community | ✅ Language specification |
-| Conceptual Stack §6.2 | `concepts/CONCEPTUAL_STACK.md` | ✅ Cross-suite `requires` constraint rule |
-| Artifact Catalog §3.6 | `concepts/ARTIFACT_CATALOG.md` | ✅ Field summary |
+| Conceptual Stack §6.2 | `conceptual-stack.md` | ✅ Cross-suite `requires` constraint rule |
+| Artifact Catalog §3.6 | `artifact-catalog.md` | ✅ Field summary |
 
 ---
 

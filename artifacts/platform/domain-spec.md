@@ -204,9 +204,9 @@ A Domain/Service Spec defines a single bounded context (Evans, 2003) and its imp
 | Source | Location | Status |
 |--------|----------|--------|
 | Service Layer Schema | `io.openleap.telos/schemas/service-layer.schema.json` | ✅ Comprehensive (775 lines), authoritative field definitions |
-| Domain Spec Template | `concepts/ui-sple/DOMAIN_SPEC_TEMPLATE.md` | ✅ Solid, needs minor Conceptual Stack alignment |
-| Conceptual Stack §3.2–§3.3 | `concepts/CONCEPTUAL_STACK.md` | ✅ Defines domain = bounded context, service = deployable unit |
-| Artifact Catalog §3.2 | `concepts/ARTIFACT_CATALOG.md` | ✅ Summary of domain/service fields |
+| Domain Spec Template | `templates/DOMAIN_SPEC_TEMPLATE.md` | ✅ Solid, needs minor Conceptual Stack alignment |
+| Conceptual Stack §3.2–§3.3 | `conceptual-stack.md` | ✅ Defines domain = bounded context, service = deployable unit |
+| Artifact Catalog §3.2 | `artifact-catalog.md` | ✅ Summary of domain/service fields |
 
 ---
 

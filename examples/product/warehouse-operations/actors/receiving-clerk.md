@@ -1,6 +1,6 @@
 # Actor: Receiving Clerk
 
-> **Template:** [Actor](../../../../concepts/artifacts/product/actor.md)
+> **Template:** [Actor](../../../../artifacts/product/actor.md)
 
 ---
 

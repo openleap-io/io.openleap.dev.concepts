@@ -1,6 +1,6 @@
 # Domain/Service Spec: pps-im-svc — Inventory Management
 
-> **Template:** [Domain/Service Spec](../../../concepts/artifacts/platform/domain-spec.md)
+> **Template:** [Domain/Service Spec](../../../artifacts/platform/domain-spec.md)
 > **Schema:** `service-layer.schema.json`
 > **Suite:** [PPS](../pps-suite/suite-spec.md)
 

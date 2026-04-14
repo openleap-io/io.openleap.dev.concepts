@@ -1,6 +1,6 @@
 # KPI: KPI-001 Goods Receipt Processing Time
 
-> **Template:** [KPI](../../../../concepts/artifacts/product/kpi.md)
+> **Template:** [KPI](../../../../artifacts/product/kpi.md)
 
 ---
 

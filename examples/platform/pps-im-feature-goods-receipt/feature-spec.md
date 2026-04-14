@@ -1,6 +1,6 @@
 # Platform-Feature Spec: F-PPS-IM-001 — Post Goods Receipt
 
-> **Template:** [Platform-Feature Spec](../../../concepts/artifacts/platform/platform-feature-spec.md)
+> **Template:** [Platform-Feature Spec](../../../artifacts/platform/platform-feature-spec.md)
 > **Suite:** [PPS](../pps-suite/suite-spec.md)
 > **Domain:** [pps-im-svc](../pps-im-domain/domain-spec.md)
 > **Companions:** [feature.uvl](feature.uvl) · [screen-contract-aui.yaml](screen-contract-aui.yaml) · [bff-contract.md](bff-contract.md)

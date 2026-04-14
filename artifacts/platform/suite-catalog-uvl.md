@@ -64,9 +64,9 @@ A Suite Catalog UVL is the suite-level root of the UVL variability tree. It impo
 
 | Source | Location | Status |
 |--------|----------|--------|
-| Suite Catalog UVL Template | `concepts/ui-sple/SUITE_CATALOG_TEMPLATE.uvl` | ✅ Covers namespace, imports, features, constraints |
+| Suite Catalog UVL Template | `templates/SUITE_CATALOG_TEMPLATE.uvl` | ✅ Covers namespace, imports, features, constraints |
 | UVL Standard | Sundermann et al. (2021), MODEVAR community | ✅ Language specification |
-| Artifact Catalog §3.10 | `concepts/ARTIFACT_CATALOG.md` | ✅ Referenced alongside Suite Feature Catalog |
+| Artifact Catalog §3.10 | `artifact-catalog.md` | ✅ Referenced alongside Suite Feature Catalog |
 
 ---
 

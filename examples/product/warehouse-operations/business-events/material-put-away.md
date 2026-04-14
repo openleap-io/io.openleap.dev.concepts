@@ -1,6 +1,6 @@
 # Business Event: Material Put Away
 
-> **Template:** [Business Event](../../../../concepts/artifacts/product/business-event.md)
+> **Template:** [Business Event](../../../../artifacts/product/business-event.md)
 
 ---
 

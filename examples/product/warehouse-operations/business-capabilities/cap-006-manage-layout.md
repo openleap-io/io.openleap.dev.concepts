@@ -1,6 +1,6 @@
 # Business Capability: CAP-006 Manage Warehouse Layout
 
-> **Template:** [Business Capability](../../../../concepts/artifacts/product/business-capability.md)
+> **Template:** [Business Capability](../../../../artifacts/product/business-capability.md)
 
 ---
 

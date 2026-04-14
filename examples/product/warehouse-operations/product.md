@@ -1,6 +1,6 @@
 # Product: Warehouse Operations
 
-> **Template:** [Product](../../../concepts/artifacts/product/product.md)
+> **Template:** [Product](../../../artifacts/product/product.md)
 
 ---
 

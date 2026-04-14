@@ -1,6 +1,6 @@
 # Business Rule: BR-002 FIFO Principle for Perishable Goods
 
-> **Template:** [Business Rule](../../../../concepts/artifacts/product/business-rule.md)
+> **Template:** [Business Rule](../../../../artifacts/product/business-rule.md)
 
 ---
 

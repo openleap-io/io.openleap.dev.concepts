@@ -1,6 +1,6 @@
 # Workflow Candidate: WC-002 Automatic Replenishment Trigger
 
-> **Template:** [Workflow Candidate](../../../../concepts/artifacts/product/workflow-candidate.md)
+> **Template:** [Workflow Candidate](../../../../artifacts/product/workflow-candidate.md)
 
 ---
 

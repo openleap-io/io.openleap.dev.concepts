@@ -1,6 +1,6 @@
 # Decision: DEC-001 Separate Inbound and Outbound as Functional Areas
 
-> **Template:** [Decision](../../../../concepts/artifacts/product/decision.md)
+> **Template:** [Decision](../../../../artifacts/product/decision.md)
 
 ---
 

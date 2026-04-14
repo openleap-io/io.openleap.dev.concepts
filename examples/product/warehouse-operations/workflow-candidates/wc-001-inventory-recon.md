@@ -1,6 +1,6 @@
 # Workflow Candidate: WC-001 Nightly Inventory Reconciliation
 
-> **Template:** [Workflow Candidate](../../../../concepts/artifacts/product/workflow-candidate.md)
+> **Template:** [Workflow Candidate](../../../../artifacts/product/workflow-candidate.md)
 
 ---
 

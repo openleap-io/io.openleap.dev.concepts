@@ -36,7 +36,7 @@ and conventions** that all instances must follow.
 
 A template is NOT:
 - A concrete spec (e.g., `srv_cat-spec.md`) — that is a template **instance**
-- A platform reference doc (e.g., `SYSTEM_OVERVIEW.md`) — that is a **living document**
+- A platform reference doc (e.g., [system-topology.md](https://github.com/openleap-io/io.openleap.dev.hub/blob/main/architecture/system-topology.md)) — that is a **living document**
 - A generated artifact (e.g., `srv.catalog.uvl`) — that is an **output**
 
 ---
@@ -315,7 +315,7 @@ Specs may or may not have a corresponding implementation repository on
 GitHub. The mapping between specs and their implementations is tracked
 in a separate registry:
 
-**`landscape/implementation-status.json`**
+**`https://github.com/openleap-io/io.openleap.dev.hub/blob/main/landscape/impl-status.json`**
 
 This file tracks, for each spec:
 - Whether an implementation repository exists

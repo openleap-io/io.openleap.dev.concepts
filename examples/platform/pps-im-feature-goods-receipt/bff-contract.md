@@ -1,6 +1,6 @@
 # BFF Contract: F-PPS-IM-001 — Post Goods Receipt
 
-> **Template:** [BFF Contract](../../../concepts/artifacts/platform/bff-contract.md)
+> **Template:** [BFF Contract](../../../artifacts/platform/bff-contract.md)
 > **Feature:** [F-PPS-IM-001](feature-spec.md)
 > **Derived from:** Feature Spec §5 (Backend Dependencies) + §5.2 (View-Model Shape)
 

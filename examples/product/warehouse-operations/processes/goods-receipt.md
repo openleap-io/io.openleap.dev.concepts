@@ -1,6 +1,6 @@
 # Business Process: Goods Receipt
 
-> **Template:** [Business Process](../../../../concepts/artifacts/product/business-process.md)
+> **Template:** [Business Process](../../../../artifacts/product/business-process.md)
 
 ---
 

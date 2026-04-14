@@ -1,6 +1,6 @@
 # Business Capability: CAP-002 Store Materials in Warehouse
 
-> **Template:** [Business Capability](../../../../concepts/artifacts/product/business-capability.md)
+> **Template:** [Business Capability](../../../../artifacts/product/business-capability.md)
 
 ---
 

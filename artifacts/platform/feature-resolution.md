@@ -71,9 +71,9 @@ A Feature Resolution is the result produced by the Platform (Telos Decompose) wh
 
 | Source | Location | Status |
 |--------|----------|--------|
-| Agora Spec "Decompose" concept | `io.openleap.spec/concepts/agora/` | ⚠️ Mentions Decompose as a Telos function but does not define the artifact |
-| Artifact Catalog §3.0 | `concepts/ARTIFACT_CATALOG.md` | ✅ Field definitions authoritative |
-| Conceptual Stack §2.8 | `concepts/CONCEPTUAL_STACK.md` | ✅ Describes the capability→feature resolution flow |
+| Agora Spec "Decompose" concept | `io.openleap.dev.spec/artifacts/` | ⚠️ Mentions Decompose as a Telos function but does not define the artifact |
+| Artifact Catalog §3.0 | `artifact-catalog.md` | ✅ Field definitions authoritative |
+| Conceptual Stack §2.8 | `conceptual-stack.md` | ✅ Describes the capability→feature resolution flow |
 
 ---
 

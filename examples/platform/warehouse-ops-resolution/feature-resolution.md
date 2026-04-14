@@ -1,6 +1,6 @@
 # Feature Resolution: Warehouse Operations
 
-> **Template:** [Feature Resolution](../../../concepts/artifacts/platform/feature-resolution.md)
+> **Template:** [Feature Resolution](../../../artifacts/platform/feature-resolution.md)
 > **Product:** [Warehouse Operations](../../product/warehouse-operations/product.md)
 > **Resolved by:** Telos Decompose
 

@@ -1,6 +1,6 @@
 # Quality Requirement: QR-002 System Availability
 
-> **Template:** [Quality Requirement](../../../../concepts/artifacts/product/quality-requirement.md)
+> **Template:** [Quality Requirement](../../../../artifacts/product/quality-requirement.md)
 
 ---
 

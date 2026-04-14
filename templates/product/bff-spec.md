@@ -16,7 +16,7 @@
 >   suites, each suite gets its own BFF spec instance.
 > **Companion files:** `product-config.uvl`, `server/schemas/{suite}/*.ts`, `server/api/v1/{suite}/**/*.ts`
 > **Referenced by:** Product Spec, Suite Feature Specs
-> **Governance:** `concepts/governance/bff-guideline.md` (GOV-BFF-001)
+> **Governance:** `governance/bff-guideline.md` (GOV-BFF-001)
 
 > **Meta Information**
 > - **Version:** YYYY-MM-DD

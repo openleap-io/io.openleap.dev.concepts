@@ -114,9 +114,9 @@ Derived from Feature Spec §5 Backend Dependencies.
 
 | Source | Location | Status |
 |--------|----------|--------|
-| Conceptual Stack §4.6 | `concepts/CONCEPTUAL_STACK.md` | ✅ Defines BFF responsibilities, gating, deployment models |
-| Conceptual Stack §4.6.3 | `concepts/CONCEPTUAL_STACK.md` | ✅ Feature Spec §5 + §5.2 as BFF specification |
-| Artifact Catalog §3.8 | `concepts/ARTIFACT_CATALOG.md` | ✅ Field summary |
+| Conceptual Stack §4.6 | `conceptual-stack.md` | ✅ Defines BFF responsibilities, gating, deployment models |
+| Conceptual Stack §4.6.3 | `conceptual-stack.md` | ✅ Feature Spec §5 + §5.2 as BFF specification |
+| Artifact Catalog §3.8 | `artifact-catalog.md` | ✅ Field summary |
 
 ---
 

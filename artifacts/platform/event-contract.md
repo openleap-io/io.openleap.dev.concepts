@@ -100,7 +100,7 @@ An Event Contract is an AsyncAPI specification paired with JSON Schema definitio
 | Domain Spec contracts.events | `service-layer.schema.json` | ✅ Source fields defined |
 | Suite Spec eventConventions | `suite-layer.schema.json` | ✅ Routing key pattern, envelope, versioning |
 | File convention | Platform governance rules | ✅ `contracts/events/<suite>/<domain>/<aggregate>.<event>.schema.json` |
-| Artifact Catalog §3.4 | `concepts/ARTIFACT_CATALOG.md` | ✅ Summary |
+| Artifact Catalog §3.4 | `artifact-catalog.md` | ✅ Summary |
 
 ---
 

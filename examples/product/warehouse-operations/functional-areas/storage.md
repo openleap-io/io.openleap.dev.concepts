@@ -1,6 +1,6 @@
 # Functional Area: Storage
 
-> **Template:** [Functional Area](../../../../concepts/artifacts/product/functional-area.md)
+> **Template:** [Functional Area](../../../../artifacts/product/functional-area.md)
 
 ---
 

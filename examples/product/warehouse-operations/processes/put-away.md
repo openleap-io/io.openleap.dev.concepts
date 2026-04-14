@@ -1,6 +1,6 @@
 # Business Process: Put-Away
 
-> **Template:** [Business Process](../../../../concepts/artifacts/product/business-process.md)
+> **Template:** [Business Process](../../../../artifacts/product/business-process.md)
 
 ---
 

@@ -1,6 +1,6 @@
 # Quality Requirement: QR-001 Scan-to-Confirm Latency
 
-> **Template:** [Quality Requirement](../../../../concepts/artifacts/product/quality-requirement.md)
+> **Template:** [Quality Requirement](../../../../artifacts/product/quality-requirement.md)
 
 ---
 

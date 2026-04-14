@@ -1,6 +1,6 @@
 # Business Rule: BR-001 Quality Check Required for Regulated Materials
 
-> **Template:** [Business Rule](../../../../concepts/artifacts/product/business-rule.md)
+> **Template:** [Business Rule](../../../../artifacts/product/business-rule.md)
 
 ---
 

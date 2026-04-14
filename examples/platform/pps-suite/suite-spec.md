@@ -1,6 +1,6 @@
 # Suite Spec: PPS — Production, Planning & Shopfloor
 
-> **Template:** [Suite Spec](../../../concepts/artifacts/platform/suite-spec.md)
+> **Template:** [Suite Spec](../../../artifacts/platform/suite-spec.md)
 > **Schema:** `suite-layer.schema.json`
 
 ---

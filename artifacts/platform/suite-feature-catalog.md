@@ -82,10 +82,10 @@ A Suite Feature Catalog is the complete inventory of all platform-features belon
 
 | Source | Location | Status |
 |--------|----------|--------|
-| Suite UI Catalog Template | `concepts/ui-sple/SUITE_UI_CATALOG_TEMPLATE.md` | ✅ Covers feature tree, register, variability summary |
-| Suite Catalog UVL Template | `concepts/ui-sple/SUITE_CATALOG_TEMPLATE.uvl` | ✅ Machine-readable companion |
-| Conceptual Stack §3.5 | `concepts/CONCEPTUAL_STACK.md` | ✅ Feature hierarchy and ownership rules |
-| Artifact Catalog §3.10 | `concepts/ARTIFACT_CATALOG.md` | ✅ Summary |
+| Suite UI Catalog Template | `templates/SUITE_UI_CATALOG_TEMPLATE.md` | ✅ Covers feature tree, register, variability summary |
+| Suite Catalog UVL Template | `templates/SUITE_CATALOG_TEMPLATE.uvl` | ✅ Machine-readable companion |
+| Conceptual Stack §3.5 | `conceptual-stack.md` | ✅ Feature hierarchy and ownership rules |
+| Artifact Catalog §3.10 | `artifact-catalog.md` | ✅ Summary |
 
 ---
 

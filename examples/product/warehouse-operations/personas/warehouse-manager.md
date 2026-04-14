@@ -1,6 +1,6 @@
 # Persona: Warehouse Manager
 
-> **Template:** [Persona](../../../../concepts/artifacts/product/persona.md)
+> **Template:** [Persona](../../../../artifacts/product/persona.md)
 
 ---
 

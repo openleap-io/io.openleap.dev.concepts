@@ -1,6 +1,6 @@
 # OpenLeap SPLE Platform — Artifact Catalog
 
-> **Authority:** CONCEPTUAL_STACK.md
+> **Authority:** conceptual-stack.md
 > **Scope:** Defines every artifact of the SPLE platform — its fields, relationships, constraints, and format. No processes, no phases, no "how to create" — only what each artifact IS.
 
 ---

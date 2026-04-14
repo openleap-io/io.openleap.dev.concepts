@@ -106,9 +106,9 @@ A Workflow Spec defines a non-actor (non-human-driven) process in the platform: 
 
 | Source | Location | Status |
 |--------|----------|--------|
-| Agora Spec §5.3.4 | `io.openleap.spec/concepts/agora/` | ✅ Defines workflow types and structure |
-| Artifact Catalog §3.11 | `concepts/ARTIFACT_CATALOG.md` | ✅ Field summary |
-| Conceptual Stack §3.3 | `concepts/CONCEPTUAL_STACK.md` | ✅ Service as deployable unit context |
+| Agora Spec §5.3.4 | `io.openleap.dev.spec/artifacts/` | ✅ Defines workflow types and structure |
+| Artifact Catalog §3.11 | `artifact-catalog.md` | ✅ Field summary |
+| Conceptual Stack §3.3 | `conceptual-stack.md` | ✅ Service as deployable unit context |
 
 ---
 

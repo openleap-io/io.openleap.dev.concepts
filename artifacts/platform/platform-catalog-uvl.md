@@ -73,10 +73,10 @@ Note: T1 (Platform Foundations) and T4 (Data & Analytics) are NOT imported becau
 
 | Source | Location | Status |
 |--------|----------|--------|
-| Platform Catalog UVL Template | `concepts/ui-sple/PLATFORM_CATALOG_TEMPLATE.uvl` | ✅ Covers namespace, imports, features, constraints |
+| Platform Catalog UVL Template | `templates/PLATFORM_CATALOG_TEMPLATE.uvl` | ✅ Covers namespace, imports, features, constraints |
 | UVL Standard | Sundermann et al. (2021), MODEVAR community | ✅ Language specification |
-| Conceptual Stack §7 | `concepts/CONCEPTUAL_STACK.md` | ✅ Tier governance — T2/T3 own features |
-| Artifact Catalog §3.12 | `concepts/ARTIFACT_CATALOG.md` | ✅ Summary |
+| Conceptual Stack §7 | `conceptual-stack.md` | ✅ Tier governance — T2/T3 own features |
+| Artifact Catalog §3.12 | `artifact-catalog.md` | ✅ Summary |
 
 ---
 

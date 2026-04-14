@@ -1,6 +1,6 @@
 # Quality Requirement: QR-003 Inventory Accuracy
 
-> **Template:** [Quality Requirement](../../../../concepts/artifacts/product/quality-requirement.md)
+> **Template:** [Quality Requirement](../../../../artifacts/product/quality-requirement.md)
 
 ---
 

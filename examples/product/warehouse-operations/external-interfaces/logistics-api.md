@@ -1,6 +1,6 @@
 # External Interface: Logistics Partner API
 
-> **Template:** [External Interface](../../../../concepts/artifacts/product/external-interface.md)
+> **Template:** [External Interface](../../../../artifacts/product/external-interface.md)
 
 ---
 

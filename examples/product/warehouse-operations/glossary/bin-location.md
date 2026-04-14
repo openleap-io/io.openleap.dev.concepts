@@ -1,6 +1,6 @@
 # Glossary Term: Bin Location
 
-> **Template:** [Glossary Term](../../../../concepts/artifacts/product/glossary-term.md)
+> **Template:** [Glossary Term](../../../../artifacts/product/glossary-term.md)
 
 ---
 

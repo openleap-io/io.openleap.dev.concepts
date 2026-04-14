@@ -1,6 +1,6 @@
 # KPI: KPI-002 Pick Accuracy Rate
 
-> **Template:** [KPI](../../../../concepts/artifacts/product/kpi.md)
+> **Template:** [KPI](../../../../artifacts/product/kpi.md)
 
 ---
 

@@ -1,6 +1,6 @@
 # Business Object: Shipment
 
-> **Template:** [Business Object](../../../../concepts/artifacts/product/business-object.md)
+> **Template:** [Business Object](../../../../artifacts/product/business-object.md)
 
 ---
 

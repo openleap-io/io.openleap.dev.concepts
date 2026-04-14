@@ -10,8 +10,8 @@ OpenLeap uses three overlapping but distinct models. Each answers a different qu
 
 | Model | Question | Defined In | Scope |
 |-------|----------|-----------|-------|
-| **4-Tier Service Model** | "Where does this service sit in the platform?" | `spec/OPENLEAP_PLATFORM_GENERAL.md` | Runtime deployment and dependency governance |
-| **5-Layer Specification Model** | "At what level of abstraction is this knowledge?" | `concepts/CONCEPTUAL_STACK.md` §2 | Specification authoring and artifact taxonomy |
+| **4-Tier Service Model** | "Where does this service sit in the platform?" | [four-tier-architecture.md](https://github.com/openleap-io/io.openleap.dev.hub/blob/main/architecture/four-tier-architecture.md) | Runtime deployment and dependency governance |
+| **5-Layer Specification Model** | "At what level of abstraction is this knowledge?" | `conceptual-stack.md` §2 | Specification authoring and artifact taxonomy |
 | **3-Space Perspective** | "Who owns this concern and when is it defined?" | Derived from Agora, UI-SPLE, and platform specs | Lifecycle and tooling responsibility |
 
 These models are **orthogonal, not competing**. A single artifact can be located in all three:

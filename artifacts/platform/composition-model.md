@@ -69,9 +69,9 @@ A Composition Model is the UVL (Universal Variability Language) representation o
 
 | Source | Location | Status |
 |--------|----------|--------|
-| Composition Node UVL Template | `concepts/ui-sple/COMPOSITION_NODE_TEMPLATE.uvl` | ✅ Covers imports, feature groups, constraints |
+| Composition Node UVL Template | `templates/COMPOSITION_NODE_TEMPLATE.uvl` | ✅ Covers imports, feature groups, constraints |
 | UVL Standard | Sundermann et al. (2021), MODEVAR community | ✅ Language specification |
-| Artifact Catalog §3.9 | `concepts/ARTIFACT_CATALOG.md` | ✅ Referenced alongside Feature Composition |
+| Artifact Catalog §3.9 | `artifact-catalog.md` | ✅ Referenced alongside Feature Composition |
 
 ---
 

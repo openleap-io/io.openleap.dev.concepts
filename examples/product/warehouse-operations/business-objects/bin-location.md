@@ -1,6 +1,6 @@
 # Business Object: Bin Location
 
-> **Template:** [Business Object](../../../../concepts/artifacts/product/business-object.md)
+> **Template:** [Business Object](../../../../artifacts/product/business-object.md)
 
 ---
 

@@ -1,6 +1,6 @@
 # Business Rule: BR-003 Bin Capacity Must Not Be Exceeded
 
-> **Template:** [Business Rule](../../../../concepts/artifacts/product/business-rule.md)
+> **Template:** [Business Rule](../../../../artifacts/product/business-rule.md)
 
 ---
 

@@ -1,6 +1,6 @@
 # Decision: DEC-002 Mobile-First UI for Warehouse Floor
 
-> **Template:** [Decision](../../../../concepts/artifacts/product/decision.md)
+> **Template:** [Decision](../../../../artifacts/product/decision.md)
 
 ---
 

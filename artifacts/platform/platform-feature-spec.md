@@ -98,10 +98,10 @@ A Platform-Feature Spec is the anchor of four artifacts maintained in sync:
 
 | Source | Location | Status |
 |--------|----------|--------|
-| Conceptual Stack §3.5 | `concepts/CONCEPTUAL_STACK.md` | ✅ Defines feature hierarchy, four parts, derivation rules |
-| Leaf Feature Spec Template | `concepts/ui-sple/LEAF_FEATURE_SPEC_TEMPLATE.md` | ✅ Good (90%) — covers §0-§8 |
-| Artifact Catalog §3.5 | `concepts/ARTIFACT_CATALOG.md` | ✅ Field summary |
-| Agora Spec §5.3.3 | `io.openleap.spec/concepts/agora/` | ✅ Feature concept origin |
+| Conceptual Stack §3.5 | `conceptual-stack.md` | ✅ Defines feature hierarchy, four parts, derivation rules |
+| Leaf Feature Spec Template | `templates/LEAF_FEATURE_SPEC_TEMPLATE.md` | ✅ Good (90%) — covers §0-§8 |
+| Artifact Catalog §3.5 | `artifact-catalog.md` | ✅ Field summary |
+| Agora Spec §5.3.3 | `io.openleap.dev.spec/artifacts/` | ✅ Feature concept origin |
 
 ---
 

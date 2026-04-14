@@ -73,9 +73,9 @@ The Product's ultimate goal is to declare **required capabilities** that the Pla
 | Source | Location | Status |
 |--------|----------|--------|
 | Elara Business Spec | `io.openleap.elara/spec/elara_business_specification.md` §4 | ✅ Defines 15 contained artifact types |
-| Elara Enhancement | `concepts/agora/elara-product-discovery-enhancement.md` | ✅ Defines Product + Persona |
-| Product Config Template | `concepts/ui-sple/PRODUCT_CONFIG_SPEC_TEMPLATE.md` | ⚠️ Has feature selection but missing: requiredCapabilities, Feature Resolution, BFF config |
-| Product Config UVL | `concepts/ui-sple/PRODUCT_CONFIG_TEMPLATE.uvl` | ✅ Variability resolution format |
+| Elara Enhancement | `artifacts/elara-product-discovery-enhancement.md` | ✅ Defines Product + Persona |
+| Product Config Template | `templates/PRODUCT_CONFIG_SPEC_TEMPLATE.md` | ⚠️ Has feature selection but missing: requiredCapabilities, Feature Resolution, BFF config |
+| Product Config UVL | `templates/PRODUCT_CONFIG_TEMPLATE.uvl` | ✅ Variability resolution format |
 | Freeze Schema | `io.openleap.telos/schemas/conceptual-freeze.schema.json` | ⚠️ Missing: BusinessObject, BusinessEvent, ExternalInterface, KPI, WorkflowCandidate, Persona, Product |
 
 ---

@@ -96,7 +96,7 @@
 
 ### 0.4 Related Documents
 <!-- Maps to schema field: scope.related_documents (array of {name, path, type}) -->
-- `SYSTEM_OVERVIEW.md` - Platform architecture overview
+- [system-topology.md](https://github.com/openleap-io/io.openleap.dev.hub/blob/main/architecture/system-topology.md) - Platform architecture overview
 - `{related_domain}_spec.md` - Related domain specifications
 - `TECHNICAL_STANDARDS.md` - Cross-cutting technical standards
 - `EVENT_STANDARDS.md` - Event envelope and routing conventions

@@ -122,10 +122,10 @@ The task model uses five operators from the Cameleon Reference Framework to desc
 
 | Source | Location | Status |
 |--------|----------|--------|
-| Conceptual Stack §3.5.1 | `concepts/CONCEPTUAL_STACK.md` | ✅ Defines AUI concepts: task model operators, zones, absent-rules |
-| UI-SPLE document §7-§9 | `concepts/ui-sple/ui-sple.md` | ✅ Conceptual foundation for AUI/CUI split |
+| Conceptual Stack §3.5.1 | `conceptual-stack.md` | ✅ Defines AUI concepts: task model operators, zones, absent-rules |
+| UI-SPLE document §7-§9 | `templates/ui-sple.md` | ✅ Conceptual foundation for AUI/CUI split |
 | Cameleon Reference Framework | Calvary et al. (2003) | ✅ Academic foundation |
-| Artifact Catalog §3.7 | `concepts/ARTIFACT_CATALOG.md` | ✅ Field summary |
+| Artifact Catalog §3.7 | `artifact-catalog.md` | ✅ Field summary |
 
 ---
 

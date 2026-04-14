@@ -1,6 +1,6 @@
 # Glossary Term: Goods Issue
 
-> **Template:** [Glossary Term](../../../../concepts/artifacts/product/glossary-term.md)
+> **Template:** [Glossary Term](../../../../artifacts/product/glossary-term.md)
 
 ---
 

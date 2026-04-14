@@ -1,6 +1,6 @@
 # Project Scope: Warehouse Operations
 
-> **Template:** [Project Scope](../../../concepts/artifacts/product/project-scope.md)
+> **Template:** [Project Scope](../../../artifacts/product/project-scope.md)
 
 ---
 

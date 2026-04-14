@@ -83,7 +83,7 @@ An API Contract is an OpenAPI specification that formally defines a domain servi
 | OpenAPI Specification | openapis.org | ✅ Industry standard |
 | Domain Spec contracts.restApi | `service-layer.schema.json` | ✅ Source fields defined |
 | File convention | Platform governance rules | ✅ `contracts/http/<suite>/<domain>/openapi.yaml` |
-| Artifact Catalog §3.3 | `concepts/ARTIFACT_CATALOG.md` | ✅ Summary |
+| Artifact Catalog §3.3 | `artifact-catalog.md` | ✅ Summary |
 
 ---
 

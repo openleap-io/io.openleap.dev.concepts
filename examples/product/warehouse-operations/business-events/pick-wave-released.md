@@ -1,6 +1,6 @@
 # Business Event: Pick Wave Released
 
-> **Template:** [Business Event](../../../../concepts/artifacts/product/business-event.md)
+> **Template:** [Business Event](../../../../artifacts/product/business-event.md)
 
 ---
 

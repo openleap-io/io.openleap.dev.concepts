@@ -77,10 +77,10 @@ A Feature Composition is a composition node in the feature hierarchy that groups
 
 | Source | Location | Status |
 |--------|----------|--------|
-| Composition Node Spec Template | `concepts/ui-sple/COMPOSITION_NODE_SPEC_TEMPLATE.md` | ✅ Covers structure, children, variability |
-| Composition Node UVL Template | `concepts/ui-sple/COMPOSITION_NODE_TEMPLATE.uvl` | ✅ UVL companion |
-| Conceptual Stack §3.5 | `concepts/CONCEPTUAL_STACK.md` | ✅ Defines FODA hierarchy: Capability → Use-Case → Screen |
-| Artifact Catalog §3.9 | `concepts/ARTIFACT_CATALOG.md` | ✅ Field summary |
+| Composition Node Spec Template | `templates/COMPOSITION_NODE_SPEC_TEMPLATE.md` | ✅ Covers structure, children, variability |
+| Composition Node UVL Template | `templates/COMPOSITION_NODE_TEMPLATE.uvl` | ✅ UVL companion |
+| Conceptual Stack §3.5 | `conceptual-stack.md` | ✅ Defines FODA hierarchy: Capability → Use-Case → Screen |
+| Artifact Catalog §3.9 | `artifact-catalog.md` | ✅ Field summary |
 
 ---
 

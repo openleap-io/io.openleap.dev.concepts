@@ -1,6 +1,6 @@
 # Glossary Term: Storage Unit
 
-> **Template:** [Glossary Term](../../../../concepts/artifacts/product/glossary-term.md)
+> **Template:** [Glossary Term](../../../../artifacts/product/glossary-term.md)
 
 ---
 
