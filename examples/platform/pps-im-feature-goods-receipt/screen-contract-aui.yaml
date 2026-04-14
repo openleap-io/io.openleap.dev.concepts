@@ -1,0 +1,127 @@
+# Screen Contract (AUI): F-PPS-IM-001 — Post Goods Receipt
+# Template: concepts/artifacts/platform/screen-contract-aui.md
+# Derived from: feature-spec.md §2 (journey), §3 (fields/actions), §4 (edge cases)
+
+featureId: F-PPS-IM-001
+name: Post Goods Receipt
+
+# ──────────────────────────────────────────────
+# Task Model (from §2 User Journey)
+# ──────────────────────────────────────────────
+taskModel:
+  root:
+    operator: sequential
+    children:
+      - task: scan-delivery-note
+        description: Clerk scans delivery note barcode to load PO
+      - task: verify-lines
+        operator: sequential
+        children:
+          - task: scan-material
+            description: Scan each material barcode
+            operator: enabling  # enabled after delivery note scanned
+            enabledBy: scan-delivery-note
+          - task: enter-quantity
+            description: Enter actual quantity received
+            operator: enabling
+            enabledBy: scan-material
+          - task: quality-check
+            description: Perform quality check (if material is regulated)
+            operator: optional  # only when qualityCheckEnabled AND material.isRegulated
+            featureGate: qualityCheckEnabled
+            absentRule: collapse-up
+      - task: submit-receipt
+        description: Post the goods receipt
+        operator: enabling
+        enabledBy: verify-lines  # all lines must have actual qty
+
+# ──────────────────────────────────────────────
+# Zones (from §3 Interaction Requirements)
+# ──────────────────────────────────────────────
+zones:
+  - id: zone-header
+    name: Receipt Header
+    type: fixed
+    priority: 1
+    dataBinding: goodsReceipt (id, referenceId, status, receivedAt)
+    fields:
+      - deliveryNoteNumber (scan input)
+      - purchaseOrderRef (display, from PO lookup)
+      - supplierName (display, from bp-svc)
+      - status (display)
+
+  - id: zone-lines
+    name: Material Lines
+    type: fixed
+    priority: 2
+    dataBinding: goodsReceipt.lines[]
+    fields:
+      - materialRef (scan input)
+      - materialName (display, from pps-pd-svc)
+      - expectedQuantity (display, from PO)
+      - actualQuantity (number input, required)
+      - unit (display)
+      - lotNumber (text input, if material is lot-tracked)
+      - variance (computed: actual - expected)
+
+  - id: zone-quality
+    name: Quality Check
+    type: feature-gated
+    featureGate: qualityCheckEnabled AND material.isRegulated
+    priority: 3
+    absentRule: collapse-up  # if not shown, lines zone expands
+    dataBinding: goodsReceiptLine.qualityStatus
+    fields:
+      - qualityStatus (select: PASSED / FAILED)
+
+  - id: zone-extension-custom-fields
+    name: Custom Fields
+    type: variable  # extension zone — product team fills this
+    priority: 4
+    extensionPoint: ext.customFieldsOnReceipt
+    absentRule: collapse-up  # if no custom fields configured, zone not rendered
+
+  - id: zone-actions
+    name: Actions
+    type: fixed
+    priority: 5
+    fields:
+      - cancelButton (action: cancel, always enabled)
+      - postButton (action: post, enabled when all lines complete + quality passed)
+
+# ──────────────────────────────────────────────
+# Absent-Rules (from §4 Edge Cases)
+# ──────────────────────────────────────────────
+absentRules:
+  - zoneId: zone-quality
+    condition: qualityCheckEnabled == false OR material.isRegulated == false
+    rule: collapse-up
+    description: Quality zone hidden — lines zone takes full space
+
+  - zoneId: zone-extension-custom-fields
+    condition: No extension point filled for ext.customFieldsOnReceipt
+    rule: collapse-up
+    description: Custom fields zone hidden — quality or actions zone moves up
+
+# ──────────────────────────────────────────────
+# Business Rules (from §3 + §6)
+# ──────────────────────────────────────────────
+businessRules:
+  - type: stateCondition
+    rule: postButton disabled until all lines have actualQuantity AND (no regulated lines OR all quality = PASSED)
+
+  - type: roleGate
+    rule: postButton requires ROLE_IM_CLERK; if totalValue > fourEyeValueThreshold then also requires ROLE_IM_MANAGER
+
+  - type: actionConsequence
+    action: post
+    consequence: POST to pps-im-svc, emit pps.im.goodsreceipt.posted, navigate to receipt confirmation
+
+# ──────────────────────────────────────────────
+# Extension Zones
+# ──────────────────────────────────────────────
+extensionZones:
+  - id: zone-extension-custom-fields
+    extensionPoint: ext.customFieldsOnReceipt
+    description: Product team can add custom form fields here (e.g., delivery temperature, damage notes)
+    renderPosition: after zone-quality, before zone-actions

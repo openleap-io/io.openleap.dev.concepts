@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warehouse Operations — Product Artifact Flow Story</title>
+<style>
+  :root {
+    --product: #1565c0;
+    --product-bg: #e3f2fd;
+    --platform: #2e7d32;
+    --platform-bg: #e8f5e9;
+    --bridge: #e65100;
+    --bridge-bg: #fff3e0;
+    --text: #1a1a1a;
+    --muted: #666;
+    --border: #ddd;
+    --bg: #fafafa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; }
+  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1rem; }
+  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+  h2 { font-size: 1.5rem; margin: 2.5rem 0 1rem; padding-top: 1.5rem; border-top: 2px solid var(--border); }
+  h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+  p, li { font-size: 0.95rem; }
+  .subtitle { color: var(--muted); font-size: 1rem; margin-bottom: 2rem; }
+  .step { background: white; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; border-left: 4px solid var(--product); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .step.platform { border-left-color: var(--platform); }
+  .step.bridge { border-left-color: var(--bridge); }
+  .step-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .step-number { background: var(--product); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; flex-shrink: 0; }
+  .step.platform .step-number { background: var(--platform); }
+  .step.bridge .step-number { background: var(--bridge); }
+  .step-title { font-weight: 600; font-size: 1.05rem; }
+  .artifact-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0; }
+  .artifact { background: var(--product-bg); border: 1px solid var(--product); color: var(--product); padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.8rem; font-weight: 500; }
+  .artifact.platform { background: var(--platform-bg); border-color: var(--platform); color: var(--platform); }
+  .artifact.bridge { background: var(--bridge-bg); border-color: var(--bridge); color: var(--bridge); }
+  .arrow { text-align: center; font-size: 1.5rem; color: var(--muted); margin: 0.5rem 0; }
+  .edge-label { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 1rem; margin: 0.5rem auto; max-width: 600px; text-align: center; font-size: 0.85rem; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+  th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+  th { background: #f5f5f5; font-weight: 600; }
+  .flow-connector { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin: 1.5rem 0; }
+  .flow-connector .line { flex: 1; height: 2px; background: var(--border); }
+  .flow-connector .label { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+  .highlight { background: #fff9c4; padding: 0.1rem 0.3rem; border-radius: 3px; }
+  .note { background: #f5f5f5; padding: 1rem; border-radius: 6px; margin: 1rem 0; font-size: 0.9rem; }
+  ul { padding-left: 1.5rem; margin: 0.5rem 0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Warehouse Operations</h1>
+<p class="subtitle">Product Artifact Flow Story — how 59 artifacts connect from business need to platform resolution</p>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>1. It Starts With a Problem</h2>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-number">1</div>
+    <div class="step-title">Project Scope — Why does this product exist?</div>
+  </div>
+  <p>A mid-size manufacturer operates a 5,000 m² warehouse with 12 employees. Goods receipt is paper-based, bin assignments live in Excel, pick lists are printed daily. The result: 3–5% of stock is "lost" in wrong bins, inventory data is always 24 hours stale, and pick errors average 2.1% per week.</p>
+  <div class="artifact-list">
+    <span class="artifact">Project Scope</span>
+  </div>
+  <p><strong>5 goals defined</strong> — from "eliminate paper-based goods receipt" (must-have) to "warehouse utilization dashboard" (should-have). Constraints: Zebra TC52 scanners, 06:00–22:00 operating hours, ISO 9001 traceability.</p>
+</div>
+
+<div class="arrow">↓</div>
+<div class="edge-label">Scope defines boundaries → determines which processes and capabilities are in/out</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>2. Who Is Involved?</h2>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-number">2</div>
+    <div class="step-title">Actors — Who participates in the business?</div>
+  </div>
+  <div class="artifact-list">
+    <span class="artifact">Warehouse Worker</span>
+    <span class="artifact">Warehouse Manager</span>
+    <span class="artifact">Receiving Clerk</span>
+    <span class="artifact">Supplier (external)</span>
+    <span class="artifact">Logistics Partner (external)</span>
+  </div>
+  <p>Each actor has defined responsibilities and decision authority. The <strong>Receiving Clerk</strong> verifies deliveries against POs. The <strong>Warehouse Worker</strong> handles physical movements. The <strong>Manager</strong> oversees layout and approves high-value receipts.</p>
+</div>
+
+<div class="arrow">↓</div>
+<div class="edge-label">Actors are enriched into Personas → adding UX context (frequency, comfort, pain points, IAM roles)</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-number">3</div>
+    <div class="step-title">Personas — Who are the actual users?</div>
+  </div>
+  <div class="artifact-list">
+    <span class="artifact">Warehouse Worker (persona)</span>
+    <span class="artifact">Warehouse Manager (persona)</span>
+    <span class="artifact">Receiving Clerk (persona)</span>
+  </div>
+  <table>
+    <tr><th>Persona</th><th>Usage</th><th>Comfort</th><th>Key Pain Point</th></tr>
+    <tr><td>Warehouse Worker</td><td>Daily</td><td>Medium</td><td>"I waste 20 min/day looking for misplaced materials"</td></tr>
+    <tr><td>Receiving Clerk</td><td>Daily</td><td>Medium</td><td>"Paper forms get lost, I re-enter everything into the ERP the next day"</td></tr>
+    <tr><td>Warehouse Manager</td><td>Daily</td><td>High</td><td>"I have no real-time view of warehouse utilization"</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>3. How Does the Business Work?</h2>
+
+<div class="arrow">↓</div>
+<div class="edge-label">Processes describe the actual work → each step names its actor, data, rules, and vocabulary</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-number">4</div>
+    <div class="step-title">Business Processes — Step by step, what happens?</div>
+  </div>
+
+  <h3>Process: Goods Receipt (L0) — 6 steps, 2 gateways</h3>
+  <table>
+    <tr><th>#</th><th>Step</th><th>Actor</th><th>Reads</th><th>Writes</th><th>Rules</th></tr>
+    <tr><td>1</td><td>Delivery arrives</td><td>Supplier</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>2</td><td>Scan delivery note</td><td>Receiving Clerk</td><td>Material</td><td>—</td><td>—</td></tr>
+    <tr><td>→</td><td colspan="5"><em>Gateway: Does delivery match Purchase Order?</em> → Yes: continue / No: reject and notify supplier</td></tr>
+    <tr><td>3</td><td>Unload and count</td><td>Warehouse Worker</td><td>Material</td><td>Goods Receipt</td><td>—</td></tr>
+    <tr><td>4</td><td>Quality check</td><td>Receiving Clerk</td><td>Material, Goods Receipt</td><td>Goods Receipt</td><td>BR-001 (if regulated)</td></tr>
+    <tr><td>→</td><td colspan="5"><em>Gateway: Quality OK?</em> → Yes: continue / No: quarantine</td></tr>
+    <tr><td>5</td><td>Confirm quantities</td><td>Receiving Clerk</td><td>Goods Receipt</td><td>Goods Receipt</td><td>—</td></tr>
+    <tr><td>6</td><td>Post goods receipt</td><td>Receiving Clerk</td><td>Goods Receipt</td><td>Goods Receipt</td><td>BR-004 (if value > €10k)</td></tr>
+  </table>
+  <p><strong>Outcome:</strong> Goods Receipt posted → emits <span class="highlight">Goods Received</span> event → triggers Put-Away process</p>
+
+  <h3>+ 3 more processes</h3>
+  <div class="artifact-list">
+    <span class="artifact">Put-Away (4 steps)</span>
+    <span class="artifact">Pick & Pack (5 steps)</span>
+    <span class="artifact">Goods Issue (5 steps)</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>4. What Things Does the Business Work With?</h2>
+
+<div class="arrow">↓</div>
+<div class="edge-label">Business Objects emerge from process step I/O → each step reads and writes specific objects</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-number">5</div>
+    <div class="step-title">Business Objects — The data entities</div>
+  </div>
+  <div class="artifact-list">
+    <span class="artifact">Goods Receipt</span>
+    <span class="artifact">Storage Unit</span>
+    <span class="artifact">Bin Location</span>
+    <span class="artifact">Pick Wave</span>
+    <span class="artifact">Shipment</span>
+    <span class="artifact">Material (master data)</span>
+  </div>
+  <table>
+    <tr><th>Object</th><th>Lifecycle</th><th>Owner</th></tr>
+    <tr><td>Goods Receipt</td><td>pending → received → posted → cancelled</td><td>Receiving Clerk</td></tr>
+    <tr><td>Storage Unit</td><td>created → stored → picked → consumed</td><td>Warehouse Worker</td></tr>
+    <tr><td>Pick Wave</td><td>planned → released → in-progress → completed</td><td>Warehouse Manager</td></tr>
+    <tr><td>Shipment</td><td>created → loaded → dispatched → delivered</td><td>Warehouse Worker</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>5. What Happens? What Constrains?</h2>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-number">6</div>
+    <div class="step-title">Business Events — What triggers what?</div>
+  </div>
+  <div class="artifact-list">
+    <span class="artifact">Goods Received → triggers Put-Away</span>
+    <span class="artifact">Material Put Away → updates inventory</span>
+    <span class="artifact">Pick Wave Released → assigns to worker</span>
+    <span class="artifact">Shipment Dispatched → notifies logistics</span>
+  </div>
+  <p>Events chain processes together. The Goods Receipt process <em>emits</em> "Goods Received" which <em>triggers</em> the Put-Away process. This is how processes connect without knowing about each other.</p>
+</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-number">7</div>
+    <div class="step-title">Business Rules — What constrains the business?</div>
+  </div>
+  <table>
+    <tr><th>ID</th><th>Rule</th><th>Type</th><th>Applies To</th></tr>
+    <tr><td>BR-001</td><td>Regulated materials MUST undergo quality check</td><td>invariant</td><td>Goods Receipt step 4</td></tr>
+    <tr><td>BR-002</td><td>Perishable goods: FIFO by lot date</td><td>invariant</td><td>Pick & Pack step 3</td></tr>
+    <tr><td>BR-003</td><td>Bin capacity must not be exceeded</td><td>validation</td><td>Put-Away step 1</td></tr>
+    <tr><td>BR-004</td><td>Four-eye for goods > €10k</td><td>authorization</td><td>Goods Receipt step 6</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>6. What Can the Business Do?</h2>
+
+<div class="arrow">↓</div>
+<div class="edge-label">Capabilities are what the business CAN DO — independent of how. They cluster into Functional Areas and are THE input to the Platform.</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-number">8</div>
+    <div class="step-title">Business Capabilities — The required abilities</div>
+  </div>
+  <table>
+    <tr><th>ID</th><th>Capability</th><th>Type</th><th>Priority</th><th>Fulfilled By</th></tr>
+    <tr><td>CAP-001</td><td>Receive Inbound Goods</td><td>core</td><td>must-have</td><td>Goods Receipt process</td></tr>
+    <tr><td>CAP-002</td><td>Store Materials in Warehouse</td><td>core</td><td>must-have</td><td>Put-Away process</td></tr>
+    <tr><td>CAP-003</td><td>Pick Materials for Orders</td><td>core</td><td>must-have</td><td>Pick & Pack process</td></tr>
+    <tr><td>CAP-004</td><td>Ship Outbound Goods</td><td>core</td><td>must-have</td><td>Goods Issue process</td></tr>
+    <tr><td>CAP-005</td><td>Track Inventory Levels</td><td>core</td><td>must-have</td><td>All processes</td></tr>
+    <tr><td>CAP-006</td><td>Manage Warehouse Layout</td><td>supporting</td><td>should-have</td><td>—</td></tr>
+  </table>
+</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-number">9</div>
+    <div class="step-title">Functional Areas — How does it cluster?</div>
+  </div>
+  <div class="artifact-list">
+    <span class="artifact">Inbound (Receipt + Put-Away)</span>
+    <span class="artifact">Storage (Bins + Inventory)</span>
+    <span class="artifact">Outbound (Pick + Ship)</span>
+  </div>
+  <p>Three areas, each with distinct actors and KPIs. <strong>Inbound</strong> depends on <strong>Storage</strong> (needs bins). <strong>Outbound</strong> depends on <strong>Storage</strong> (picks from bins). These areas will map to suites during Platform decomposition.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>7. The Bridge — Required Capabilities Sent to Platform</h2>
+
+<div class="flow-connector">
+  <div class="line"></div>
+  <div class="label">PRODUCT SPACE ends here → PLATFORM SPACE resolves</div>
+  <div class="line"></div>
+</div>
+
+<div class="step bridge">
+  <div class="step-header">
+    <div class="step-number">→</div>
+    <div class="step-title">Required Capabilities → Platform Feature Resolution</div>
+  </div>
+  <p>The Product declares: <em>"I need these 6 capabilities."</em> The Platform (Telos Decompose) matches them against its Feature Catalog and returns:</p>
+  <table>
+    <tr><th>Capability</th><th>Status</th><th>Matched Feature(s)</th><th>Suite</th></tr>
+    <tr><td>CAP-001: Receive Goods</td><td><span class="artifact bridge">MATCHED</span></td><td>F-PPS-IM-001</td><td>pps (im)</td></tr>
+    <tr><td>CAP-002: Store Materials</td><td><span class="artifact bridge">MATCHED</span></td><td>F-PPS-WM-001</td><td>pps (wm)</td></tr>
+    <tr><td>CAP-003: Pick Materials</td><td><span class="artifact bridge">MATCHED</span></td><td>F-PPS-WM-002</td><td>pps (wm)</td></tr>
+    <tr><td>CAP-004: Ship Goods</td><td><span class="artifact bridge">MATCHED</span></td><td>F-PPS-WM-003</td><td>pps (wm)</td></tr>
+    <tr><td>CAP-005: Track Inventory</td><td><span class="artifact bridge">MATCHED</span></td><td>F-PPS-IM-002</td><td>pps (im)</td></tr>
+    <tr><td>CAP-006: Manage Layout</td><td><span class="artifact bridge">GAP</span></td><td>—</td><td>—</td></tr>
+  </table>
+  <p><strong>Gap identified:</strong> CAP-006 "Manage Warehouse Layout" has no platform-feature. Resolution options: extend the platform (create F-PPS-WM-004), build a custom service, or defer.</p>
+  <p><strong>Cross-suite reads required:</strong> Supplier data (BP), Purchase Orders (PPS-PUR), Delivery Orders (SD) → generates UVL <code>requires</code> constraints.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>8. Supporting Artifacts</h2>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-number">+</div>
+    <div class="step-title">Also produced during discovery</div>
+  </div>
+  <div class="artifact-list">
+    <span class="artifact">8 Glossary Terms</span>
+    <span class="artifact">3 Quality Requirements</span>
+    <span class="artifact">4 External Interfaces</span>
+    <span class="artifact">3 KPIs</span>
+    <span class="artifact">2 Decisions</span>
+    <span class="artifact">2 Workflow Candidates</span>
+  </div>
+  <p>These artifacts provide additional context:</p>
+  <ul>
+    <li><strong>Glossary Terms</strong> (Material, Goods Receipt, Bin Location, ...) → feed into Suite UBL</li>
+    <li><strong>Quality Requirements</strong> (scan latency < 1s, 99.5% availability) → become service NFRs</li>
+    <li><strong>External Interfaces</strong> (barcode scanner, ERP procurement/sales, logistics API) → define integration boundaries</li>
+    <li><strong>KPIs</strong> (receipt time < 30min, pick accuracy > 99.5%) → measure process success</li>
+    <li><strong>Decisions</strong> (separate inbound/outbound, mobile-first UI) → trace to suite ADRs</li>
+    <li><strong>Workflow Candidates</strong> (nightly inventory recon, auto-replenishment) → become Telos Workflow Specs</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>9. Summary — The Complete Product</h2>
+
+<div class="note">
+  <strong>59 artifacts</strong> fully specify the "Warehouse Operations" product:
+  <ul>
+    <li>1 Product + 1 Project Scope</li>
+    <li>5 Actors → 3 Personas</li>
+    <li>4 Business Processes (20 steps, gateways, data flows)</li>
+    <li>6 Business Objects (with lifecycles and ownership)</li>
+    <li>4 Business Events (chaining processes together)</li>
+    <li>4 Business Rules (invariants, validations, authorizations)</li>
+    <li>6 Business Capabilities → 6 Required Capabilities sent to Platform</li>
+    <li>8 Glossary Terms → feed Suite UBL</li>
+    <li>3 Quality Requirements → become service NFRs</li>
+    <li>4 External Interfaces → define integration boundaries</li>
+    <li>3 KPIs → measure success</li>
+    <li>3 Functional Areas → map to suites</li>
+    <li>2 Decisions → trace to ADRs</li>
+    <li>2 Workflow Candidates → become Telos workflows</li>
+  </ul>
+  <p style="margin-top: 1rem;"><strong>Next step:</strong> Platform resolves the 6 Required Capabilities against its Feature Catalog. The PO reviews the resolution (5 matches, 1 gap), configures the BFF, and the product is ready for implementation.</p>
+</div>
+
+</div>
+</body>
+</html>

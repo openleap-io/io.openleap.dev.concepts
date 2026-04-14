@@ -1,0 +1,35 @@
+// Feature Model: F-PPS-IM-001 — Post Goods Receipt
+// Template: concepts/artifacts/platform/feature-model.md
+
+namespace pps.im.F_PPS_IM_001
+
+imports
+    bp.F_BP_001 as bp_search
+
+features
+    F_PPS_IM_001 "Post Goods Receipt"
+        // Attributes with binding times
+        Boolean qualityCheckEnabled {
+            default true,
+            bindingTime "deploy"
+            // If false, quality check step is hidden for all materials
+        }
+        Integer autoPostThreshold {
+            default 0,
+            bindingTime "deploy"
+            // If > 0 and all lines match exactly, GR is auto-posted
+        }
+        Real fourEyeValueThreshold {
+            default 10000.00,
+            bindingTime "deploy"
+            // EUR value above which four-eye principle applies
+        }
+
+constraints
+    // Cross-suite read dependency: Goods Receipt reads supplier data from BP
+    // Derived from Feature Spec §5: bp-svc GET /parties/{id}
+    F_PPS_IM_001 => bp_search.F_BP_001
+
+    // Attribute constraints
+    // autoPostThreshold must be non-negative
+    // fourEyeValueThreshold must be positive

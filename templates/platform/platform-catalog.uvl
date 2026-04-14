@@ -1,0 +1,90 @@
+// Template Meta
+// Template-ID:   TPL-UVL-PLAT
+// Version:       1.0.0
+// Last Updated:  2026-04-03
+// Changelog:
+//   1.0.0 (2026-04-03) — Initial versioned baseline.
+
+// ============================================================
+// OpenLeap Platform — UI Feature Catalog (Root)
+// File: catalog.uvl
+//
+// This is the machine-readable root of the entire OpenLeap
+// UI feature catalog. It imports all suite catalog roots
+// and assembles them under a single platform root feature.
+//
+// This is the entry point for:
+//   - Elara: ProductConfig validation
+//   - Decompose: gap analysis and artifact generation
+//
+// Adding a new suite:
+//   1. Create {suite}.catalog.uvl in the suite directory
+//   2. Add an import line below
+//   3. Add the suite root feature to the or-group below
+//   4. Update catalog.md (the human-readable platform overview)
+// ============================================================
+
+namespace openleap.ui
+
+imports
+    // Tier 1 — Platform & Technical Foundations
+    // (UI features for platform administration, ref data, etc.)
+    // ref  as ref    from "ref/ref.catalog.uvl"
+    // i18n as i18n   from "i18n/i18n.catalog.uvl"
+
+    // Tier 2 — Shared Enterprise Business
+    bp   as bp   from "bp/bp.catalog.uvl"
+    // cal  as cal    from "cal/cal.catalog.uvl"
+
+    // Tier 3 — Core Business Suites
+    sd   as sd   from "sd/sd.catalog.uvl"
+    ops  as ops  from "ops/ops.catalog.uvl"
+    fi   as fi   from "fi/fi.catalog.uvl"
+    // pps  as pps    from "pps/pps.catalog.uvl"
+    // fac  as fac    from "fac/fac.catalog.uvl"
+    // hr   as hr     from "hr/hr.catalog.uvl"
+    // co   as co     from "co/co.catalog.uvl"
+
+    // Tier 4 — Analytics & Integration
+    // bi   as bi     from "bi/bi.catalog.uvl"
+
+    // Add further suite imports here as catalogs are created.
+    // Comment out suites that have no UI features yet.
+
+features
+
+    OpenLeapUI
+
+        // Products select any combination of suite capabilities.
+        // The or-group ensures at least one suite is selected
+        // in every valid ProductConfig.
+        or
+            bp.BP_UI
+            sd.SD_UI
+            ops.OPS_UI
+            fi.FI_UI
+            // pps.PPS_UI
+            // fac.FAC_UI
+            // hr.HR_UI
+            // co.CO_UI
+            // bi.BI_UI
+
+constraints
+
+    // --------------------------------------------------------
+    // Platform-level cross-suite constraints.
+    //
+    // Place here only constraints that span suites and represent
+    // platform-wide rules — not suite-specific or feature-specific
+    // constraints (those live in suite catalogs and leaf .uvl files).
+    //
+    // Example: any T3 suite that deals with parties requires bp.
+    // sd.SD_UI  => bp.BP_UI
+    // ops.OPS_UI => bp.BP_UI
+    // fi.FI_UI  => bp.BP_UI
+    // --------------------------------------------------------
+
+    // Uncomment and extend as needed.
+    // sd.SD_UI  => bp.BP_UI
+    // ops.OPS_UI => bp.BP_UI
+    // fi.FI_UI  => bp.BP_UI

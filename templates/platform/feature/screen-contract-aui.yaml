@@ -1,0 +1,150 @@
+# Template Meta
+# Template-ID:   TPL-AUI
+# Version:       1.0.0
+# Last Updated:  2026-04-03
+# Changelog:
+#   1.0.0 (2026-04-03) — Initial versioned baseline.
+
+# Screen Contract (AUI) — Template
+#
+# Conceptual Stack Layer: Platform-Feature (Screen Contract)
+# Space: Platform
+# Owner: Domain Engineering Team
+# Companion of: Feature Spec (F-{SUITE}-{NNN}.md)
+# Derived from: Feature Spec §2 (journey → task model), §3 (fields → zones), §4 (edge cases → absent-rules)
+#
+# This file defines the Abstract UI — platform-free, independent of web/mobile/desktop.
+# One AUI per feature. Multiple CUIs (one per target platform) derive from this AUI.
+#
+# Five task operators (from Cameleon Reference Framework):
+#   sequential(A, B)   — A must complete before B starts
+#   concurrent(A, B)   — A and B are co-accessible (side-by-side or tabs)
+#   alternative(A | B) — mutual exclusion (one or the other)
+#   optional(A)        — A may be absent (triggers absent-rule)
+#   enabling(B ← A)    — B is disabled until A provides data
+#
+# Three zone types:
+#   fixed         — owned by platform, not overridable
+#   variable      — product team integration slot (extension zone)
+#   feature-gated — visible only when a UVL attribute or feature flag is active
+#
+# Four absent-rules (what happens when an optional zone is not rendered):
+#   collapse-up          — predecessor expands to fill space
+#   end-page             — page ends at previous zone
+#   tab-hidden           — tab removed from navigation
+#   panel-section-hidden — panel section collapses
+
+featureId: F-{SUITE}-{NNN}
+name: "{Feature Name}"
+
+# ──────────────────────────────────────────────
+# Task Model (from §2 User Journey)
+# ──────────────────────────────────────────────
+taskModel:
+  root:
+    operator: sequential    # Choose: sequential | concurrent | alternative
+    children:
+      - task: "{task-1-id}"
+        description: "{What the user does first}"
+
+      - task: "{task-2-id}"
+        description: "{Next step}"
+        operator: enabling
+        enabledBy: "{task-1-id}"
+
+      - task: "{optional-task-id}"
+        description: "{Conditional step — only under certain conditions}"
+        operator: optional
+        featureGate: "{uvl-attribute-name}"
+        absentRule: collapse-up
+
+      - task: "{final-task-id}"
+        description: "{Completing action}"
+        operator: enabling
+        enabledBy: "{task-2-id}"
+
+# ──────────────────────────────────────────────
+# Zones (from §3 Interaction Requirements)
+# ──────────────────────────────────────────────
+zones:
+  - id: zone-header
+    name: "{Header Section}"
+    type: fixed
+    priority: 1
+    dataBinding: "{viewModel.headerField}"
+    fields:
+      - "{field-1} ({type}: display | input | scan | lookup | select)"
+      - "{field-2} ({type})"
+
+  - id: zone-main
+    name: "{Main Content}"
+    type: fixed
+    priority: 2
+    dataBinding: "{viewModel.items[]}"
+    fields:
+      - "{field-1} ({type})"
+      - "{field-2} ({type})"
+      # List all fields from Feature Spec §3 for this zone
+
+  - id: zone-conditional
+    name: "{Conditional Section}"
+    type: feature-gated
+    featureGate: "{uvl-attribute} AND/OR {condition}"
+    priority: 3
+    absentRule: collapse-up    # Choose: collapse-up | end-page | tab-hidden | panel-section-hidden
+    dataBinding: "{viewModel.conditionalField}"
+    fields:
+      - "{field} ({type})"
+
+  - id: zone-extension
+    name: "{Extension Area}"
+    type: variable
+    priority: 4
+    extensionPoint: "ext.{extensionPointName}"
+    absentRule: collapse-up
+    # No fixed fields — product team defines content via extension point
+
+  - id: zone-actions
+    name: Actions
+    type: fixed
+    priority: 99               # Always last
+    fields:
+      - "{primaryAction} (action: {verb}, enabled when: {condition})"
+      - "{cancelAction} (action: cancel, always enabled)"
+
+# ──────────────────────────────────────────────
+# Absent-Rules (from §4 Edge Cases)
+# ──────────────────────────────────────────────
+absentRules:
+  - zoneId: zone-conditional
+    condition: "{when this zone is absent — e.g., attribute == false}"
+    rule: collapse-up          # Choose: collapse-up | end-page | tab-hidden | panel-section-hidden
+    description: "{What happens visually when this zone is hidden}"
+
+  - zoneId: zone-extension
+    condition: "No extension point filled for ext.{extensionPointName}"
+    rule: collapse-up
+    description: "Extension area hidden — adjacent zones fill the space"
+
+# ──────────────────────────────────────────────
+# Business Rules (from §3 + §6)
+# ──────────────────────────────────────────────
+businessRules:
+  - type: stateCondition
+    rule: "{action} disabled until {precondition}"
+
+  - type: roleGate
+    rule: "{action} requires {ROLE}; if {condition} then also requires {ROLE_2}"
+
+  - type: actionConsequence
+    action: "{action-name}"
+    consequence: "{API call, event emission, navigation target}"
+
+# ──────────────────────────────────────────────
+# Extension Zones
+# ──────────────────────────────────────────────
+extensionZones:
+  - id: zone-extension
+    extensionPoint: "ext.{extensionPointName}"
+    description: "{What product teams can add here}"
+    renderPosition: "after {zone-X}, before {zone-Y}"

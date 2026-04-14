@@ -1,0 +1,127 @@
+// Template Meta
+// Template-ID:   TPL-UVL-PCFG
+// Version:       1.0.0
+// Last Updated:  2026-04-03
+// Changelog:
+//   1.0.0 (2026-04-03) — Initial versioned baseline.
+
+// ============================================================
+// ProductConfig UVL — {product-id}
+// Product: {Product Name}
+// Project: {project-name} / {customer-name}
+//
+// Companion document: {product-id}.product-config.md
+//
+// This file is the machine-readable product configuration.
+// It is an Application Engineering artifact — created in Elara,
+// validated by Decompose against catalog.uvl.
+//
+// Decompose checks:
+//   1. Validity     — all selected features satisfy catalog.uvl constraints
+//   2. Completeness — all variability points are resolved
+//                     (no undecided optional features, no unset attributes)
+//   3. Cross-suite  — all cross-suite requires are satisfied
+//   4. Gap analysis — selected leaf IDs that have no .md spec yet
+//
+// Authoring rules:
+//   - Import catalog.uvl as the root.
+//   - Declare the product root feature under 'features'.
+//   - Under the root, list each selected leaf feature as a
+//     mandatory child (all selections are mandatory in a config).
+//   - For each selected feature, override attributes that differ
+//     from the Telos default using the attribute syntax.
+//   - For optional features NOT selected, add a comment explaining why.
+//   - Do not declare new features here — only select from the catalog.
+// ============================================================
+
+namespace {product-id}
+
+imports
+    // The platform catalog is the single import root.
+    // All suite catalogs are transitively imported through it.
+    catalog from "../../catalog.uvl"
+
+
+features
+
+    // Product root — one feature per ProductConfig.
+    {ProductId}_Config
+
+        mandatory
+            // ------------------------------------------------
+            // List every selected leaf feature here.
+            //
+            // Format for selection with attribute overrides:
+            //
+            //   catalog.{suite}.F-{SUITE}-{NNN}-{NN} {
+            //       {attr.path} {value}
+            //       {attr.path}.bindingTime "{compile|deploy|runtime}"
+            //   }
+            //
+            // Format for selection with no overrides (uses Telos defaults):
+            //
+            //   catalog.{suite}.F-{SUITE}-{NNN}-{NN}
+            //
+            // ------------------------------------------------
+
+            // --- SD Suite features ---
+            catalog.sd.F-SD-001-01 {
+                // Uses Telos default: pagination.pageSize 50
+                // Override if needed:
+                // pagination.pageSize 25
+                // pagination.pageSize.bindingTime "deploy"
+            }
+
+            catalog.sd.F-SD-001-02 {
+                approval.requireComment true
+                approval.requireComment.bindingTime "deploy"
+                // Other attributes use Telos defaults
+            }
+
+            catalog.sd.F-SD-001-03-01
+            // Note: F-SD-001-03-02 (read-only variant) NOT selected.
+            // Rationale: see .md §2.2 — all personas have write access.
+
+            // --- BP Suite features (cross-suite requires) ---
+            // Required by F-SD-001-02 (Create Order needs Customer Search)
+            catalog.bp.F-BP-001-01
+            catalog.bp.F-BP-001-02
+
+            // --- FI Suite features ---
+            // Included for Controller persona (read-only invoice view)
+            catalog.fi.F-FI-002-01
+
+            // --- Add further selected leaves here ---
+            // catalog.{suite}.F-{SUITE}-{NNN}-{NN}
+
+
+        // ------------------------------------------------
+        // Optional features considered but NOT selected.
+        // Documenting the negative decision prevents
+        // "why isn't X here?" questions.
+        //
+        // Leave as comments — selected features are in
+        // the mandatory block above.
+        //
+        // // NOT selected: F-SD-002-01 Pricing Maintenance
+        // //   Reason: customer uses central pricing, no local config
+        // // NOT selected: F-SD-001-03-02 Order Detail Read-Only
+        // //   Reason: all personas have write access
+        // ------------------------------------------------
+
+
+constraints
+
+    // --------------------------------------------------------
+    // Product-specific constraints (rare).
+    //
+    // Most constraints are enforced by catalog.uvl.
+    // Add here only constraints specific to this product
+    // configuration that cannot be expressed in the catalog —
+    // e.g., business rules that apply to this customer only.
+    //
+    // Format:
+    //   {ProductId}_Config => catalog.{suite}.F-{SUITE}-{NNN}
+    // --------------------------------------------------------
+
+    // Add product-specific constraints here if needed.

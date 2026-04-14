@@ -1,0 +1,167 @@
+# Artifact-to-Template Mapping
+
+> Maps each artifact from the Artifact Catalog to its chapter in a consolidated, human-readable template.
+
+---
+
+## Platform Templates
+
+### Template: Domain/Service Specification (`platform/domain-service-spec.md`)
+
+One consolidated template for specifying a microservice. Integrates content from multiple artifacts into numbered chapters.
+
+| Chapter | Title | Artifact Source(s) | Notes |
+|---------|-------|-------------------|-------|
+| §0 | Document Purpose & Scope | domain-spec (scope) | Purpose, audience, in/out scope, related documents |
+| §1 | Business Context | domain-spec (businessContext) | Problems solved, business value, stakeholders, strategic positioning |
+| §2 | Service Identity | domain-spec (metadata) | Service ID, suite, domain, base package, API path, team, repo |
+| §3 | Domain Model | domain-spec (domainModel) | Aggregates (root + entities + VOs), enumerations, shared types, lifecycle states, invariants. Each aggregate fully detailed. |
+| §4 | Business Rules | domain-spec (businessRules) | Catalog with ID, name, type, enforcement, error code. Detailed definitions. Validation rules. Reference data deps. |
+| §5 | Use Cases | *(new — from DOMAIN_SPEC_TEMPLATE §3)* | Canonical format: id, type, trigger, aggregate, operation, inputs, outputs, events, REST endpoint, idempotency, errors. Process flow diagrams. |
+| §6 | REST API | domain-spec (contracts.restApi) + api-contract | Base path, auth, endpoints with full request/response examples. Reference to OpenAPI file. |
+| §7 | Events & Integration | domain-spec (contracts.events + integration) | EDA pattern, published events (routing key, payload, consumers), consumed events, event flow diagrams, integration points. |
+| §8 | Data Model | domain-spec (dataModel) | Storage tech, tables with columns/types/constraints/indexes, reference data, ERD diagram. |
+| §9 | Security & Compliance | domain-spec (security) | Data classification, access control (roles → permissions), compliance requirements (GDPR, ISO, SOX). |
+| §10 | Quality Attributes | domain-spec (from Elara QualityRequirements) | Performance targets, availability SLAs, scalability, maintainability. |
+| §11 | Feature Dependencies | *(new — from Conceptual Stack)* | Which platform-features (F-{SUITE}-{NNN}) call this service. Endpoints used per feature. BFF aggregation hints. |
+| §12 | Extension Points | *(new — from Conceptual Stack)* | Defined hooks: extension events, aggregate hooks, extension API endpoints. Open-Closed Principle. |
+| §13 | Migration & Evolution | domain-spec (implicit) | Data migration strategy, deprecation path, versioning policy. |
+| §14 | Decisions & Open Questions | domain-spec (adrs, suiteAdrRefs) | ADRs, consistency checks, conflicts, open questions with severity. |
+| §15 | Appendix | domain-spec (glossary, changelog) | Service-local glossary, references, change log, review & approval. |
+
+**Companion files (referenced, not embedded):**
+- `openapi.yaml` → OpenAPI contract (referenced in §6)
+- `*.schema.json` → Event contracts (referenced in §7)
+
+---
+
+### Template: Suite Specification (`platform/suite-spec.md`)
+
+One consolidated template for specifying a suite — the UBL-bounded domain cluster.
+
+| Chapter | Title | Artifact Source(s) | Notes |
+|---------|-------|-------------------|-------|
+| §0 | Suite Identity & Purpose | suite-spec (metadata + purpose) | ID, name, version, status, owner. Business purpose, in/out scope, target users, business value. |
+| §1 | Ubiquitous Language | suite-spec (ubiquitousLanguage) | THE central chapter. Glossary entries with ID, term, aliases, definition, examples, related terms. This defines the suite boundary. |
+| §2 | Domain Model | suite-spec (domainModel) | Conceptual overview (Mermaid), core concepts, shared kernel, bounded context map (intra-suite). |
+| §3 | Service Landscape | suite-spec (serviceLandscape) | Service catalog (ID, name, BC, status, responsibility), responsibility matrix, dependency diagram. |
+| §4 | Integration Patterns | suite-spec (integrationPatterns) | Pattern decision (event-driven/orchestration/hybrid) + rationale. Event flows. Sync vs async decisions. Error handling. |
+| §5 | Event Conventions | suite-spec (eventConventions) | Routing key pattern, payload envelope, versioning strategy, event catalog. |
+| §6 | Feature Catalog | suite-feature-catalog + suite-catalog-uvl | Feature tree (ASCII + Mermaid), mandatory features, cross-suite dependencies, feature register, variability summary. |
+| §7 | Cross-Cutting Concerns | suite-spec (crossCuttingConcerns) | Compliance, security, multi-tenancy (model, isolation, propagation), audit (requirements, retention policies). |
+| §8 | External Interfaces | suite-spec (externalInterfaces) | Outbound (→ other suites), inbound (← other suites), external context mapping (DDD patterns). |
+| §9 | Architecture Decisions | suite-spec (adrs) | Suite-level ADRs (ADR-{SUITE}-NNN), with scope, rationale, consequences. |
+| §10 | Roadmap | suite-spec (roadmap) | Planned phases, timeframes, deprecations. |
+| §11 | Appendix | — | Change log, review & approval. |
+
+**Companion files (referenced, not embedded):**
+- `{suite}.catalog.uvl` → Suite UVL catalog root (referenced in §6)
+- Per-feature files in the feature catalog directory
+
+---
+
+### Template: Platform-Feature Specification (`platform/feature-spec.md`)
+
+One consolidated template for a platform-feature — the central artifact bridging both spaces.
+
+| Chapter | Title | Artifact Source(s) | Notes |
+|---------|-------|-------------------|-------|
+| §0 | Feature Identity & Orientation | platform-feature-spec (id, orientation) | ID (F-{SUITE}-{NNN}), suite, name, status, summary, non-goals, entry/exit points. |
+| §1 | User Goal & Scenarios | platform-feature-spec (§1) | Goal statement, 2–5 scenarios (happy path, edge cases, error cases). |
+| §2 | User Journey & Screen Layout | platform-feature-spec (§2) | Mermaid sequence diagram, ASCII screen layouts. Derivation notes: this section feeds the AUI task model. |
+| §3 | Interaction Requirements | platform-feature-spec (§3) | Form fields table, actions table, cross-field rules, confirmation dialogs. Derivation notes: this section feeds AUI zones. |
+| §4 | Edge Cases & Screen States | platform-feature-spec (§4) | Component states (loading, empty, error, populated), specific edge cases. Derivation notes: this section feeds AUI absent-rules. |
+| §5 | Backend Dependencies & BFF Contract | platform-feature-spec (§5) + bff-contract | Service calls table (service, tier, endpoint, method, isMutation, failure mode). View-model shape (JSON-C). Feature-gating rules per mode. Failure modes. Caching hints. |
+| §6 | Screen Contract (AUI) | screen-contract-aui | Task model (operators), zones (typed, prioritized), absent-rules, business rules, extension zones. Inline YAML or reference to companion file. |
+| §7 | i18n, Permissions & Accessibility | platform-feature-spec (§6) | Translation keys, role-based visibility/enable rules. |
+| §8 | Acceptance Criteria | platform-feature-spec (§7) | Given/When/Then statements covering all scenarios, edge cases, permissions. |
+| §9 | Dependencies, Variability & Extension Points | platform-feature-spec (§8) + feature-model | Required features (UVL `requires`), variability points (attributes with binding times), extension points (hooks for product customization). |
+| §10 | Change Log & Review | — | Version history, approval. |
+
+**Companion files (referenced from within the template):**
+- `F-{SUITE}-{NNN}.uvl` → Feature variability model (referenced in §9) — template: `platform/uvl/feature-leaf.uvl`
+- `F-{SUITE}-{NNN}.aui.yaml` → Screen contract (referenced in §6, can also be inline) — template: `platform/yaml/screen-contract-aui.yaml`
+- `F-{SUITE}-{NNN}.attrs.md` → Attribute documentation (optional, referenced in §9 if complex) — template: `platform/feature-attrs.md`
+
+---
+
+### Template: Feature Composition (`platform/feature-composition-spec.md`)
+
+| Chapter | Title | Artifact Source(s) |
+|---------|-------|-------------------|
+| §0 | Composition Identity | feature-composition (id, name, position in tree) |
+| §1 | Children & Variability Structure | feature-composition (children, group types, rationale) |
+| §2 | Constraints | feature-composition + composition-model (intra-node, cross-tree) |
+| §3 | Valid & Invalid Configurations | feature-composition (examples) |
+| §4 | Change Log | — |
+
+**Companion:** `F-{SUITE}-{NNN}.uvl` (referenced)
+
+---
+
+### Template: Workflow Specification (`platform/workflow-spec.md`)
+
+| Chapter | Title | Artifact Source(s) |
+|---------|-------|-------------------|
+| §0 | Workflow Identity | workflow-spec (id, type, suite, trigger) |
+| §1 | Steps | workflow-spec (ordered steps with service ref, compensation, retry, timeout) |
+| §2 | Retry & Compensation | workflow-spec (retryPolicy, compensationStrategy) |
+| §3 | Referenced Services | workflow-spec (service IDs, roles, endpoints, events) |
+| §4 | Observability | workflow-spec (metrics, alerts) |
+| §5 | Elara Cross-Reference | workflow-spec (link to originating business process) |
+| §6 | Decisions & Change Log | — |
+
+---
+
+## Product Templates
+
+### Template: Product Specification (`product/product-spec.md`)
+
+One consolidated template for a product — the application engineering deliverable.
+
+| Chapter | Title | Artifact Source(s) | Notes |
+|---------|-------|-------------------|-------|
+| §0 | Product Identity | product (id, name, description) | What this product is, for whom. |
+| §1 | Project Scope | project-scope | Business problem, goals, in/out scope, constraints, assumptions. |
+| §2 | Actors & Stakeholders | actor[] | All actors with responsibilities, decision authority, stakeholder interests. |
+| §3 | Personas | persona[] | Enriched actors with IAM roles, job-to-be-done, frequency, comfort, pain points. |
+| §4 | Business Processes | business-process[] | All processes (L0/L1/L2) with steps, gateways, data flows, actors. BPMN references. |
+| §5 | Business Objects | business-object[] | Data entities with attributes, lifecycle states, ownership. |
+| §6 | Business Events | business-event[] | Events chaining processes, with trigger types and carried data. |
+| §7 | Business Rules | business-rule[] | Typed rules with rationale, source, examples, exceptions. |
+| §8 | Business Capabilities | business-capability[] | What the business can do (core/supporting/generic), fulfilled by which processes. |
+| §9 | Domain Vocabulary | glossary-term[] | Business terms, aliases, definitions, disambiguation. |
+| §10 | Quality Requirements | quality-requirement[] | NFRs by category with measurable targets. |
+| §11 | External Interfaces | external-interface[] | Systems, agencies, channels with direction. |
+| §12 | KPIs | kpi[] | Success metrics with measurement method and targets. |
+| §13 | Functional Areas | functional-area[] | Logical clustering with boundaries, rationale, dependencies. |
+| §14 | Decisions | decision[] | Structural choices with context, rationale, alternatives. |
+| §15 | Workflow Candidates | workflow-candidate[] | Patterns flagged for Platform (batch, saga, scheduled). |
+| §16 | Required Capabilities & Feature Resolution | product (requiredCapabilities) + feature-resolution | THE bridge: capabilities sent to Platform, resolution returned (matched/partial/gap). |
+| §17 | Feature Selection & Configuration | product (featureSelections) | Selected features with mode, attribute overrides, extension points filled. |
+| §18 | BFF Configuration | product (bffConfiguration) | Deployment model, feature-gating, extension routing, view-model overrides. |
+| §19 | Navigation Architecture | product (navigationArchitecture) | How features are arranged in the UI. Entry points, navigation map. |
+| §20 | Custom Services | product (customServices) | Customer-specific services outside the platform. |
+| §21 | Appendix | — | Change log, review & approval. |
+
+---
+
+## UVL Companion File Templates
+
+These are referenced from within the human-readable templates above, not standalone.
+
+| Template | Referenced By | Location |
+|----------|-------------|----------|
+| `platform/uvl/feature-leaf.uvl` | Feature Spec §9 | Feature variability declaration |
+| `platform/uvl/feature-composition.uvl` | Feature Composition §2 | Composition node variability |
+| `platform/uvl/suite-catalog.uvl` | Suite Spec §6 | Suite root UVL |
+| `platform/uvl/platform-catalog.uvl` | Platform-wide | Platform root UVL |
+| `product/uvl/product-config.uvl` | Product Spec §17 | Resolved product variability |
+
+---
+
+## YAML Companion File Templates
+
+| Template | Referenced By | Location |
+|----------|-------------|----------|
+| `platform/yaml/screen-contract-aui.yaml` | Feature Spec §6 | AUI screen contract |

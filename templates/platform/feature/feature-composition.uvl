@@ -1,0 +1,109 @@
+// Template Meta
+// Template-ID:   TPL-UVL-COMP
+// Version:       1.0.0
+// Last Updated:  2026-04-03
+// Changelog:
+//   1.0.0 (2026-04-03) — Initial versioned baseline.
+
+// ============================================================
+// Composition Node UVL — F-{SUITE}-{NNN}
+// Name: {Composition Node Name}
+// Suite: {suite}
+// Parent: F-{SUITE}-{NNN-PARENT} / suite root
+//
+// Companion document: F-{SUITE}-{NNN}.md
+//
+// This file defines the variability structure over the children
+// of this composition node. It does NOT declare leaf feature
+// attributes or user journey information — those live in
+// individual leaf .uvl and .md files.
+//
+// Authoring rules:
+//   1. Write F-{SUITE}-{NNN}.md first (business intent).
+//   2. Formalise the group structure here from the .md.
+//   3. Each child leaf or sub-composition must also have its
+//      own .uvl file — import it here.
+//   4. Add this file as an import in the suite catalog:
+//      {suite}.catalog.uvl
+//   5. Run the catalog validator after every structural change.
+// ============================================================
+
+namespace {suite}.F-{SUITE}-{NNN}
+
+imports
+    // Import child composition nodes (not leaves —
+    // leaves are declared inline via feature references).
+    // Only import if the child is itself a composition node
+    // with its own .uvl file.
+    //
+    // F-{SUITE}-{NNN}-03 as sub03   from "F-{SUITE}-{NNN}-03.uvl"
+
+features
+
+    F-{SUITE}-{NNN}
+
+        // --------------------------------------------------------
+        // Group structure over children.
+        //
+        // Choose ONE top-level group type, or use mixed groups
+        // with multiple group blocks as shown below.
+        //
+        // Group types:
+        //   mandatory  — all children required if parent selected
+        //   optional   — child may or may not be included
+        //   alternative — exactly one child selected (XOR)
+        //   or          — at least one child selected
+        //
+        // Cardinality groups (advanced):
+        //   [n..m]     — between n and m children selected
+        //   [1..*]     — at least one (equivalent to or)
+        //   [1..1]     — exactly one (equivalent to alternative)
+        // --------------------------------------------------------
+
+        // --- Example: mixed groups ---
+        // Uncomment and adapt; delete what you don't need.
+
+        mandatory
+            // Children that are ALWAYS required when this node is selected.
+            F-{SUITE}-{NNN}-01
+            // F-{SUITE}-{NNN}-02
+
+        optional
+            // Children that MAY be included.
+            F-{SUITE}-{NNN}-02
+            // F-{SUITE}-{NNN}-04
+
+        alternative
+            // Exactly ONE of these must be selected.
+            // Business reason: see F-{SUITE}-{NNN}.md §1.1
+            F-{SUITE}-{NNN}-03-01
+            F-{SUITE}-{NNN}-03-02
+
+        // or
+        //     // AT LEAST ONE of these must be selected.
+        //     F-{SUITE}-{NNN}-05
+        //     F-{SUITE}-{NNN}-06
+
+
+constraints
+
+    // --------------------------------------------------------
+    // Intra-node cross-tree constraints.
+    //
+    // These express implications and exclusions between siblings
+    // or between children and grandchildren within this node.
+    //
+    // Operators:
+    //   =>    implies (if A selected then B must be selected)
+    //   <=>   iff (A selected iff B selected)
+    //   !     not
+    //   &     and
+    //   |     or
+    //
+    // Examples:
+    //   F-{SUITE}-{NNN}-02 => F-{SUITE}-{NNN}-03-01
+    //   !(F-{SUITE}-{NNN}-03-01 & F-{SUITE}-{NNN}-03-02)
+    // --------------------------------------------------------
+
+    // Add intra-node constraints here.
+    // F-{SUITE}-{NNN}-02 => F-{SUITE}-{NNN}-03-01

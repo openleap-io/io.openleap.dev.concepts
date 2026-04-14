@@ -1,0 +1,146 @@
+// Template Meta
+// Template-ID:   TPL-UVL-LEAF
+// Version:       1.0.0
+// Last Updated:  2026-04-03
+// Changelog:
+//   1.0.0 (2026-04-03) — Initial versioned baseline.
+
+// ============================================================
+// Leaf Feature UVL — F-{SUITE}-{NNN}-{NN}
+// Name: {Feature Name}
+// Suite: {suite}
+// Parent: F-{SUITE}-{NNN}
+//
+// Companion document: F-{SUITE}-{NNN}-{NN}.md  (human spec)
+// Attribute doc:      F-{SUITE}-{NNN}-{NN}.attrs.md (if exists)
+//
+// This file is the machine-readable contract for one leaf feature.
+// It declares:
+//   - Feature attributes with type, default, valid values,
+//     and binding time
+//   - Cross-suite requires (features from other suites that
+//     must be present in any ProductConfig that includes this leaf)
+//   - Any leaf-specific intra-suite constraints
+//
+// Evaluated by:
+//   Elara      — ProductConfig validation (is this selection valid?)
+//   Decompose  — gap analysis, cross-suite require resolution,
+//                attribute → Spring Boot property generation
+//
+// Authoring rules:
+//   1. Write F-{SUITE}-{NNN}-{NN}.md FIRST (design before formalism).
+//   2. Derive attributes from §0.3 (Variability Points) of the .md.
+//   3. Derive cross-suite requires from §5.1 (Service Calls) of the .md.
+//   4. Add this leaf to its parent composition node's .uvl children.
+//   5. Run the catalog validator.
+//   6. For attributes with complex semantics, add a schema reference
+//      pointing to F-{SUITE}-{NNN}-{NN}.attrs.md.
+// ============================================================
+
+namespace {suite}.F-{SUITE}-{NNN}-{NN}
+
+imports
+    // Import every suite whose features this leaf requires.
+    // Only import suites from which this leaf has a cross-suite require.
+    //
+    // Format: {suite} as {alias} from "../{suite}/{suite}.catalog.uvl"
+    //
+    // bp  as bp  from "../bp/bp.catalog.uvl"
+    // ref as ref from "../ref/ref.catalog.uvl"
+    {dep_suite} as {dep_alias} from "../{dep_suite}/{dep_suite}.catalog.uvl"
+
+features
+
+    F-{SUITE}-{NNN}-{NN}
+
+        // --------------------------------------------------------
+        // Feature Attributes
+        //
+        // Attributes are configuration parameters on this feature.
+        // They do NOT affect BDD satisfiability — the feature is
+        // either selected or not. Once selected, attributes configure
+        // its behaviour.
+        //
+        // Each attribute MUST declare:
+        //   bindingTime  — when the value is resolved:
+        //                  "compile"  → baked into build artifact
+        //                  "deploy"   → application-{profile}.yml
+        //                  "runtime"  → feature flag / tenant config
+        //
+        // Attribute value types supported by UVL:
+        //   Boolean   true | false
+        //   Integer   whole number
+        //   Float     decimal number
+        //   String    quoted string value
+        //
+        // For constrained value sets, document in .attrs.md and
+        // reference with: schema: "F-{SUITE}-{NNN}-{NN}.attrs.md#{anchor}"
+        //
+        // Generated Spring Boot property key convention:
+        //   {suite}.{feature-id}.{attr.path}
+        //   e.g., sd.F-SD-001-02.pagination.pageSize = 50
+        // --------------------------------------------------------
+
+        // --- Inline attributes (simple, self-documenting) ---
+
+        // Pagination
+        pagination.pageSize     Integer   50    // deploy  — records per page; valid: 10|25|50|100
+        pagination.defaultSort  String    "createdAt,desc"  // deploy — default sort field and direction
+
+        // Search / filter behaviour
+        search.debounceMs       Integer   300   // deploy  — typeahead debounce in milliseconds
+
+        // Binding time metadata (one per attribute group or per attribute)
+        // UVL does not have a native bindingTime keyword — we encode it
+        // as a companion attribute using a dotted suffix convention.
+        // The build pipeline reads the .bindingTime attribute to determine
+        // which output to generate.
+        pagination.pageSize.bindingTime   String "deploy"
+        search.debounceMs.bindingTime     String "deploy"
+
+        // --- Attributes with external schema documentation ---
+        // Use when valid values need business explanation.
+
+        // approval.workflow String "simple"
+        //     schema: "F-{SUITE}-{NNN}-{NN}.attrs.md#approval-workflow"
+        // approval.workflow.bindingTime String "compile"
+
+        // approval.requireComment Boolean false
+        // approval.requireComment.bindingTime String "deploy"
+
+        // Remove the example attributes above.
+        // Add real attributes derived from .md §0.3 (Variability Points).
+
+
+constraints
+
+    // --------------------------------------------------------
+    // Cross-suite requires.
+    //
+    // If this leaf is selected in a ProductConfig, then each
+    // of these features from other suites must also be selected.
+    //
+    // These are derived from §5.1 (Service Calls) in the .md —
+    // every service call to a feature-bearing suite implies a
+    // cross-suite require on the relevant feature.
+    //
+    // Format:
+    //   F-{SUITE}-{NNN}-{NN} => {dep_alias}.F-{SUITE2}-{NNN}
+    //
+    // Examples:
+    //   F-SD-001-02 => bp.F-BP-001-01    // needs Customer Search
+    //   F-SD-001-02 => bp.F-BP-001-02    // needs Customer Detail
+    // --------------------------------------------------------
+
+    // Add cross-suite requires here.
+    // F-{SUITE}-{NNN}-{NN} => {dep_alias}.F-{SUITE2}-{NNN}
+
+    // --------------------------------------------------------
+    // Leaf-specific intra-suite constraints (rare).
+    //
+    // Most intra-suite constraints live on composition nodes.
+    // Add here only constraints specific to this leaf that
+    // cannot be expressed on the parent composition node.
+    // --------------------------------------------------------
+
+    // Add leaf-specific constraints here if needed.

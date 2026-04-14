@@ -1,0 +1,78 @@
+// Template Meta
+// Template-ID:   TPL-UVL-CAT
+// Version:       1.0.0
+// Last Updated:  2026-04-03
+// Changelog:
+//   1.0.0 (2026-04-03) — Initial versioned baseline.
+
+// ============================================================
+// {SUITE} Suite — UI Feature Catalog (UVL Root)
+// File: {suite}.catalog.uvl
+//
+// This is the machine-readable root of the {SUITE} suite's
+// UI feature tree. It imports all composition node and leaf
+// UVL files in this suite and assembles them under a single
+// suite root feature.
+//
+// This file is imported by catalog.uvl (the platform root).
+//
+// Companion document: {suite}.ui-catalog.md
+//
+// Authoring rules:
+//   - Add an import line for every .uvl file in this suite.
+//   - Add the corresponding feature reference under the
+//     suite root's group.
+//   - The group type at the suite root is `optional` —
+//     ProductConfigs select which composition nodes to include.
+//   - Mandatory suite-level cross-tree constraints go in
+//     the constraints block here.
+//   - Feature-level constraints stay in individual .uvl files.
+// ============================================================
+
+namespace {suite}
+
+imports
+    // Import every composition node in this suite.
+    // Format: F-{SUITE}-{NNN} as {alias}
+    // Aliases are optional but help readability in constraints.
+    F-{SUITE}-001 as {alias_001}
+    F-{SUITE}-002 as {alias_002}
+    // Add further imports as features are created.
+
+features
+
+    // Suite root — the top-level feature representing this
+    // suite's entire UI capability.
+    // This is the node that the platform catalog.uvl references.
+    {SUITE}_UI
+
+        optional
+            // List every top-level composition node.
+            // Products select which capability areas they need.
+            F-{SUITE}-001
+            F-{SUITE}-002
+            // Add further composition nodes here.
+
+
+constraints
+
+    // --------------------------------------------------------
+    // Suite-level cross-tree constraints.
+    //
+    // Place here only constraints that span multiple
+    // composition nodes within this suite, or that represent
+    // suite-level requirements on other suites.
+    //
+    // Feature-level cross-suite requires (e.g., F-SD-001-02
+    // requires F-BP-001-01) belong in the leaf .uvl file,
+    // NOT here.
+    //
+    // Format:
+    //   F-{SUITE}-{NNN} => F-{SUITE}-{NNN}   (intra-suite)
+    //   F-{SUITE}-{NNN} => {other_suite}.F-{SUITE2}-{NNN}  (cross-suite)
+    // --------------------------------------------------------
+
+    // Example: if any SD feature is selected, bp Customer Search must be present.
+    // F-{SUITE}-001 => bp.F-BP-001-01
+
+    // Add suite-level constraints here.

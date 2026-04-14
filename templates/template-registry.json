@@ -1,0 +1,272 @@
+{
+  "$schema": "template-registry.schema.json",
+  "lastUpdated": "2026-04-03",
+  "templates": [
+    {
+      "id": "TPL-SVC",
+      "file": "platform/domain/domain-service-spec.md",
+      "name": "Domain / Service Specification",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": ["TPL-FEAT", "TPL-UVL-LEAF"],
+      "dependedBy": ["TPL-SUITE", "TPL-FEAT"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-SUITE",
+      "file": "platform/suite/suite-spec.md",
+      "name": "Suite Architecture Specification",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": ["TPL-SVC", "TPL-FCOMP"],
+      "dependedBy": ["TPL-PROD"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-FEAT",
+      "file": "platform/feature/feature-spec.md",
+      "name": "Leaf Feature Specification",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": ["TPL-SVC", "TPL-AUI", "TPL-UVL-LEAF"],
+      "dependedBy": ["TPL-PROD", "TPL-SUITE"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-FCOMP",
+      "file": "platform/feature/feature-composition-spec.md",
+      "name": "Composition Feature Specification",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": ["TPL-UVL-COMP"],
+      "dependedBy": ["TPL-SUITE"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-PROD",
+      "file": "product/product-spec.md",
+      "name": "Product Specification",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": ["TPL-FEAT", "TPL-SUITE"],
+      "dependedBy": [],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-WF",
+      "file": "platform/domain/workflow-spec.md",
+      "name": "Workflow / Saga Specification",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": [],
+      "dependedBy": [],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-FATTR",
+      "file": "platform/feature/feature-attrs.md",
+      "name": "Feature Attribute Documentation",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": [],
+      "dependedBy": ["TPL-FEAT"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-UVL-LEAF",
+      "file": "platform/feature/feature-leaf.uvl",
+      "name": "Leaf Feature UVL",
+      "format": "uvl",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": [],
+      "dependedBy": ["TPL-UVL-COMP", "TPL-FEAT", "TPL-SVC"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-UVL-COMP",
+      "file": "platform/feature/feature-composition.uvl",
+      "name": "Composition Feature UVL",
+      "format": "uvl",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": ["TPL-UVL-LEAF"],
+      "dependedBy": ["TPL-UVL-CAT", "TPL-FCOMP"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-UVL-CAT",
+      "file": "platform/suite/suite-catalog.uvl",
+      "name": "Suite Catalog UVL",
+      "format": "uvl",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": ["TPL-UVL-COMP"],
+      "dependedBy": ["TPL-UVL-PLAT"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-UVL-PLAT",
+      "file": "platform/platform-catalog.uvl",
+      "name": "Platform Root Catalog UVL",
+      "format": "uvl",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": ["TPL-UVL-CAT"],
+      "dependedBy": [],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-UVL-PCFG",
+      "file": "product/product-config.uvl",
+      "name": "Product Configuration UVL",
+      "format": "uvl",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": [],
+      "dependedBy": ["TPL-PROD"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-AUI",
+      "file": "platform/feature/screen-contract-aui.yaml",
+      "name": "AUI Screen Contract",
+      "format": "yaml",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": [],
+      "dependedBy": ["TPL-FEAT"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-BFF",
+      "file": "product/bff-spec.md",
+      "name": "BFF Specification",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-03",
+      "owner": "Architecture Team",
+      "dependsOn": ["TPL-FEAT", "TPL-AUI", "TPL-PROD"],
+      "dependedBy": [],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-03",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline"
+        }
+      ]
+    }
+  ]
+}
