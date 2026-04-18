@@ -1,0 +1,52 @@
+# Example — ACME Sales Workbench: F-SD-001 extension rules
+# Template: templates/product/prod/extensions/rules.yaml (TPL-PROD-EXT-RULES v1.0.0)
+
+apiVersion: openleap.io/product-spec/v1
+kind: ExtensionRules
+
+metadata:
+  featureId: F-SD-001
+  product: acme-sales
+
+extensions:
+
+  - extensionPointId: "ext.orderCreate.rules.validation"
+    rules:
+      - id: "RX-ACME-001"
+        name: "Cost centre must match sales rep's department"
+        type: "validation"
+        enforcement: "hard"
+        severity: "error"
+        when: "form.extensions.costCenter != persona.department.costCenter"
+        then:
+          block: true
+          errorCode: "COST_CENTER_MISMATCH"
+          message: "Die Kostenstelle muss Ihrer Abteilung entsprechen."
+        rationale: "ACME internal audit requirement (BR-Acme-04)."
+
+  - extensionPointId: "ext.orderCreate.rules.authorization"
+    rules:
+      - id: "RX-ACME-010"
+        name: "VIP band requires sales manager"
+        type: "authorization"
+        enforcement: "hard"
+        when: "form.extensions.priorityBand == 'vip'"
+        then:
+          requireRole: "SD_MANAGER"
+          errorCode: "VIP_REQUIRES_MANAGER"
+          message: "VIP-Bestellungen müssen vom Vertriebsleiter bestätigt werden."
+        rationale: "ACME service-level guarantee for VIP customers (SLA-ACME-02)."
+
+  - extensionPointId: "ext.orderCreate.rules.derivation"
+    rules:
+      - id: "RX-ACME-020"
+        name: "Derive commission split from project code"
+        type: "derivation"
+        when: "form.extensions.projectCode != null"
+        then:
+          set:
+            "form.extensions.commissionSplit":
+              source: "custom-service"
+              endpoint: "/api/extensions/commission/lookup"
+              input: "form.extensions.projectCode"
+        rationale: "Commission rules live in ACME's payroll system, not in the platform."

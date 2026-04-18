@@ -348,6 +348,8 @@ A **Product** is a composed UI application that serves one or more personas for 
 
 **Product composition is customer-driven** (Application Engineering): The product owner or business analyst selects features from the platform catalog based on the customer's processes and personas. This selection happens in Elara.
 
+**Persistence — the `prod.*` repo convention.** Elara is the authoring UI. The resulting product specification is persisted to a dedicated Git repository named `io.openleap.prod.{product}`, authored against the templates under [`templates/product/prod/`](templates/product/prod/) and documented in [dev.hub architecture/product-repo-layout.md](https://github.com/openleap-io/io.openleap.dev.hub/blob/main/architecture/product-repo-layout.md). The repo holds a product manifest (`product.yaml`), feature selection (`features/selection.uvl`), variability bindings (`variability/bindings.yaml`), extension fills (`extensions/{F-ID}/*`), exported personas and BPMN processes, screen overrides, and the release artifact `bff/productconfig.yaml` consumed by the BFF at runtime. A companion `prod.{product}.ui` repo holds the frontend, and an optional `prod.{product}.bff` holds a dedicated BFF.
+
 ### 4.2 Product-Feature — The Configured Instance
 
 A **Product-Feature** is a configured instance of a platform-feature. It represents "what this specific customer gets" for a given platform capability.

@@ -1,0 +1,46 @@
+# Example — ACME Sales Workbench persona: Sales Rep
+# Template: templates/product/prod/personas/persona.yaml (TPL-PROD-PERSONA v1.0.0)
+
+apiVersion: openleap.io/product-spec/v1
+kind: Persona
+
+metadata:
+  id: sales-rep
+  name: "Sales Representative"
+
+actorRefs:
+  - acme-sales-rep
+
+iamRoles:
+  - SD_USER
+  - BP_READER
+
+jobToBeDone: "Enter, price and confirm customer orders while on the phone with the buyer."
+
+usageFrequency: DAILY
+technicalComfort: MEDIUM
+
+painPoints:
+  - "Switches between four screens to enter a single order."
+  - "Cannot see real-time stock availability while quoting."
+  - "Legacy ERP requires double-entry of cost-centre and project codes."
+
+workarounds:
+  - "Keeps a paper notebook of project codes per major customer."
+  - "Phones the warehouse to confirm stock before promising a date."
+
+scenarios:
+  - processId: order-to-cash
+    role: primary
+    frequency: "~30 orders per day"
+
+device:
+  primary: "laptop"
+  secondary: "desktop"
+  screenSize: "1440x900"
+  inputMethods: ["keyboard", "mouse", "headset-voice"]
+
+accessibility:
+  colorVision: "normal"
+  fontScale: "100%"
+  keyboardOnly: false

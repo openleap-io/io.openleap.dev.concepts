@@ -1,0 +1,113 @@
+# Template Meta
+# Template-ID:   TPL-PROD-AUI-OVR
+# Version:       1.0.0
+# Last Updated:  2026-04-18
+# Changelog:
+#   1.0.0 (2026-04-18) — Initial versioned baseline for prod.* repo convention.
+
+# ============================================================
+# screen-overrides/{feature-id}.aui.yaml — Product AUI Overrides
+#
+# Conceptual Stack Layer: Product-Feature (screen override)
+# Space: Product (Application Engineering)
+# Lives in: io.openleap.prod.{product}/screen-overrides/{feature-id}.aui.yaml
+# Companion of: the platform Screen Contract (AUI) for {feature-id},
+#               which lives in dev.spec as F-{SUITE}-{NNN}.aui.yaml
+# Authored by: Elara (export) or human architect
+# Consumed by: BFF at runtime, UI build (CUI picker)
+#
+# Purpose
+# -------
+# Platform AUI contracts are platform-free and suite-agnostic.
+# Products customise them in three tightly-scoped ways:
+#
+#   1. Pick a CUI target   — choose web-desktop, web-tablet,
+#                             handheld, voice, etc. per zone.
+#   2. Override zone order — reorder VARIABLE zones only.
+#   3. Persona-gate zones  — restrict visibility per persona.
+#
+# Anything broader (adding actions, adding fields, changing
+# business rules) belongs in extensions/*.yaml, not here.
+# Screen overrides cannot delete FIXED zones or modify the
+# platform task model (sple-platform-concept.md §6).
+#
+# Every zone and action ID referenced here MUST exist in the
+# platform AUI contract. Decompose rejects unknown IDs.
+# ============================================================
+
+apiVersion: openleap.io/product-spec/v1
+kind: ScreenOverride
+
+metadata:
+  # The platform feature whose AUI this override customises.
+  # File stem MUST equal this value.
+  featureId: F-{SUITE}-{NNN}[-{NN}]
+  product: "{product-id}"
+
+# ------------------------------------------------------------
+# CUI target selection
+#
+# The platform AUI lists candidate Concrete UI targets.
+# Products pick one per context. Devices come from persona
+# device profiles (see personas/{id}.yaml#device).
+# ------------------------------------------------------------
+cuiTargets:
+  default: "web-desktop"        # web-desktop | web-tablet | handheld | voice
+  perPersona:
+    - persona: "{persona-id}"
+      cui: "handheld"           # e.g. warehouse worker on a scanner
+
+# ------------------------------------------------------------
+# Zone overrides
+#
+# Each entry targets a VARIABLE zone declared by the platform
+# AUI. `order` is a relative integer — lower numbers render
+# earlier. `hidden` drops the zone entirely (only legal for
+# zones flagged as `removableByProduct: true` in the platform
+# AUI).
+# ------------------------------------------------------------
+zones:
+
+  - id: "{zone-id}"                       # must exist in the platform AUI
+    order: 10
+    personaGates:
+      visibleFor: ["{persona-id}", "{another-persona-id}"]
+      editableFor: ["{persona-id}"]
+    hidden: false
+
+  # Example: push the "related documents" panel below the
+  # "items" panel for this customer.
+  # - id: "detail.relatedDocuments"
+  #   order: 30
+
+# ------------------------------------------------------------
+# Action overrides
+#
+# Change the LABEL or ICON of a platform action for this
+# product. Adding actions is NOT allowed here — use
+# extensions/{F-ID}/actions.yaml instead.
+# ------------------------------------------------------------
+actionLabels:
+  - id: "{platform-action-id}"
+    label: "{Customer-preferred label}"
+    icon: "{icon-id}"
+
+# ------------------------------------------------------------
+# Copy overrides — user-visible strings the customer wants
+# changed (branding, jargon). Keyed by i18n key declared by
+# the platform.
+# ------------------------------------------------------------
+copy:
+  - key: "{i18n-key}"
+    locale: "de-DE"
+    value: "{Localised customer-specific text}"
+
+# ------------------------------------------------------------
+# Absent-rule overrides — when a zone is hidden (above),
+# pick how the surrounding layout reacts. Values MUST come
+# from the platform's four absent-rules (collapse-up,
+# end-page, tab-hidden, panel-section-hidden).
+# ------------------------------------------------------------
+absentRules:
+  - zoneId: "{zone-id}"
+    rule: "collapse-up"

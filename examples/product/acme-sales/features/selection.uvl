@@ -1,0 +1,74 @@
+// Example — ACME Sales Workbench feature selection
+// Template: templates/product/prod/features/selection.uvl (TPL-PROD-SEL v1.0.0)
+//
+// Feature IDs follow F-{SUITE}-{NNN} / F-{SUITE}-{NNN}-{NN}
+// (sple-platform-concept.md §2.3).
+//
+// Cross-suite rule: read-across, mutate-local (§5).
+//   - Own suite (SD): `full` allowed.
+//   - Shared T2 (BP): `full` allowed.
+//   - Other suite T3 (PPS, FI): `read-only` only, unless the feature
+//     spec explicitly declares it safe to include in `full` mode.
+//
+// Inclusion modes come from integrated-overview.md §8.2:
+//   full | read-only | embedded | excluded
+
+namespace acme-sales
+
+imports
+    catalog from "io.openleap.dev.spec/catalog.uvl"
+
+
+features
+
+    AcmeSales
+
+        mandatory
+            // --- SD: the owning suite (full access) ---
+            catalog.sd.F-SD-001 {
+                inclusion "full"
+            }
+            catalog.sd.F-SD-001-02 {
+                inclusion "full"
+            }
+            catalog.sd.F-SD-001-03-01 {
+                inclusion "full"
+            }
+
+            // --- BP: T2 shared (full access allowed) ---
+            catalog.bp.F-BP-001 {
+                inclusion "full"
+            }
+            catalog.bp.F-BP-001-02 {
+                inclusion "full"
+            }
+
+            // --- PPS: other-suite T3 (read-only per §5) ---
+            // Sales reps see stock but never mutate it; PPS owns writes.
+            catalog.pps.F-PPS-010 {
+                inclusion "read-only"
+            }
+
+            // --- FI: other-suite T3 (read-only per §5) ---
+            // Controller persona reviews invoices; mutations stay in FI.
+            catalog.fi.F-FI-007 {
+                inclusion "read-only"
+            }
+
+        optional
+            // Invoice preview is embedded inside the order detail
+            // header rather than a standalone screen for this product.
+            catalog.fi.F-FI-002-01 {
+                inclusion "embedded"
+            }
+
+            // NOT selected: catalog.sd.F-SD-002-01 Pricing Maintenance
+            //   Reason: ACME uses central pricing (decision PD-003).
+            // NOT selected: catalog.sd.F-SD-001-03-02 Order Detail (read-only)
+            //   Reason: every persona has write access.
+
+
+constraints
+    // Product-specific: if invoice preview is embedded, customer detail
+    // must be available for the drill-down link.
+    catalog.fi.F-FI-002-01 => catalog.bp.F-BP-001-02

@@ -205,7 +205,44 @@ The product's `requiredCapabilities` field is a list of BusinessCapability IDs. 
 
 **Derived from:** Feature Selection + Platform-Feature BFF Contracts
 
-### 2.10 Remaining Product Artifacts
+### 2.10 `prod.*` Repository Artifacts (Git-Persisted Product Spec)
+
+The following artifacts are the Git-persisted, reviewable export of an
+Elara-authored product. They live in an `io.openleap.prod.{product}` repo
+defined by [dev.hub architecture/product-repo-layout.md](https://github.com/openleap-io/io.openleap.dev.hub/blob/main/architecture/product-repo-layout.md)
+and complement the in-Elara artifacts defined in §§2.1–2.9.
+
+Detail lives under [`artifacts/product/prod/`](artifacts/product/prod/). Each
+artifact has a matching template under [`templates/product/prod/`](templates/product/prod/)
+and a canonical example under [`examples/product/acme-sales/`](examples/product/acme-sales/).
+
+| Artifact | File | Template | Purpose |
+|----------|------|----------|---------|
+| Product Manifest | `product.yaml` | TPL-PROD-MANIFEST | Identity, owner, target customer, catalog pin, satellite refs |
+| Feature Selection | `features/selection.uvl` | TPL-PROD-SEL | References platform features by `F-{SUITE}-{NNN}`; declares `full` / `read-only` / `embedded` / `excluded` per sel |
+| Variability Bindings | `variability/bindings.yaml` | TPL-PROD-BIND | Resolves UVL attributes with `compile` / `deploy` / `runtime` binding times |
+| Extension Fields Fill | `extensions/{F-ID}/fields.yaml` | TPL-PROD-EXT-FIELDS | Fills feature-level `extension-field` hooks |
+| Extension Rules Fill | `extensions/{F-ID}/rules.yaml` | TPL-PROD-EXT-RULES | Fills feature-level `extension-rule` hooks (add or tighten, never weaken) |
+| Extension Actions Fill | `extensions/{F-ID}/actions.yaml` | TPL-PROD-EXT-ACTIONS | Fills feature-level `extension-action` hooks |
+| Product Persona (exported) | `personas/{id}.yaml` | TPL-PROD-PERSONA | Elara-derived persona with IAM roles, device profile |
+| Customer BPMN Process | `processes/{id}.bpmn` | TPL-PROD-PROCESS | BPMN 2.0 with `ol:*` OpenLeap extensions (`productRef`, `level`, `featureHints`) |
+| Product AUI Override | `screen-overrides/{feature-id}.aui.yaml` | TPL-PROD-AUI-OVR | Persona-gated zones, CUI picks, copy; no rule changes |
+| BFF productconfig | `bff/productconfig.yaml` | TPL-PROD-BFF-PCFG | Release artifact consumed by the BFF at runtime |
+
+**Feature inclusion modes** used across these artifacts come from
+[integrated-overview.md §8.2](https://github.com/openleap-io/io.openleap.dev.hub/blob/main/architecture/integrated-overview.md): `full` / `read-only` / `embedded` / `excluded`.
+
+**Cross-suite rule** (read-across, mutate-local, [sple-platform-concept.md §5](https://github.com/openleap-io/io.openleap.dev.hub/blob/main/architecture/sple-platform-concept.md)):
+T2 features freely included in `full`; other suites' T3 features only `read-only`.
+
+**Extension-point taxonomy** referenced by the three `extensions/*.yaml`
+artifacts is the FEATURE level of [sple-platform-concept.md §6](https://github.com/openleap-io/io.openleap.dev.hub/blob/main/architecture/sple-platform-concept.md). Domain-level
+and service-level extensions attach via custom services (`extension-event`,
+aggregate hooks), not via these files.
+
+---
+
+### 2.11 Remaining Product Artifacts
 
 The following artifacts are fully defined in the Elara Business Specification and belong to the Product. Their field definitions are authoritative in that source.
 

@@ -1,0 +1,159 @@
+# Template Meta
+# Template-ID:   TPL-PROD-BFF-PCFG
+# Version:       1.0.0
+# Last Updated:  2026-04-18
+# Changelog:
+#   1.0.0 (2026-04-18) — Initial versioned baseline for prod.* repo convention.
+
+# ============================================================
+# bff/productconfig.yaml — BFF Runtime Configuration
+#
+# Conceptual Stack Layer: BFF (runtime)
+# Space: Product (Application Engineering)
+# Lives in: io.openleap.prod.{product}/bff/productconfig.yaml
+# Authored by: packaging step in CI (NOT hand-edited for real
+#              releases — this template exists to document the
+#              expected shape so reviewers can sanity-check
+#              CI-generated output)
+# Derived from:
+#   - product.yaml                       (metadata, catalog ref)
+#   - features/selection.uvl             (active features + mode)
+#   - variability/bindings.yaml          (resolved attribute values)
+#   - extensions/{F-ID}/*.yaml           (extension-point routing)
+#   - the platform Feature Spec §5 / §5.2 of each selected
+#     feature                            (BFF aggregation hints)
+# Consumed by: the product's BFF at runtime (per-product) or per
+#              subscription (shared / feature-module SaaS BFFs)
+#
+# Purpose
+# -------
+# This is the RELEASE ARTIFACT of the product-spec repo.
+# Everything else in the repo exists to produce this file
+# reproducibly. See architecture/product-repo-layout.md §3.2 in
+# dev.hub.
+#
+# The BFF reads this file at startup (per-product BFF) or per
+# request (SaaS shared BFF) to:
+#   1. enforce feature-gating per inclusion mode;
+#   2. apply resolved variability attribute values;
+#   3. route extension-point calls to the correct services;
+#   4. know which platform service endpoints to aggregate per
+#      feature (BFF aggregation hints from Feature Spec §5/§5.2).
+#
+# See conceptual-stack.md §4.6 (BFF) and sple-platform-concept.md
+# §4.2 for the runtime model.
+# ============================================================
+
+apiVersion: openleap.io/product-spec/v1
+kind: BffProductConfig
+
+metadata:
+  product: "{product-id}"
+  productVersion: "{semver from product.yaml}"
+  generatedAt: "{YYYY-MM-DD HH:MM ISO-8601}"
+  catalogRef: "{dev.spec git-tag or sha}"
+  deploymentModel: "per-product"    # per-product | shared | feature-module
+
+# ------------------------------------------------------------
+# Active features with their inclusion mode.
+#
+# Values for `mode` MUST come from the four modes defined in
+# integrated-overview.md §8.2:
+#   full      — complete functionality including writes
+#   read-only — mutations blocked by BFF (403 on write endpoints)
+#   embedded  — rendered inside another feature (no top-level nav)
+#   excluded  — not present here (excluded features are omitted
+#               entirely; listed in `excluded` below for audit)
+# ------------------------------------------------------------
+features:
+
+  - id: F-{SUITE}-{NNN}-{NN}
+    mode: "full"
+    # Platform service endpoints this feature's BFF route calls.
+    # Copied verbatim from the feature's Feature Spec §5 table.
+    aggregatedServices:
+      - service: "{suite}-{domain}-svc"
+        endpoint: "GET /api/v1/{suite}/{domain}/{resource}"
+        tier: "T3"
+        isMutation: false
+        failureMode: "degrade"         # degrade | fail | retry
+    # View-model shape key used by the BFF response envelope.
+    viewModelKey: "{ViewModelName}"
+    # Attribute bindings this feature uses at runtime.
+    # `deploy`-time values are already inlined here;
+    # `runtime`-time values are placeholders the BFF resolves
+    # per request from a config service.
+    bindings:
+      "{attr.path}":
+        value: "{value}"
+        bindingTime: "deploy"
+
+  # --------------------------------------------------------
+  # Cross-suite read example (read-only mode).
+  # Per sple-platform-concept.md §5, other suites' T3 features
+  # may only be included read-only.
+  # --------------------------------------------------------
+  - id: F-PPS-010
+    mode: "read-only"
+    aggregatedServices:
+      - service: "pps-im-svc"
+        endpoint: "GET /api/v1/pps/im/stock"
+        tier: "T3"
+        isMutation: false
+        failureMode: "degrade"
+    writeBlockResponse:
+      status: 403
+      code: "FEATURE_READ_ONLY"
+
+excluded:
+  # Informational — for audit. The BFF does not expose these.
+  - id: F-SD-002-01
+    reason: "Customer uses central pricing (PD-003)."
+
+# ------------------------------------------------------------
+# Extension-point routing
+#
+# One entry per filled extension point across all features.
+# Generated from extensions/{F-ID}/*.yaml.
+# ------------------------------------------------------------
+extensionRoutes:
+
+  - featureId: F-{SUITE}-{NNN}
+    extensionPointId: "ext.{feature}.customFields"
+    kind: "fields"                    # fields | rules | actions
+    target:
+      type: "custom-service"          # custom-service | platform-endpoint | inline
+      service: "cs-{customer-fields}"
+      endpoint: "/api/extensions/{feature}/fields"
+      timeoutMs: 2000
+      failureMode: "degrade"
+
+# ------------------------------------------------------------
+# Persona → IAM role mapping.
+# Derived from personas/{id}.yaml#iamRoles. The BFF uses this
+# to enforce role-based visibility and the `persona.visibleFor`
+# / `persona.editableFor` gates declared in extensions and
+# screen-overrides.
+# ------------------------------------------------------------
+personas:
+  - id: "{persona-id}"
+    iamRoles: ["{ROLE_CODE}"]
+
+# ------------------------------------------------------------
+# Global BFF settings derived from variability/bindings.yaml
+# globals section. One canonical place for cross-feature values.
+# ------------------------------------------------------------
+globals:
+  locale: "de-DE"
+  currency: "EUR"
+  timezone: "Europe/Berlin"
+
+# ------------------------------------------------------------
+# Validation evidence — Decompose writes a checksum here so the
+# BFF can refuse to start if the file has been hand-edited out
+# of sync with its inputs.
+# ------------------------------------------------------------
+validation:
+  decomposeVersion: "{semver}"
+  inputDigest: "sha256:{hex}"
+  status: "valid"                     # valid | invalid | partial

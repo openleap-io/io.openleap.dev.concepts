@@ -1,0 +1,54 @@
+# Example — ACME Sales Workbench variability bindings
+# Template: templates/product/prod/variability/bindings.yaml (TPL-PROD-BIND v1.0.0)
+
+apiVersion: openleap.io/product-spec/v1
+kind: VariabilityBindings
+
+metadata:
+  product: acme-sales
+  catalogRef: "v2026.04.0"
+
+bindings:
+
+  - featureId: F-SD-001
+    attributes:
+      - path: approval.requireComment
+        value: true
+        bindingTime: deploy
+        rationale: "ACME audit policy — every order approval requires a reason."
+      - path: pricing.roundingMode
+        value: HALF_UP
+        bindingTime: compile
+        rationale: "Matches legacy ERP rounding; compile-time bake keeps the UI consistent with the receipt."
+
+  - featureId: F-SD-001-02
+    attributes:
+      - path: form.sections.visibleByDefault
+        value: ["header", "items", "pricing", "extensions"]
+        bindingTime: deploy
+        rationale: "ACME wants custom-field section always expanded for sales reps."
+
+  - featureId: F-BP-001
+    attributes:
+      - path: search.minCharacters
+        value: 3
+        bindingTime: runtime
+        rationale: "Tuned per region; runtime binding lets ops adjust without redeploy."
+
+  - featureId: F-PPS-010
+    attributes:
+      - path: pagination.pageSize
+        value: 25
+        bindingTime: runtime
+        rationale: "14-inch laptops dominate ACME sales fleet; 25 rows fit above the fold."
+
+globals:
+  - path: locale.default
+    value: "de-DE"
+    bindingTime: deploy
+  - path: currency.default
+    value: "EUR"
+    bindingTime: compile
+  - path: timezone.default
+    value: "Europe/Berlin"
+    bindingTime: deploy

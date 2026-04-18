@@ -1,0 +1,110 @@
+# Template Meta
+# Template-ID:   TPL-PROD-MANIFEST
+# Version:       1.0.0
+# Last Updated:  2026-04-18
+# Changelog:
+#   1.0.0 (2026-04-18) — Initial versioned baseline for prod.* repo convention.
+
+# ============================================================
+# product.yaml — Product Manifest
+#
+# Conceptual Stack Layer: Product
+# Space: Product (Application Engineering)
+# Lives in: io.openleap.prod.{product}/product.yaml
+# Companion files: features/selection.uvl, variability/bindings.yaml,
+#                  extensions/*, personas/*, processes/*,
+#                  screen-overrides/*, bff/productconfig.yaml
+# Authored by: Elara (export) or human architect
+# Reviewed via: Git pull request on io.openleap.prod.{product}
+#
+# This file is the single entry point of the product-spec repo.
+# It identifies the product, names its owner and target customer,
+# and points at the satellite artifacts. It is NOT a feature-
+# selection document — that lives in features/selection.uvl.
+# ============================================================
+
+apiVersion: openleap.io/product-spec/v1
+kind: ProductManifest
+
+metadata:
+  # Kebab-case product identifier. Matches {product} in the repo name
+  # io.openleap.prod.{product}. Used as namespace in selection.uvl.
+  id: "{product-id}"
+
+  # Human-readable product name.
+  name: "{Product Name}"
+
+  # Short description: what this product does, for whom.
+  description: "{1-2 sentences}"
+
+  # SemVer of this product spec. Bumped on every release.
+  version: "0.1.0"
+
+  # Current lifecycle status.
+  # Allowed: draft | review | approved | released | deprecated
+  status: draft
+
+  # Owning team inside the customer organisation or the operator.
+  owner:
+    team: "{team name}"
+    email: "{contact@example.com}"
+    slack: "#{channel}"
+
+  # Target customer or market segment.
+  # For internal in-house products, use "internal".
+  targetCustomer:
+    name: "{Customer or Segment}"
+    industry: "{industry}"
+    deploymentModel: "on-premise"   # on-premise | saas-dedicated | saas-shared
+
+# ------------------------------------------------------------
+# References — where the detail lives
+# ------------------------------------------------------------
+# These are relative paths inside this repo. Tools (Decompose,
+# packaging) read them to build productconfig.yaml. Do NOT copy
+# the content of these files into this manifest.
+# ------------------------------------------------------------
+references:
+  featureSelection: "features/selection.uvl"
+  variabilityBindings: "variability/bindings.yaml"
+  extensionsRoot: "extensions/"
+  personasRoot: "personas/"
+  processesRoot: "processes/"
+  screenOverridesRoot: "screen-overrides/"
+  bffProductConfig: "bff/productconfig.yaml"
+
+# ------------------------------------------------------------
+# Persona manifest — list of persona YAML files.
+# Each persona MUST exist under personas/{id}.yaml.
+# ------------------------------------------------------------
+personas:
+  - id: "{persona-id}"
+    file: "personas/{persona-id}.yaml"
+
+# ------------------------------------------------------------
+# Process manifest — list of BPMN files driving feature selection.
+# Each file MUST exist under processes/{id}.bpmn.
+# ------------------------------------------------------------
+processes:
+  - id: "{process-id}"
+    name: "{Process Name}"
+    level: "L0"          # L0 | L1 | L2
+    file: "processes/{process-id}.bpmn"
+
+# ------------------------------------------------------------
+# Platform catalog reference — which dev.spec version this
+# product validates against. Decompose fails the build if the
+# referenced version is unavailable.
+# ------------------------------------------------------------
+platformCatalog:
+  repo: "io.openleap.dev.spec"
+  ref: "{git-tag-or-sha}"    # e.g. "v2026.04.0" or a commit SHA
+
+# ------------------------------------------------------------
+# Release packaging hints consumed by CI to publish
+# bff/productconfig.yaml as a versioned artifact.
+# ------------------------------------------------------------
+release:
+  artifact: "productconfig.yaml"
+  registry: "{oci-or-file-registry}"
+  channel: "stable"          # stable | beta | preview

@@ -1,0 +1,53 @@
+# Example — ACME Sales Workbench product manifest
+# Template: templates/product/prod/product.yaml (TPL-PROD-MANIFEST v1.0.0)
+
+apiVersion: openleap.io/product-spec/v1
+kind: ProductManifest
+
+metadata:
+  id: acme-sales
+  name: "ACME Sales Workbench"
+  description: >
+    Desktop-first sales workbench for ACME Manufacturing. Consolidates order
+    entry, customer management, invoice lookup and stock availability into one
+    workspace for the sales team.
+  version: "0.3.0"
+  status: review
+  owner:
+    team: "ACME IT — Sales Platform"
+    email: "sales-platform@acme.example"
+    slack: "#acme-sales-workbench"
+  targetCustomer:
+    name: "ACME Manufacturing GmbH"
+    industry: "industrial-components"
+    deploymentModel: "on-premise"
+
+references:
+  featureSelection: "features/selection.uvl"
+  variabilityBindings: "variability/bindings.yaml"
+  extensionsRoot: "extensions/"
+  personasRoot: "personas/"
+  processesRoot: "processes/"
+  screenOverridesRoot: "screen-overrides/"
+  bffProductConfig: "bff/productconfig.yaml"
+
+personas:
+  - id: sales-rep
+    file: "personas/sales-rep.yaml"
+  - id: sales-manager
+    file: "personas/sales-manager.yaml"
+
+processes:
+  - id: order-to-cash
+    name: "Order to Cash"
+    level: "L0"
+    file: "processes/order-to-cash.bpmn"
+
+platformCatalog:
+  repo: "io.openleap.dev.spec"
+  ref: "v2026.04.0"
+
+release:
+  artifact: "productconfig.yaml"
+  registry: "oci://registry.acme.example/prod/acme-sales"
+  channel: "stable"

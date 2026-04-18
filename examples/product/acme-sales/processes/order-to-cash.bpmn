@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Example — ACME Sales Workbench: Order-to-Cash process stub
+  Template: templates/product/prod/processes/process.bpmn (TPL-PROD-PROCESS v1.0.0)
+
+  This is a stub — a real authoring session in a BPMN 2.0 editor
+  (e.g. Camunda Modeler) would populate the flow elements and the
+  bpmndi layout. The OpenLeap-specific metadata below is what the
+  Decompose tool reads to trace feature coverage.
+-->
+<bpmn:definitions
+    xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+    xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+    xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ol="https://openleap.io/spec/product/bpmn-extensions"
+    targetNamespace="https://openleap.io/prod/acme-sales/processes"
+    id="Definitions_order-to-cash">
+
+  <bpmn:process
+      id="order-to-cash"
+      name="Order to Cash"
+      isExecutable="false"
+      ol:productRef="acme-sales"
+      ol:level="L0">
+
+    <bpmn:documentation>
+      End-to-end order-to-cash flow for ACME: customer enquiry arrives, sales rep
+      captures order, optional VIP approval by manager, order confirmed, stock
+      reserved via event into PPS, invoice generated in FI. Fulfils capabilities
+      CAP-ACME-ORDER and CAP-ACME-INVOICE.
+    </bpmn:documentation>
+
+    <bpmn:extensionElements>
+      <ol:processMetadata>
+        <ol:triggerType>external_signal</ol:triggerType>
+        <ol:frequency>~30/day per sales rep</ol:frequency>
+        <ol:sla>under 3 minutes per order for standard orders</ol:sla>
+        <ol:outcome>Order confirmed, stock reserved, invoice queued.</ol:outcome>
+        <ol:fulfilsCapabilities>
+          <ol:capabilityRef>CAP-ACME-ORDER</ol:capabilityRef>
+          <ol:capabilityRef>CAP-ACME-INVOICE</ol:capabilityRef>
+        </ol:fulfilsCapabilities>
+        <ol:featureHints>
+          <ol:hint taskId="Task_LookupCustomer" featureId="F-BP-001"/>
+          <ol:hint taskId="Task_CreateOrder" featureId="F-SD-001-02"/>
+          <ol:hint taskId="Task_CheckStock" featureId="F-PPS-010"/>
+          <ol:hint taskId="Task_ApproveVIP" featureId="F-SD-001-03-01"/>
+          <ol:hint taskId="Task_ViewInvoice" featureId="F-FI-007"/>
+        </ol:featureHints>
+      </ol:processMetadata>
+    </bpmn:extensionElements>
+
+    <bpmn:startEvent id="StartEvent_1" name="Customer enquiry arrives"/>
+    <bpmn:task id="Task_LookupCustomer" name="Look up customer"/>
+    <bpmn:task id="Task_CreateOrder" name="Create sales order"/>
+    <bpmn:task id="Task_CheckStock" name="Check stock (read-only)"/>
+    <bpmn:exclusiveGateway id="Gateway_VIP" name="VIP priority?"/>
+    <bpmn:task id="Task_ApproveVIP" name="Sales manager approves VIP"/>
+    <bpmn:task id="Task_ConfirmOrder" name="Confirm order"/>
+    <bpmn:task id="Task_ViewInvoice" name="Preview invoice"/>
+    <bpmn:endEvent id="EndEvent_1" name="Order confirmed"/>
+
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Task_LookupCustomer"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_LookupCustomer" targetRef="Task_CreateOrder"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_CreateOrder" targetRef="Task_CheckStock"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_CheckStock" targetRef="Gateway_VIP"/>
+    <bpmn:sequenceFlow id="Flow_VIP" name="VIP" sourceRef="Gateway_VIP" targetRef="Task_ApproveVIP"/>
+    <bpmn:sequenceFlow id="Flow_STD" name="Standard" sourceRef="Gateway_VIP" targetRef="Task_ConfirmOrder"/>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Task_ApproveVIP" targetRef="Task_ConfirmOrder"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_ConfirmOrder" targetRef="Task_ViewInvoice"/>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_ViewInvoice" targetRef="EndEvent_1"/>
+
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="order-to-cash">
+      <!-- DI populated by the BPMN editor. -->
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</bpmn:definitions>

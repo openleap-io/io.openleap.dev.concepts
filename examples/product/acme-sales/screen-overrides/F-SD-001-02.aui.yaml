@@ -1,0 +1,56 @@
+# Example — ACME Sales Workbench: AUI overrides for F-SD-001-02 (Create Sales Order)
+# Template: templates/product/prod/screen-overrides/feature.aui.yaml (TPL-PROD-AUI-OVR v1.0.0)
+#
+# Only picks CUIs, reorders VARIABLE zones, persona-gates visibility,
+# and changes copy. Business rules and action registration are in
+# extensions/F-SD-001/ — this file does NOT alter rules.
+
+apiVersion: openleap.io/product-spec/v1
+kind: ScreenOverride
+
+metadata:
+  featureId: F-SD-001-02
+  product: acme-sales
+
+cuiTargets:
+  default: "web-desktop"
+  perPersona:
+    - persona: sales-rep
+      cui: "web-desktop"           # laptop-first
+    - persona: sales-manager
+      cui: "web-desktop"
+
+zones:
+
+  # Put the custom-fields panel (extension zone) ABOVE pricing,
+  # because cost centre drives approval routing.
+  - id: "detail.extensions.customFields"
+    order: 20
+    personaGates:
+      visibleFor: ["sales-rep", "sales-manager"]
+      editableFor: ["sales-rep", "sales-manager"]
+    hidden: false
+
+  - id: "detail.pricing"
+    order: 30
+
+  # Hide the "related campaigns" panel — ACME does not use campaigns.
+  - id: "detail.relatedCampaigns"
+    hidden: true
+
+actionLabels:
+  - id: "confirm-order"
+    label: "Bestellung bestätigen"
+    icon: "check"
+  - id: "save-draft"
+    label: "Als Entwurf speichern"
+    icon: "save"
+
+copy:
+  - key: "order.total.label"
+    locale: "de-DE"
+    value: "Gesamtsumme (ohne MwSt.)"
+
+absentRules:
+  - zoneId: "detail.relatedCampaigns"
+    rule: "collapse-up"

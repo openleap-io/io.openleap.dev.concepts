@@ -1,0 +1,105 @@
+# Template Meta
+# Template-ID:   TPL-PROD-BIND
+# Version:       1.0.0
+# Last Updated:  2026-04-18
+# Changelog:
+#   1.0.0 (2026-04-18) — Initial versioned baseline for prod.* repo convention.
+
+# ============================================================
+# variability/bindings.yaml — Resolved UVL Attribute Values
+#
+# Conceptual Stack Layer: Product-Feature (variability resolution)
+# Space: Product (Application Engineering)
+# Lives in: io.openleap.prod.{product}/variability/bindings.yaml
+# Companion files: ../features/selection.uvl, ../bff/productconfig.yaml
+# Authored by: Elara (export) or human architect
+# Consumed by: Decompose (validation), packaging step (productconfig.yaml)
+#
+# Purpose
+# -------
+# features/selection.uvl decides WHICH platform features this
+# product ships. This file decides HOW each selected feature is
+# configured — the resolved values of every UVL attribute
+# declared in the platform feature spec §9 (variability points).
+#
+# Every attribute declaration in the platform catalog has a
+# binding time. A product MUST resolve every such attribute to
+# a concrete value at or before its declared binding time.
+#
+# Binding times (from conceptual-stack.md §4.2 / sple-platform-
+# concept.md §2.3):
+#   compile  — baked into the UI bundle at build time
+#   deploy   — written into bff/productconfig.yaml at package time
+#   runtime  — can be changed per-request / per-subscription
+# ============================================================
+
+apiVersion: openleap.io/product-spec/v1
+kind: VariabilityBindings
+
+metadata:
+  product: "{product-id}"
+  catalogRef: "{dev.spec git-tag or sha — must match product.yaml}"
+
+# ------------------------------------------------------------
+# Bindings grouped by feature.
+#
+# Every feature that declares variability in its Feature Spec §9
+# MUST appear here. Features with no variability attributes are
+# omitted. Decompose flags missing features as validation errors.
+# ------------------------------------------------------------
+bindings:
+
+  # --------------------------------------------------------
+  # Example: SD Create Sales Order
+  # The platform feature declares `approval.requireComment`
+  # (bool, default=false, bindingTime=deploy) and
+  # `pricing.roundingMode` (enum, bindingTime=compile).
+  # --------------------------------------------------------
+  - featureId: F-SD-001
+    attributes:
+      - path: approval.requireComment
+        value: true
+        bindingTime: deploy
+        rationale: "Customer audit policy requires documented approval reason."
+      - path: pricing.roundingMode
+        value: HALF_UP
+        bindingTime: compile
+        rationale: "Aligns with legacy ERP rounding."
+
+  # --------------------------------------------------------
+  # Example: PPS Stock Read — runtime binding
+  # --------------------------------------------------------
+  - featureId: F-PPS-010
+    attributes:
+      - path: pagination.pageSize
+        value: 25
+        bindingTime: runtime
+        rationale: "Customer uses 14-inch laptops; 25 rows fit above the fold."
+
+  # --------------------------------------------------------
+  # Template entry — copy per feature
+  # --------------------------------------------------------
+  # - featureId: F-{SUITE}-{NNN}[-{NN}]
+  #   attributes:
+  #     - path: "{dotted.attr.path}"
+  #       value: {value}
+  #       bindingTime: "compile|deploy|runtime"
+  #       rationale: "Why this value for this product."
+
+# ------------------------------------------------------------
+# Global bindings — product-wide values applied to every
+# feature that declares a matching attribute path. Useful for
+# cross-cutting concerns (currency, locale, timezone).
+#
+# Feature-level bindings above override globals.
+# ------------------------------------------------------------
+globals:
+  - path: locale.default
+    value: "de-DE"
+    bindingTime: deploy
+  - path: currency.default
+    value: "EUR"
+    bindingTime: compile
+  - path: timezone.default
+    value: "Europe/Berlin"
+    bindingTime: deploy

@@ -1,0 +1,107 @@
+# Template Meta
+# Template-ID:   TPL-PROD-EXT-RULES
+# Version:       1.0.0
+# Last Updated:  2026-04-18
+# Changelog:
+#   1.0.0 (2026-04-18) — Initial versioned baseline for prod.* repo convention.
+
+# ============================================================
+# extensions/{F-ID}/rules.yaml — Extension-Rule Fill
+#
+# Conceptual Stack Layer: Product-Feature (extension)
+# Space: Product (Application Engineering)
+# Lives in: io.openleap.prod.{product}/extensions/{F-ID}/rules.yaml
+# Companion files: fields.yaml, actions.yaml in the same directory
+# Authored by: Elara (export) or human architect
+# Consumed by: Decompose (validation), BFF at runtime
+#
+# Purpose
+# -------
+# Fills the extension points declared as `extension-rule` in the
+# platform feature spec §9. Rules here layer on top of the
+# platform-provided business rules — they cannot remove or
+# weaken the platform's own enforcement (sple-platform-concept.md
+# §6, open-closed principle).
+#
+# Scope: FEATURE level (screen / form rules). Domain-level and
+# service-level rules live in custom services (see SS20 of the
+# product-spec) and attach via `extension-event` hooks, not here.
+# ============================================================
+
+apiVersion: openleap.io/product-spec/v1
+kind: ExtensionRules
+
+metadata:
+  featureId: F-{SUITE}-{NNN}
+  product: "{product-id}"
+
+# ------------------------------------------------------------
+# Rule fills.
+#
+# Each entry targets a declared `extension-rule` point. The
+# `when` expression uses the feature's view-model schema
+# (Feature Spec §5.2). `then` declares the consequence.
+#
+# Rule types:
+#   validation     — block the action if condition holds
+#   authorization  — require a role/permission beyond the
+#                    platform default
+#   derivation     — compute a field value from others
+#   calculation    — numeric derivation (subset of derivation)
+#   trigger        — fire a side-effect (e.g. call a custom
+#                    service) when a condition holds
+# ------------------------------------------------------------
+extensions:
+
+  - extensionPointId: "ext.{feature}.rules.validation"
+    rules:
+      - id: "RX-001"
+        name: "Cost centre must match persona's department"
+        type: "validation"
+        enforcement: "hard"                 # hard | soft
+        severity: "error"                   # error | warning | info
+        when: "form.extensions.costCenter != persona.department.costCenter"
+        then:
+          block: true
+          errorCode: "COST_CENTER_MISMATCH"
+          message: "Cost centre must match your department."
+        rationale: "Customer internal audit requirement (BR-Acme-04)."
+
+  - extensionPointId: "ext.{feature}.rules.authorization"
+    rules:
+      - id: "RX-010"
+        name: "VIP band requires sales manager"
+        type: "authorization"
+        enforcement: "hard"
+        when: "form.extensions.priorityBand == 'vip'"
+        then:
+          requireRole: "SD_MANAGER"
+          errorCode: "VIP_REQUIRES_MANAGER"
+          message: "VIP orders must be confirmed by a Sales Manager."
+
+  - extensionPointId: "ext.{feature}.rules.derivation"
+    rules:
+      - id: "RX-020"
+        name: "Derive commission split from project code"
+        type: "derivation"
+        when: "form.extensions.projectCode != null"
+        then:
+          set:
+            "form.extensions.commissionSplit":
+              source: "custom-service"
+              endpoint: "/api/extensions/commission/lookup"
+              input: "form.extensions.projectCode"
+
+  # ----------------------------------------------------------
+  # Template entry — copy per rule
+  # ----------------------------------------------------------
+  # - extensionPointId: "ext.{feature}.rules.{kind}"
+  #   rules:
+  #     - id: "RX-{NNN}"
+  #       name: "{Short name}"
+  #       type: "validation|authorization|derivation|calculation|trigger"
+  #       enforcement: "hard|soft"
+  #       when: "{expression against the view-model}"
+  #       then:
+  #         {consequence spec — see examples above}
+  #       rationale: "{Why this rule for this product.}"

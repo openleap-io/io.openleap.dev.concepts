@@ -30,7 +30,8 @@ Consolidated specification templates — the current standard for authoring spec
 | `platform/workflow-spec.md` | Workflow Specification |
 | `platform/uvl/` | UVL grammar templates |
 | `platform/yaml/` | Screen Contract (AUI) templates |
-| `product/product-spec.md` | Product Specification |
+| `product/product-spec.md` | Product Specification (in-Elara, consolidated) |
+| `product/prod/` | Templates for the `io.openleap.prod.{product}` repo convention — product manifest, feature selection, variability bindings, extension fills, personas, BPMN processes, screen overrides, BFF productconfig. See [dev.hub product-repo-layout.md](https://github.com/openleap-io/io.openleap.dev.hub/blob/main/architecture/product-repo-layout.md). |
 | `ARTIFACT_TO_TEMPLATE_MAPPING.md` | Maps artifacts to template chapters |
 | `template-registry.json` | Machine-readable template metadata |
 
@@ -39,7 +40,8 @@ Consolidated specification templates — the current standard for authoring spec
 Artifact detail specifications — defines what each artifact IS (not how to fill in a template).
 
 - `platform/` — 15 Platform Space artifact definitions
-- `product/` — 25 Product Space artifact definitions
+- `product/` — 25 Product Space artifact definitions (in-Elara)
+- `product/prod/` — 10 artifact definitions for the `io.openleap.prod.{product}` repo convention (product manifest, feature selection, bindings, extension fills, exported persona, customer BPMN, AUI override, BFF productconfig)
 
 ### Examples (`examples/`)
 
@@ -51,7 +53,8 @@ Canonical examples demonstrating how to use the templates.
 | `platform/pps-im-domain/` | Domain Spec | PPS Inventory Management service |
 | `platform/pps-im-feature-goods-receipt/` | Feature Spec | F-PPS-IM-001 with all companions (.uvl, .aui.yaml, .bff) |
 | `platform/warehouse-ops-resolution/` | Feature Resolution | Decompose output example |
-| `product/warehouse-operations/` | Product Spec | Complete product with 50+ Elara artifacts |
+| `product/warehouse-operations/` | Product Spec | Complete in-Elara product with 50+ artifacts |
+| `product/acme-sales/` | `prod.*` repo | Full shape of an `io.openleap.prod.{product}` repository — manifest, selection.uvl, bindings, extensions, personas, BPMN, AUI override, productconfig |
 
 ### Governance (`governance/`)
 
@@ -82,6 +85,7 @@ dev.hub                          — central documentation & navigation
 
 | Repository | Relationship |
 |------------|-------------|
-| [dev.hub](https://github.com/openleap-io/io.openleap.dev.hub) | Central documentation, architecture overview |
+| [dev.hub](https://github.com/openleap-io/io.openleap.dev.hub) | Central documentation, architecture overview. See [architecture/product-repo-layout.md](https://github.com/openleap-io/io.openleap.dev.hub/blob/main/architecture/product-repo-layout.md) — the consumer of the `templates/product/prod/` templates added here. |
 | [dev.spec](https://github.com/openleap-io/io.openleap.dev.spec) | Domain & service specifications that use these templates |
 | [dev.prompts](https://github.com/openleap-io/io.openleap.dev.prompts) | AI prompts that reference the template registry |
+| `io.openleap.prod.{product}` | Product-spec repositories authored against the `templates/product/prod/` templates. Each repo is one customer product (spec), paired with `prod.{product}.ui` (Nuxt) and optionally `prod.{product}.bff` (Spring). |

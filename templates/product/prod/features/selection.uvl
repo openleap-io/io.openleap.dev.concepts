@@ -1,0 +1,115 @@
+// Template Meta
+// Template-ID:   TPL-PROD-SEL
+// Version:       1.0.0
+// Last Updated:  2026-04-18
+// Changelog:
+//   1.0.0 (2026-04-18) — Initial versioned baseline for prod.* repo convention.
+
+// ============================================================
+// features/selection.uvl — Product Feature Selection
+//
+// Conceptual Stack Layer: Product-Feature (selection)
+// Space: Product (Application Engineering)
+// Lives in: io.openleap.prod.{product}/features/selection.uvl
+// Companion files: ../product.yaml, ../variability/bindings.yaml
+// Authored by: Elara (export) or human architect
+// Validated by: Decompose against the dev.spec catalog
+//
+// RULES (see architecture/product-repo-layout.md §3.1 in dev.hub):
+//   1. This file REFERENCES platform features by their stable ID
+//      (F-{SUITE}-{NNN} for composition nodes, F-{SUITE}-{NNN}-{NN}
+//      for leaves). It MUST NOT copy platform spec content.
+//   2. Feature inclusion modes (full / read-only / embedded /
+//      excluded) are declared on the right-hand side of the
+//      selection. See integrated-overview.md §8.2.
+//   3. Cross-suite rule: T2 features (shared) may be included
+//      freely. Other suites' T3 features may only be included
+//      in `read-only` mode unless the spec explicitly permits
+//      `full` (sple-platform-concept.md §5).
+//   4. Variability attribute VALUES are resolved in
+//      variability/bindings.yaml, not here. This file only
+//      selects features and declares inclusion modes.
+// ============================================================
+
+namespace {product-id}
+
+imports
+    // The dev.spec platform catalog is the single import root.
+    // All suite catalogs are transitively imported through it.
+    // The ref is pinned by product.yaml#platformCatalog.
+    catalog from "io.openleap.dev.spec/catalog.uvl"
+
+
+features
+
+    // Product root — one feature per product spec.
+    // The root's name should match metadata.id in product.yaml.
+    {ProductId}
+
+        mandatory
+            // ------------------------------------------------
+            // Select every platform feature this product ships.
+            //
+            // Format:
+            //   catalog.{suite}.F-{SUITE}-{NNN}[-{NN}] {
+            //       inclusion "{full|read-only|embedded|excluded}"
+            //   }
+            //
+            // `full`      — complete functionality including writes
+            // `read-only` — mutations blocked by BFF
+            // `embedded`  — rendered inside another feature's UI
+            // `excluded`  — not shipped (document the negative
+            //               decision as a comment under "optional")
+            // ------------------------------------------------
+
+            // --- Own-suite features (full access allowed) ---
+            catalog.{suite}.F-{SUITE}-{NNN}-{NN} {
+                inclusion "full"
+            }
+
+            // --- Cross-suite T2 features (freely included) ---
+            // Example: shared Business Partner feature used by an SD product.
+            catalog.bp.F-BP-001 {
+                inclusion "full"
+            }
+
+            // --- Cross-suite T3 features from OTHER suites ---
+            // Read-across, mutate-local: only `read-only` allowed.
+            // (sple-platform-concept.md §5)
+            catalog.pps.F-PPS-010 {
+                inclusion "read-only"
+            }
+
+        optional
+            // ------------------------------------------------
+            // Optional features considered. Either select with
+            // an explicit inclusion, or leave as a comment
+            // documenting why the feature was NOT shipped.
+            //
+            // NOT selecting here is equivalent to `excluded`.
+            // ------------------------------------------------
+
+            catalog.fi.F-FI-007 {
+                inclusion "full"
+            }
+
+            // NOT selected: catalog.sd.F-SD-002-01 Pricing Maintenance
+            //   Reason: customer uses central pricing (see PD-003).
+
+
+constraints
+    // --------------------------------------------------------
+    // Product-specific constraints (rare).
+    //
+    // The dev.spec catalog already enforces cross-suite
+    // `requires` relationships (e.g., F-SD-001 requires F-BP-001).
+    // Add here only constraints that are specific to THIS
+    // product — typically customer-specific combinations.
+    //
+    // Format:
+    //   catalog.{suite}.F-{SUITE}-{NNN} => catalog.{suite}.F-{SUITE}-{NNN}
+    // --------------------------------------------------------
+
+    // Example: if this product ships the Invoice Preview, it
+    // must also ship the Customer Detail (for the drill-down).
+    // catalog.fi.F-FI-007 => catalog.bp.F-BP-001-02

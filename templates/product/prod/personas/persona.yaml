@@ -1,0 +1,97 @@
+# Template Meta
+# Template-ID:   TPL-PROD-PERSONA
+# Version:       1.0.0
+# Last Updated:  2026-04-18
+# Changelog:
+#   1.0.0 (2026-04-18) — Initial versioned baseline for prod.* repo convention.
+
+# ============================================================
+# personas/{persona-id}.yaml — Product Persona (Elara-derived)
+#
+# Conceptual Stack Layer: Product (Persona)
+# Space: Product (Application Engineering)
+# Lives in: io.openleap.prod.{product}/personas/{persona-id}.yaml
+# Authored by: Elara (export) or human architect
+# Consumed by: Decompose, BFF (persona → IAM role mapping),
+#              Screen Overrides (persona-gated zones)
+#
+# Purpose
+# -------
+# A persona is an actor enriched with UX attributes — derived in
+# Elara from a business actor during discovery. Personas drive
+# feature selection, screen overrides, and BFF persona→role
+# mapping. Platform feature specs reference role TYPES
+# generically; products map those types to specific personas
+# here.
+#
+# See artifacts/product/persona.md for the Product Space
+# Persona artifact definition.
+# ============================================================
+
+apiVersion: openleap.io/product-spec/v1
+kind: Persona
+
+metadata:
+  # Kebab-case persona identifier. Matches the file name.
+  id: "{persona-id}"
+  # Human-readable persona name.
+  name: "{Persona Name}"
+
+# ------------------------------------------------------------
+# Actor derivation — which business actors this persona
+# generalises. Actors are discovered during Elara interviews
+# and live in the product's business-actor register.
+# ------------------------------------------------------------
+actorRefs:
+  - "{actor-id}"
+
+# ------------------------------------------------------------
+# IAM role mapping. Role codes come from the platform's IAM
+# suite (see _iam_suite.md in dev.spec). Multiple codes may
+# apply if the persona wears multiple hats.
+# ------------------------------------------------------------
+iamRoles:
+  - "{ROLE_CODE}"
+
+# ------------------------------------------------------------
+# UX characteristics
+# ------------------------------------------------------------
+jobToBeDone: "{Primary job this persona performs, one sentence.}"
+usageFrequency: "DAILY"        # DAILY | WEEKLY | OCCASIONAL | RARE
+technicalComfort: "MEDIUM"     # LOW | MEDIUM | HIGH
+
+# ------------------------------------------------------------
+# Discovery findings (optional but strongly recommended —
+# these drive screen overrides and business-rule priorities).
+# ------------------------------------------------------------
+painPoints:
+  - "{What frustrates them today?}"
+
+workarounds:
+  - "{How do they cope without this product?}"
+
+# ------------------------------------------------------------
+# Scenarios — which processes this persona participates in.
+# Referenced process IDs MUST exist in processes/{id}.bpmn.
+# ------------------------------------------------------------
+scenarios:
+  - processId: "{process-id}"
+    role: "primary"              # primary | secondary | observer
+    frequency: "{e.g. 20 times per day}"
+
+# ------------------------------------------------------------
+# Device profile — informs AUI→CUI picks in screen-overrides.
+# ------------------------------------------------------------
+device:
+  primary: "desktop"             # desktop | laptop | tablet | handheld | voice
+  secondary: "handheld"
+  screenSize: "1920x1080"
+  inputMethods: ["keyboard", "mouse"]
+
+# ------------------------------------------------------------
+# Accessibility needs (optional).
+# ------------------------------------------------------------
+accessibility:
+  colorVision: "normal"          # normal | deficient
+  fontScale: "100%"
+  keyboardOnly: false

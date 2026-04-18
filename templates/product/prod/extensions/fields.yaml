@@ -1,0 +1,94 @@
+# Template Meta
+# Template-ID:   TPL-PROD-EXT-FIELDS
+# Version:       1.0.0
+# Last Updated:  2026-04-18
+# Changelog:
+#   1.0.0 (2026-04-18) — Initial versioned baseline for prod.* repo convention.
+
+# ============================================================
+# extensions/{F-ID}/fields.yaml — Extension-Field Fill
+#
+# Conceptual Stack Layer: Product-Feature (extension)
+# Space: Product (Application Engineering)
+# Lives in: io.openleap.prod.{product}/extensions/{F-ID}/fields.yaml
+# Companion files: rules.yaml, actions.yaml in the same directory
+# Authored by: Elara (export) or human architect
+# Consumed by: Decompose (validation), BFF at runtime
+#
+# Purpose
+# -------
+# Fills the FEATURE-LEVEL extension points declared by a platform
+# feature in its Feature Spec §9 under `extensionPoints` of type
+# `extension-field` (see sple-platform-concept.md §6 — feature
+# level).
+#
+# Each platform feature declares which field extension points it
+# exposes (e.g. `ext.orderCreate.customFields`). This file fills
+# exactly those — it MUST NOT introduce new fields that the
+# feature spec has not declared. Decompose rejects unknown IDs.
+# ============================================================
+
+apiVersion: openleap.io/product-spec/v1
+kind: ExtensionFields
+
+metadata:
+  # The platform feature this extension set attaches to.
+  # Directory name ({F-ID}) MUST equal this value.
+  featureId: F-{SUITE}-{NNN}
+  product: "{product-id}"
+
+# ------------------------------------------------------------
+# Extension field fills.
+#
+# `extensionPointId` MUST match a declared `extension-field`
+# hook in the feature spec. `fields` are rendered by the
+# feature's Screen Contract (AUI) inside the matching
+# extension zone.
+# ------------------------------------------------------------
+extensions:
+
+  - extensionPointId: "ext.{feature}.customFields"
+    # Where the BFF should route read/write traffic for these
+    # fields. One of:
+    #   custom-service  — use a custom service (see SS20 of product-spec)
+    #   inline          — persisted in the feature's own aggregate
+    #                     via the platform's generic extension store
+    routing: custom-service
+    target:
+      service: "cs-{customer-fields}"        # custom service ID
+      endpoint: "/api/extensions/{feature}/fields"
+      timeoutMs: 2000
+      failureMode: "degrade"                  # degrade | fail | skip
+
+    fields:
+      - id: "costCenter"
+        label: "Cost Centre"
+        type: "string"                        # string | number | enum | date | bool
+        required: true
+        maxLength: 10
+        validation:
+          pattern: "^[A-Z0-9-]{3,10}$"
+        uiHint: "text-input"
+        persona:
+          visibleFor: ["sales-rep", "sales-manager"]
+          editableFor: ["sales-rep", "sales-manager"]
+
+      - id: "projectCode"
+        label: "Project Code"
+        type: "string"
+        required: false
+        lookup:
+          source: "custom-service"
+          endpoint: "/api/extensions/project-codes"
+        uiHint: "combobox"
+        persona:
+          visibleFor: ["sales-rep", "sales-manager"]
+          editableFor: ["sales-manager"]
+
+      - id: "priorityBand"
+        label: "Priority Band"
+        type: "enum"
+        required: true
+        values: ["standard", "expedite", "vip"]
+        default: "standard"
+        uiHint: "radio-group"

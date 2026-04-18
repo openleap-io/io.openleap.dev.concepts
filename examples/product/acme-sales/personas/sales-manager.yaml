@@ -1,0 +1,46 @@
+# Example — ACME Sales Workbench persona: Sales Manager
+# Template: templates/product/prod/personas/persona.yaml (TPL-PROD-PERSONA v1.0.0)
+
+apiVersion: openleap.io/product-spec/v1
+kind: Persona
+
+metadata:
+  id: sales-manager
+  name: "Sales Manager"
+
+actorRefs:
+  - acme-sales-manager
+
+iamRoles:
+  - SD_MANAGER
+  - SD_USER
+  - BP_READER
+  - FI_VIEWER
+
+jobToBeDone: "Approve discounts, review pipeline, release VIP orders, monitor rep KPIs."
+
+usageFrequency: DAILY
+technicalComfort: HIGH
+
+painPoints:
+  - "VIP orders wait in rep's queue — no push notification when approval is needed."
+  - "Pipeline dashboard lives in BI tool; context-switching breaks the flow."
+
+workarounds:
+  - "Reps send WhatsApp pings when VIP approval is pending."
+
+scenarios:
+  - processId: order-to-cash
+    role: secondary
+    frequency: "~15 approvals per day"
+
+device:
+  primary: "desktop"
+  secondary: "tablet"
+  screenSize: "2560x1440"
+  inputMethods: ["keyboard", "mouse"]
+
+accessibility:
+  colorVision: "normal"
+  fontScale: "110%"
+  keyboardOnly: false

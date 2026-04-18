@@ -1,0 +1,58 @@
+# Example — ACME Sales Workbench: F-SD-001 extension actions
+# Template: templates/product/prod/extensions/actions.yaml (TPL-PROD-EXT-ACTIONS v1.0.0)
+
+apiVersion: openleap.io/product-spec/v1
+kind: ExtensionActions
+
+metadata:
+  featureId: F-SD-001
+  product: acme-sales
+
+extensions:
+
+  - extensionPointId: "ext.orderCreate.actions.toolbar"
+    zone: "detail.toolbar.extensions"
+
+    actions:
+      - id: "export-to-legacy"
+        label: "An Legacy-ERP senden"
+        icon: "download"
+        kind: "button"
+        confirm:
+          title: "Bestellung exportieren?"
+          body: "Der Export ist asynchron und kann nicht rückgängig gemacht werden."
+          confirmLabel: "Exportieren"
+          cancelLabel: "Abbrechen"
+        routing:
+          target: "custom-service"
+          service: "cs-acme-legacy-export"
+          endpoint: "POST /api/extensions/orders/export"
+          timeoutMs: 5000
+          failureMode: "toast-error"
+        input:
+          orderId: "view.order.id"
+          exportChannel: "literal:legacy-edi"
+        persona:
+          visibleFor: ["sales-manager"]
+          enabledFor: ["sales-manager"]
+        enabledWhen: "view.order.status == 'confirmed'"
+
+  - extensionPointId: "ext.orderCreate.actions.rowMenu"
+    zone: "list.row.actions.extensions"
+
+    actions:
+      - id: "duplicate-to-new-project"
+        label: "In neues Projekt duplizieren..."
+        kind: "menu-item"
+        routing:
+          target: "custom-service"
+          service: "cs-acme-order-duplicator"
+          endpoint: "POST /api/extensions/orders/duplicate"
+          timeoutMs: 3000
+          failureMode: "toast-error"
+        input:
+          sourceOrderId: "row.id"
+          targetProjectCode: "prompt:project-code-picker"
+        persona:
+          visibleFor: ["sales-rep", "sales-manager"]
+          enabledFor: ["sales-rep", "sales-manager"]

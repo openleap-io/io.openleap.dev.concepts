@@ -1,0 +1,59 @@
+# Example — ACME Sales Workbench: F-SD-001 extension fields
+# Template: templates/product/prod/extensions/fields.yaml (TPL-PROD-EXT-FIELDS v1.0.0)
+#
+# Fills the feature-level extension-field hooks declared by
+# F-SD-001 "Create Sales Order" in its Feature Spec §9
+# (sple-platform-concept.md §6 — feature level).
+
+apiVersion: openleap.io/product-spec/v1
+kind: ExtensionFields
+
+metadata:
+  featureId: F-SD-001
+  product: acme-sales
+
+extensions:
+
+  - extensionPointId: "ext.orderCreate.customFields"
+    routing: custom-service
+    target:
+      service: "cs-acme-order-fields"
+      endpoint: "/api/extensions/orders/fields"
+      timeoutMs: 2000
+      failureMode: "degrade"
+
+    fields:
+      - id: "costCenter"
+        label: "Kostenstelle"
+        type: "string"
+        required: true
+        maxLength: 10
+        validation:
+          pattern: "^[A-Z0-9-]{3,10}$"
+        uiHint: "text-input"
+        persona:
+          visibleFor: ["sales-rep", "sales-manager"]
+          editableFor: ["sales-rep", "sales-manager"]
+
+      - id: "projectCode"
+        label: "Projekt-Code"
+        type: "string"
+        required: false
+        lookup:
+          source: "custom-service"
+          endpoint: "/api/extensions/project-codes"
+        uiHint: "combobox"
+        persona:
+          visibleFor: ["sales-rep", "sales-manager"]
+          editableFor: ["sales-manager"]
+
+      - id: "priorityBand"
+        label: "Prioritätsstufe"
+        type: "enum"
+        required: true
+        values: ["standard", "expedite", "vip"]
+        default: "standard"
+        uiHint: "radio-group"
+        persona:
+          visibleFor: ["sales-rep", "sales-manager"]
+          editableFor: ["sales-manager"]

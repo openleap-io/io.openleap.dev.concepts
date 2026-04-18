@@ -146,6 +146,40 @@ One consolidated template for a product — the application engineering delivera
 
 ---
 
+## `prod.*` Repository Templates
+
+Templates for the `io.openleap.prod.{product}` repository convention defined in
+[dev.hub architecture/product-repo-layout.md](https://github.com/openleap-io/io.openleap.dev.hub/blob/main/architecture/product-repo-layout.md).
+Unlike the consolidated `product-spec.md` above (one big in-Elara document),
+these split the product specification across small file types that are
+individually reviewable in pull requests and individually consumable by the
+packaging step that produces `bff/productconfig.yaml`.
+
+| Template ID | File | Purpose | Registry entry |
+|-------------|------|---------|----------------|
+| TPL-PROD-MANIFEST | `product/prod/product.yaml` | Product manifest (identity, owner, target customer, catalog pin, satellite refs) | ✅ |
+| TPL-PROD-SEL | `product/prod/features/selection.uvl` | Feature selection — references `F-{SUITE}-{NNN}`; declares inclusion mode | ✅ |
+| TPL-PROD-BIND | `product/prod/variability/bindings.yaml` | Resolved UVL attributes with compile/deploy/runtime binding times | ✅ |
+| TPL-PROD-EXT-FIELDS | `product/prod/extensions/fields.yaml` | Feature-level `extension-field` fill | ✅ |
+| TPL-PROD-EXT-RULES | `product/prod/extensions/rules.yaml` | Feature-level `extension-rule` fill | ✅ |
+| TPL-PROD-EXT-ACTIONS | `product/prod/extensions/actions.yaml` | Feature-level `extension-action` fill | ✅ |
+| TPL-PROD-PERSONA | `product/prod/personas/persona.yaml` | Exported persona with IAM roles and device profile | ✅ |
+| TPL-PROD-PROCESS | `product/prod/processes/process.bpmn` | BPMN 2.0 stub with `ol:*` OpenLeap extensions | ✅ |
+| TPL-PROD-AUI-OVR | `product/prod/screen-overrides/feature.aui.yaml` | Persona-gated zones, CUI picks, copy overrides | ✅ |
+| TPL-PROD-BFF-PCFG | `product/prod/bff/productconfig.yaml` | Release artifact consumed by the BFF at runtime | ✅ |
+
+**Example repo:** [`examples/product/acme-sales/`](../examples/product/acme-sales/)
+shows a complete product drawing from SD, BP, FI, and PPS with the cross-suite
+read-only rule applied to PPS and FI.
+
+**Relationship to the consolidated `product-spec.md`:** the in-Elara
+`product-spec.md` documents discovery (SS0–SS15, the bridge, and product
+configuration narratives). The `prod.*` templates are its export shape —
+machine-readable, reviewable, and validated by Decompose against the dev.spec
+catalog.
+
+---
+
 ## UVL Companion File Templates
 
 These are referenced from within the human-readable templates above, not standalone.

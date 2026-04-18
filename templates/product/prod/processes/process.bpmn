@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Template Meta
+  Template-ID:   TPL-PROD-PROCESS
+  Version:       1.0.0
+  Last Updated:  2026-04-18
+  Changelog:
+    1.0.0 (2026-04-18) — Initial versioned baseline for prod.* repo convention.
+
+  ============================================================
+  processes/{process-id}.bpmn — Customer Business Process
+  ============================================================
+  Conceptual Stack Layer: Product (Business Process)
+  Space: Product (Application Engineering)
+  Lives in: io.openleap.prod.{product}/processes/{process-id}.bpmn
+  Authored by: Elara (export) or BPMN tool (Camunda Modeler,
+               bpmn.io) via its native XML export
+  Consumed by: Decompose (feature-selection traceability),
+               human review on PR
+
+  Purpose
+  =======
+  A customer business process that drives the product's feature
+  selection. This is a STUB template — real BPMN authoring
+  happens in a BPMN 2.0 editor. The stub exists so product
+  authors know:
+
+    1. Where the file lives (processes/{id}.bpmn).
+    2. The file format (OMG BPMN 2.0 XML — http://www.omg.org/spec/BPMN/2.0/).
+    3. Which OpenLeap-specific attributes are expected on the
+       <bpmn:process> element (see the namespace declaration
+       and extensionElements below).
+
+  Required OpenLeap attributes on <bpmn:process>:
+    id               — the process ID (matches the file stem)
+    name             — human-readable process name
+    ol:productRef    — the product.yaml#metadata.id
+    ol:level         — L0 | L1 | L2 (see business-process.md §level)
+
+  See dev.hub architecture/product-repo-layout.md §3 and
+  artifacts/product/business-process.md for field definitions.
+  ============================================================
+-->
+<bpmn:definitions
+    xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+    xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+    xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ol="https://openleap.io/spec/product/bpmn-extensions"
+    targetNamespace="https://openleap.io/prod/{product-id}/processes"
+    id="Definitions_{process-id}">
+
+  <bpmn:process
+      id="{process-id}"
+      name="{Process Name}"
+      isExecutable="false"
+      ol:productRef="{product-id}"
+      ol:level="L0">
+
+    <bpmn:documentation>
+      {1-2 sentence description of what this process does and why
+       it is in scope for this product. Reference the capabilities
+       (BusinessCapability IDs) it fulfils.}
+    </bpmn:documentation>
+
+    <bpmn:extensionElements>
+      <!--
+        OpenLeap-specific process metadata. Consumed by
+        Decompose to trace process steps back to selected
+        features (features/selection.uvl) and to required
+        capabilities.
+      -->
+      <ol:processMetadata>
+        <ol:triggerType>{user_action|business_event|timer|external_signal}</ol:triggerType>
+        <ol:frequency>{e.g. ~20/day}</ol:frequency>
+        <ol:sla>{e.g. under 5 minutes per instance}</ol:sla>
+        <ol:outcome>{What the end state is.}</ol:outcome>
+        <ol:fulfilsCapabilities>
+          <ol:capabilityRef>{CAP-NNN}</ol:capabilityRef>
+        </ol:fulfilsCapabilities>
+        <!--
+          Optional: hint which platform features are expected to
+          serve each task. Decompose validates that the hinted
+          features are selected in features/selection.uvl.
+        -->
+        <ol:featureHints>
+          <!-- <ol:hint taskId="Task_1" featureId="F-SD-001-02"/> -->
+        </ol:featureHints>
+      </ol:processMetadata>
+    </bpmn:extensionElements>
+
+    <!--
+      ==========================================================
+      BPMN 2.0 flow elements go here.
+
+      A BPMN editor will populate <bpmn:startEvent>,
+      <bpmn:task>, <bpmn:userTask>, <bpmn:serviceTask>,
+      <bpmn:exclusiveGateway>, <bpmn:endEvent>, etc., along
+      with their <bpmn:sequenceFlow> connections and the
+      matching <bpmndi:BPMNDiagram> layout block.
+
+      Do NOT hand-edit the DI (diagram interchange) block —
+      let the editor manage it.
+      ==========================================================
+    -->
+
+    <bpmn:startEvent id="StartEvent_1" name="{Trigger}"/>
+    <bpmn:endEvent id="EndEvent_1" name="{Outcome}"/>
+
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="{process-id}">
+      <!-- DI elements are populated by the BPMN editor -->
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</bpmn:definitions>

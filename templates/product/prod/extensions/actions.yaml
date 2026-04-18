@@ -1,0 +1,114 @@
+# Template Meta
+# Template-ID:   TPL-PROD-EXT-ACTIONS
+# Version:       1.0.0
+# Last Updated:  2026-04-18
+# Changelog:
+#   1.0.0 (2026-04-18) — Initial versioned baseline for prod.* repo convention.
+
+# ============================================================
+# extensions/{F-ID}/actions.yaml — Extension-Action Fill
+#
+# Conceptual Stack Layer: Product-Feature (extension)
+# Space: Product (Application Engineering)
+# Lives in: io.openleap.prod.{product}/extensions/{F-ID}/actions.yaml
+# Companion files: fields.yaml, rules.yaml in the same directory
+# Authored by: Elara (export) or human architect
+# Consumed by: Decompose (validation), BFF at runtime
+#
+# Purpose
+# -------
+# Fills the extension points declared as `extension-action` in
+# the platform feature spec §9. Actions appear in the feature's
+# Screen Contract (AUI) at the designated extension zone as
+# buttons, menu items, or row actions.
+#
+# The platform feature declares WHERE actions may be added (the
+# zone) and WHICH task-model slot they belong to. Products
+# declare WHICH actions fill those slots and WHERE the BFF
+# should route the call.
+#
+# See sple-platform-concept.md §6 (feature-level extension
+# points).
+# ============================================================
+
+apiVersion: openleap.io/product-spec/v1
+kind: ExtensionActions
+
+metadata:
+  featureId: F-{SUITE}-{NNN}
+  product: "{product-id}"
+
+# ------------------------------------------------------------
+# Action fills.
+#
+# `extensionPointId` matches the declared `extension-action`
+# hook in the feature spec. `zone` names the AUI extension
+# zone the action is rendered into.
+# ------------------------------------------------------------
+extensions:
+
+  - extensionPointId: "ext.{feature}.actions.toolbar"
+    zone: "detail.toolbar.extensions"
+
+    actions:
+      - id: "export-to-legacy"
+        label: "Export to Legacy ERP"
+        icon: "download"
+        kind: "button"                       # button | menu-item | row-action
+        confirm:
+          title: "Export this order?"
+          body: "The export is asynchronous and cannot be undone."
+          confirmLabel: "Export"
+          cancelLabel: "Cancel"
+
+        # BFF routing
+        routing:
+          target: "custom-service"            # custom-service | platform-endpoint
+          service: "cs-legacy-export"
+          endpoint: "POST /api/extensions/orders/export"
+          timeoutMs: 5000
+          failureMode: "toast-error"           # toast-error | banner | silent
+
+        # Inputs passed to the custom service
+        input:
+          orderId: "view.order.id"
+          exportChannel: "literal:legacy-edi"
+
+        # Persona gating
+        persona:
+          visibleFor: ["sales-manager"]
+          enabledFor: ["sales-manager"]
+
+        # Preconditions evaluated against the view-model
+        enabledWhen: "view.order.status == 'confirmed'"
+
+  - extensionPointId: "ext.{feature}.actions.rowMenu"
+    zone: "list.row.actions.extensions"
+
+    actions:
+      - id: "duplicate-to-new-project"
+        label: "Duplicate to Project..."
+        kind: "menu-item"
+        routing:
+          target: "custom-service"
+          service: "cs-order-duplicator"
+          endpoint: "POST /api/extensions/orders/duplicate"
+          timeoutMs: 3000
+          failureMode: "toast-error"
+        input:
+          sourceOrderId: "row.id"
+          targetProjectCode: "prompt:project-code-picker"
+
+  # ----------------------------------------------------------
+  # Template entry — copy per action
+  # ----------------------------------------------------------
+  # - extensionPointId: "ext.{feature}.actions.{slot}"
+  #   zone: "{aui-zone-name}"
+  #   actions:
+  #     - id: "{kebab-case-id}"
+  #       label: "{User-visible label}"
+  #       kind: "button|menu-item|row-action"
+  #       routing: { ... }
+  #       input: { ... }
+  #       persona: { ... }
+  #       enabledWhen: "{expression}"

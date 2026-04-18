@@ -1,6 +1,6 @@
 {
   "$schema": "template-registry.schema.json",
-  "lastUpdated": "2026-04-03",
+  "lastUpdated": "2026-04-18",
   "templates": [
     {
       "id": "TPL-SVC",
@@ -265,6 +265,215 @@
           "date": "2026-04-03",
           "classification": "baseline",
           "summary": "Initial versioned baseline"
+        }
+      ]
+    },
+    {
+      "id": "TPL-PROD-MANIFEST",
+      "file": "product/prod/product.yaml",
+      "name": "Product Manifest (prod.* repo)",
+      "format": "yaml",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-18",
+      "owner": "Architecture Team",
+      "scope": "prod-repo",
+      "dependsOn": [],
+      "dependedBy": ["TPL-PROD-SEL", "TPL-PROD-BIND", "TPL-PROD-BFF-PCFG"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-18",
+          "classification": "baseline",
+          "summary": "Initial baseline for io.openleap.prod.{product} manifest"
+        }
+      ]
+    },
+    {
+      "id": "TPL-PROD-SEL",
+      "file": "product/prod/features/selection.uvl",
+      "name": "Product Feature Selection (UVL)",
+      "format": "uvl",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-18",
+      "owner": "Architecture Team",
+      "scope": "prod-repo",
+      "dependsOn": ["TPL-PROD-MANIFEST", "TPL-UVL-PLAT"],
+      "dependedBy": ["TPL-PROD-BFF-PCFG"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-18",
+          "classification": "baseline",
+          "summary": "Initial baseline — references dev.spec catalog, inclusion modes"
+        }
+      ]
+    },
+    {
+      "id": "TPL-PROD-BIND",
+      "file": "product/prod/variability/bindings.yaml",
+      "name": "Variability Bindings",
+      "format": "yaml",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-18",
+      "owner": "Architecture Team",
+      "scope": "prod-repo",
+      "dependsOn": ["TPL-PROD-SEL"],
+      "dependedBy": ["TPL-PROD-BFF-PCFG"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-18",
+          "classification": "baseline",
+          "summary": "Initial baseline — compile/deploy/runtime binding times"
+        }
+      ]
+    },
+    {
+      "id": "TPL-PROD-EXT-FIELDS",
+      "file": "product/prod/extensions/fields.yaml",
+      "name": "Extension Fields Fill",
+      "format": "yaml",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-18",
+      "owner": "Architecture Team",
+      "scope": "prod-repo",
+      "dependsOn": ["TPL-PROD-SEL"],
+      "dependedBy": ["TPL-PROD-BFF-PCFG"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-18",
+          "classification": "baseline",
+          "summary": "Initial baseline — fills feature-level extension-field points"
+        }
+      ]
+    },
+    {
+      "id": "TPL-PROD-EXT-RULES",
+      "file": "product/prod/extensions/rules.yaml",
+      "name": "Extension Rules Fill",
+      "format": "yaml",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-18",
+      "owner": "Architecture Team",
+      "scope": "prod-repo",
+      "dependsOn": ["TPL-PROD-SEL"],
+      "dependedBy": ["TPL-PROD-BFF-PCFG"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-18",
+          "classification": "baseline",
+          "summary": "Initial baseline — fills feature-level extension-rule points"
+        }
+      ]
+    },
+    {
+      "id": "TPL-PROD-EXT-ACTIONS",
+      "file": "product/prod/extensions/actions.yaml",
+      "name": "Extension Actions Fill",
+      "format": "yaml",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-18",
+      "owner": "Architecture Team",
+      "scope": "prod-repo",
+      "dependsOn": ["TPL-PROD-SEL"],
+      "dependedBy": ["TPL-PROD-BFF-PCFG"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-18",
+          "classification": "baseline",
+          "summary": "Initial baseline — fills feature-level extension-action points"
+        }
+      ]
+    },
+    {
+      "id": "TPL-PROD-PERSONA",
+      "file": "product/prod/personas/persona.yaml",
+      "name": "Product Persona (Elara-derived)",
+      "format": "yaml",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-18",
+      "owner": "Architecture Team",
+      "scope": "prod-repo",
+      "dependsOn": ["TPL-PROD-MANIFEST"],
+      "dependedBy": ["TPL-PROD-BFF-PCFG", "TPL-PROD-AUI-OVR"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-18",
+          "classification": "baseline",
+          "summary": "Initial baseline — actor-derived persona with IAM roles and device profile"
+        }
+      ]
+    },
+    {
+      "id": "TPL-PROD-PROCESS",
+      "file": "product/prod/processes/process.bpmn",
+      "name": "Customer BPMN Process",
+      "format": "bpmn",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-18",
+      "owner": "Architecture Team",
+      "scope": "prod-repo",
+      "dependsOn": ["TPL-PROD-MANIFEST"],
+      "dependedBy": [],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-18",
+          "classification": "baseline",
+          "summary": "Initial baseline — BPMN 2.0 stub with OpenLeap ol:* extensions"
+        }
+      ]
+    },
+    {
+      "id": "TPL-PROD-AUI-OVR",
+      "file": "product/prod/screen-overrides/feature.aui.yaml",
+      "name": "Product AUI Overrides",
+      "format": "yaml",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-18",
+      "owner": "Architecture Team",
+      "scope": "prod-repo",
+      "dependsOn": ["TPL-AUI", "TPL-PROD-SEL"],
+      "dependedBy": ["TPL-PROD-BFF-PCFG"],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-18",
+          "classification": "baseline",
+          "summary": "Initial baseline — persona-gated zones and CUI picks; no rule changes"
+        }
+      ]
+    },
+    {
+      "id": "TPL-PROD-BFF-PCFG",
+      "file": "product/prod/bff/productconfig.yaml",
+      "name": "BFF productconfig.yaml (release artifact)",
+      "format": "yaml",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-18",
+      "owner": "Architecture Team",
+      "scope": "prod-repo",
+      "dependsOn": [
+        "TPL-PROD-MANIFEST",
+        "TPL-PROD-SEL",
+        "TPL-PROD-BIND",
+        "TPL-PROD-EXT-FIELDS",
+        "TPL-PROD-EXT-RULES",
+        "TPL-PROD-EXT-ACTIONS",
+        "TPL-PROD-PERSONA",
+        "TPL-PROD-AUI-OVR"
+      ],
+      "dependedBy": [],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-18",
+          "classification": "baseline",
+          "summary": "Initial baseline — runtime release artifact consumed by the BFF"
         }
       ]
     }
