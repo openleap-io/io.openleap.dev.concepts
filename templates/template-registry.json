@@ -7,12 +7,28 @@
       "file": "platform/domain/domain-service-spec.md",
       "name": "Domain / Service Specification",
       "format": "markdown",
-      "version": "1.0.0",
-      "updatedAt": "2026-04-03",
+      "version": "1.1.0",
+      "updatedAt": "2026-04-15",
       "owner": "Architecture Team",
-      "dependsOn": ["TPL-FEAT", "TPL-UVL-LEAF"],
-      "dependedBy": ["TPL-SUITE", "TPL-FEAT"],
+      "dependsOn": [
+        "TPL-FEAT",
+        "TPL-UVL-LEAF",
+        "TPL-RISK",
+        "TPL-SLO"
+      ],
+      "dependedBy": [
+        "TPL-SUITE",
+        "TPL-FEAT",
+        "TPL-RES",
+        "TPL-PIPE"
+      ],
       "changelog": [
+        {
+          "version": "1.1.0",
+          "date": "2026-04-15",
+          "classification": "minor",
+          "summary": "Added \u00a79.4 DORA ICT Risk References, \u00a79.5 SBOM Requirements, \u00a710.5 SLI/SLO Reference, \u00a710.6 Resilience Requirements (all optional)"
+        },
         {
           "version": "1.0.0",
           "date": "2026-04-03",
@@ -26,12 +42,24 @@
       "file": "platform/suite/suite-spec.md",
       "name": "Suite Architecture Specification",
       "format": "markdown",
-      "version": "1.0.0",
-      "updatedAt": "2026-04-03",
+      "version": "1.1.0",
+      "updatedAt": "2026-04-15",
       "owner": "Architecture Team",
-      "dependsOn": ["TPL-SVC", "TPL-FCOMP"],
-      "dependedBy": ["TPL-PROD"],
+      "dependsOn": [
+        "TPL-SVC",
+        "TPL-FCOMP",
+        "TPL-RISK"
+      ],
+      "dependedBy": [
+        "TPL-PROD"
+      ],
       "changelog": [
+        {
+          "version": "1.1.0",
+          "date": "2026-04-15",
+          "classification": "minor",
+          "summary": "Added \u00a77.5 DORA Compliance Controls, \u00a77.6 Operational Resilience (all optional)"
+        },
         {
           "version": "1.0.0",
           "date": "2026-04-03",
@@ -48,8 +76,15 @@
       "version": "1.0.0",
       "updatedAt": "2026-04-03",
       "owner": "Architecture Team",
-      "dependsOn": ["TPL-SVC", "TPL-AUI", "TPL-UVL-LEAF"],
-      "dependedBy": ["TPL-PROD", "TPL-SUITE"],
+      "dependsOn": [
+        "TPL-SVC",
+        "TPL-AUI",
+        "TPL-UVL-LEAF"
+      ],
+      "dependedBy": [
+        "TPL-PROD",
+        "TPL-SUITE"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
@@ -67,8 +102,12 @@
       "version": "1.0.0",
       "updatedAt": "2026-04-03",
       "owner": "Architecture Team",
-      "dependsOn": ["TPL-UVL-COMP"],
-      "dependedBy": ["TPL-SUITE"],
+      "dependsOn": [
+        "TPL-UVL-COMP"
+      ],
+      "dependedBy": [
+        "TPL-SUITE"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
@@ -83,12 +122,21 @@
       "file": "product/product-spec.md",
       "name": "Product Specification",
       "format": "markdown",
-      "version": "1.0.0",
-      "updatedAt": "2026-04-03",
+      "version": "1.1.0",
+      "updatedAt": "2026-04-15",
       "owner": "Architecture Team",
-      "dependsOn": ["TPL-FEAT", "TPL-SUITE"],
+      "dependsOn": [
+        "TPL-FEAT",
+        "TPL-SUITE"
+      ],
       "dependedBy": [],
       "changelog": [
+        {
+          "version": "1.1.0",
+          "date": "2026-04-15",
+          "classification": "minor",
+          "summary": "Added \u00a7SS21 Compliance & Operational Requirements (DORA). Appendix renumbered to \u00a7SS22 (all optional)"
+        },
         {
           "version": "1.0.0",
           "date": "2026-04-03",
@@ -125,7 +173,9 @@
       "updatedAt": "2026-04-03",
       "owner": "Architecture Team",
       "dependsOn": [],
-      "dependedBy": ["TPL-FEAT"],
+      "dependedBy": [
+        "TPL-FEAT"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
@@ -144,7 +194,11 @@
       "updatedAt": "2026-04-03",
       "owner": "Architecture Team",
       "dependsOn": [],
-      "dependedBy": ["TPL-UVL-COMP", "TPL-FEAT", "TPL-SVC"],
+      "dependedBy": [
+        "TPL-UVL-COMP",
+        "TPL-FEAT",
+        "TPL-SVC"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
@@ -162,8 +216,13 @@
       "version": "1.0.0",
       "updatedAt": "2026-04-03",
       "owner": "Architecture Team",
-      "dependsOn": ["TPL-UVL-LEAF"],
-      "dependedBy": ["TPL-UVL-CAT", "TPL-FCOMP"],
+      "dependsOn": [
+        "TPL-UVL-LEAF"
+      ],
+      "dependedBy": [
+        "TPL-UVL-CAT",
+        "TPL-FCOMP"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
@@ -181,8 +240,12 @@
       "version": "1.0.0",
       "updatedAt": "2026-04-03",
       "owner": "Architecture Team",
-      "dependsOn": ["TPL-UVL-COMP"],
-      "dependedBy": ["TPL-UVL-PLAT"],
+      "dependsOn": [
+        "TPL-UVL-COMP"
+      ],
+      "dependedBy": [
+        "TPL-UVL-PLAT"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
@@ -200,7 +263,9 @@
       "version": "1.0.0",
       "updatedAt": "2026-04-03",
       "owner": "Architecture Team",
-      "dependsOn": ["TPL-UVL-CAT"],
+      "dependsOn": [
+        "TPL-UVL-CAT"
+      ],
       "dependedBy": [],
       "changelog": [
         {
@@ -220,7 +285,9 @@
       "updatedAt": "2026-04-03",
       "owner": "Architecture Team",
       "dependsOn": [],
-      "dependedBy": ["TPL-PROD"],
+      "dependedBy": [
+        "TPL-PROD"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
@@ -239,7 +306,9 @@
       "updatedAt": "2026-04-03",
       "owner": "Architecture Team",
       "dependsOn": [],
-      "dependedBy": ["TPL-FEAT"],
+      "dependedBy": [
+        "TPL-FEAT"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
@@ -257,7 +326,11 @@
       "version": "1.0.0",
       "updatedAt": "2026-04-03",
       "owner": "Architecture Team",
-      "dependsOn": ["TPL-FEAT", "TPL-AUI", "TPL-PROD"],
+      "dependsOn": [
+        "TPL-FEAT",
+        "TPL-AUI",
+        "TPL-PROD"
+      ],
       "dependedBy": [],
       "changelog": [
         {
@@ -278,7 +351,11 @@
       "owner": "Architecture Team",
       "scope": "prod-repo",
       "dependsOn": [],
-      "dependedBy": ["TPL-PROD-SEL", "TPL-PROD-BIND", "TPL-PROD-BFF-PCFG"],
+      "dependedBy": [
+        "TPL-PROD-SEL",
+        "TPL-PROD-BIND",
+        "TPL-PROD-BFF-PCFG"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
@@ -297,14 +374,19 @@
       "updatedAt": "2026-04-18",
       "owner": "Architecture Team",
       "scope": "prod-repo",
-      "dependsOn": ["TPL-PROD-MANIFEST", "TPL-UVL-PLAT"],
-      "dependedBy": ["TPL-PROD-BFF-PCFG"],
+      "dependsOn": [
+        "TPL-PROD-MANIFEST",
+        "TPL-UVL-PLAT"
+      ],
+      "dependedBy": [
+        "TPL-PROD-BFF-PCFG"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
           "date": "2026-04-18",
           "classification": "baseline",
-          "summary": "Initial baseline — references dev.spec catalog, inclusion modes"
+          "summary": "Initial baseline \u2014 references dev.spec catalog, inclusion modes"
         }
       ]
     },
@@ -317,14 +399,18 @@
       "updatedAt": "2026-04-18",
       "owner": "Architecture Team",
       "scope": "prod-repo",
-      "dependsOn": ["TPL-PROD-SEL"],
-      "dependedBy": ["TPL-PROD-BFF-PCFG"],
+      "dependsOn": [
+        "TPL-PROD-SEL"
+      ],
+      "dependedBy": [
+        "TPL-PROD-BFF-PCFG"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
           "date": "2026-04-18",
           "classification": "baseline",
-          "summary": "Initial baseline — compile/deploy/runtime binding times"
+          "summary": "Initial baseline \u2014 compile/deploy/runtime binding times"
         }
       ]
     },
@@ -337,14 +423,18 @@
       "updatedAt": "2026-04-18",
       "owner": "Architecture Team",
       "scope": "prod-repo",
-      "dependsOn": ["TPL-PROD-SEL"],
-      "dependedBy": ["TPL-PROD-BFF-PCFG"],
+      "dependsOn": [
+        "TPL-PROD-SEL"
+      ],
+      "dependedBy": [
+        "TPL-PROD-BFF-PCFG"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
           "date": "2026-04-18",
           "classification": "baseline",
-          "summary": "Initial baseline — fills feature-level extension-field points"
+          "summary": "Initial baseline \u2014 fills feature-level extension-field points"
         }
       ]
     },
@@ -357,14 +447,18 @@
       "updatedAt": "2026-04-18",
       "owner": "Architecture Team",
       "scope": "prod-repo",
-      "dependsOn": ["TPL-PROD-SEL"],
-      "dependedBy": ["TPL-PROD-BFF-PCFG"],
+      "dependsOn": [
+        "TPL-PROD-SEL"
+      ],
+      "dependedBy": [
+        "TPL-PROD-BFF-PCFG"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
           "date": "2026-04-18",
           "classification": "baseline",
-          "summary": "Initial baseline — fills feature-level extension-rule points"
+          "summary": "Initial baseline \u2014 fills feature-level extension-rule points"
         }
       ]
     },
@@ -377,14 +471,18 @@
       "updatedAt": "2026-04-18",
       "owner": "Architecture Team",
       "scope": "prod-repo",
-      "dependsOn": ["TPL-PROD-SEL"],
-      "dependedBy": ["TPL-PROD-BFF-PCFG"],
+      "dependsOn": [
+        "TPL-PROD-SEL"
+      ],
+      "dependedBy": [
+        "TPL-PROD-BFF-PCFG"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
           "date": "2026-04-18",
           "classification": "baseline",
-          "summary": "Initial baseline — fills feature-level extension-action points"
+          "summary": "Initial baseline \u2014 fills feature-level extension-action points"
         }
       ]
     },
@@ -397,14 +495,19 @@
       "updatedAt": "2026-04-18",
       "owner": "Architecture Team",
       "scope": "prod-repo",
-      "dependsOn": ["TPL-PROD-MANIFEST"],
-      "dependedBy": ["TPL-PROD-BFF-PCFG", "TPL-PROD-AUI-OVR"],
+      "dependsOn": [
+        "TPL-PROD-MANIFEST"
+      ],
+      "dependedBy": [
+        "TPL-PROD-BFF-PCFG",
+        "TPL-PROD-AUI-OVR"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
           "date": "2026-04-18",
           "classification": "baseline",
-          "summary": "Initial baseline — actor-derived persona with IAM roles and device profile"
+          "summary": "Initial baseline \u2014 actor-derived persona with IAM roles and device profile"
         }
       ]
     },
@@ -417,14 +520,16 @@
       "updatedAt": "2026-04-18",
       "owner": "Architecture Team",
       "scope": "prod-repo",
-      "dependsOn": ["TPL-PROD-MANIFEST"],
+      "dependsOn": [
+        "TPL-PROD-MANIFEST"
+      ],
       "dependedBy": [],
       "changelog": [
         {
           "version": "1.0.0",
           "date": "2026-04-18",
           "classification": "baseline",
-          "summary": "Initial baseline — BPMN 2.0 stub with OpenLeap ol:* extensions"
+          "summary": "Initial baseline \u2014 BPMN 2.0 stub with OpenLeap ol:* extensions"
         }
       ]
     },
@@ -437,14 +542,19 @@
       "updatedAt": "2026-04-18",
       "owner": "Architecture Team",
       "scope": "prod-repo",
-      "dependsOn": ["TPL-AUI", "TPL-PROD-SEL"],
-      "dependedBy": ["TPL-PROD-BFF-PCFG"],
+      "dependsOn": [
+        "TPL-AUI",
+        "TPL-PROD-SEL"
+      ],
+      "dependedBy": [
+        "TPL-PROD-BFF-PCFG"
+      ],
       "changelog": [
         {
           "version": "1.0.0",
           "date": "2026-04-18",
           "classification": "baseline",
-          "summary": "Initial baseline — persona-gated zones and CUI picks; no rule changes"
+          "summary": "Initial baseline \u2014 persona-gated zones and CUI picks; no rule changes"
         }
       ]
     },
@@ -473,7 +583,134 @@
           "version": "1.0.0",
           "date": "2026-04-18",
           "classification": "baseline",
-          "summary": "Initial baseline — runtime release artifact consumed by the BFF"
+          "summary": "Initial baseline \u2014 runtime release artifact consumed by the BFF"
+        }
+      ]
+    },
+    {
+      "id": "TPL-RISK",
+      "file": "platform/governance/risk-register.md",
+      "name": "ICT Risk Register",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-15",
+      "owner": "Security / Architecture Team",
+      "dependsOn": [],
+      "dependedBy": [
+        "TPL-SVC",
+        "TPL-SUITE"
+      ],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-15",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline \u2014 DORA ICT risk management"
+        }
+      ]
+    },
+    {
+      "id": "TPL-SLO",
+      "file": "platform/domain/sli-slo-spec.md",
+      "name": "SLI/SLO Specification",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-15",
+      "owner": "SRE / Architecture Team",
+      "dependsOn": [
+        "TPL-SVC"
+      ],
+      "dependedBy": [
+        "TPL-IRS",
+        "TPL-RES"
+      ],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-15",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline \u2014 DORA operational resilience"
+        }
+      ]
+    },
+    {
+      "id": "TPL-IRS",
+      "file": "platform/governance/incident-response-spec.md",
+      "name": "Incident Response Specification",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-15",
+      "owner": "Security / Architecture Team",
+      "dependsOn": [
+        "TPL-SLO"
+      ],
+      "dependedBy": [],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-15",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline \u2014 DORA incident management"
+        }
+      ]
+    },
+    {
+      "id": "TPL-PIPE",
+      "file": "platform/governance/devsecops-pipeline-spec.md",
+      "name": "DevSecOps Pipeline Specification",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-15",
+      "owner": "DevOps / Security Team",
+      "dependsOn": [],
+      "dependedBy": [],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-15",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline \u2014 DORA change management"
+        }
+      ]
+    },
+    {
+      "id": "TPL-RES",
+      "file": "platform/governance/resilience-testing-spec.md",
+      "name": "Resilience Testing Specification",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-15",
+      "owner": "Platform Engineering / SRE Team",
+      "dependsOn": [
+        "TPL-SLO",
+        "TPL-SVC"
+      ],
+      "dependedBy": [],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-15",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline \u2014 DORA resilience testing"
+        }
+      ]
+    },
+    {
+      "id": "TPL-TPR",
+      "file": "platform/governance/third-party-risk-assessment.md",
+      "name": "Third-Party Risk Assessment",
+      "format": "markdown",
+      "version": "1.0.0",
+      "updatedAt": "2026-04-15",
+      "owner": "Security / Procurement Team",
+      "dependsOn": [],
+      "dependedBy": [],
+      "changelog": [
+        {
+          "version": "1.0.0",
+          "date": "2026-04-15",
+          "classification": "baseline",
+          "summary": "Initial versioned baseline \u2014 DORA third-party risk management"
         }
       ]
     }

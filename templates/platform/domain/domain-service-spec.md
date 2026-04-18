@@ -1,8 +1,12 @@
 <!-- Template Meta
      Template-ID:   TPL-SVC
-     Version:       1.0.0
-     Last Updated:  2026-04-03
+     Version:       1.1.0
+     Last Updated:  2026-04-15
      Changelog:
+       1.1.0 (2026-04-15) — Added §9.4 DORA ICT Risk References, §9.5 SBOM
+                             Requirements, §10.5 SLI/SLO Reference, §10.6
+                             Resilience Requirements. All new sections are
+                             optional (MINOR change per GOV-TPL-001).
        1.0.0 (2026-04-03) — Initial versioned baseline.
 -->
 
@@ -1283,6 +1287,35 @@ erDiagram
    - Logs retained for {X} years
    - Includes: who, what, when, from where
 
+### 9.4 DORA ICT Risk References
+
+<!-- optional — DORA compliance (added in v1.1.0)
+     Reference risk register entries that affect this service.
+     Governed by GOV-DORA-002 (ICT Risk Management Policy). -->
+
+**Applicable Risk Register Entries:**
+
+| Risk ID | Title | Risk Score | Treatment | Status |
+|---------|-------|------------|-----------|--------|
+| `RISK-{SUITE}-{NNN}` | {Risk title} | {score} | {mitigate / accept / transfer / avoid} | {open / mitigated / accepted} |
+
+**Risk Register Reference:** `risk-register-{suite}.md` or `risk-register-platform.md`
+
+### 9.5 SBOM Requirements
+
+<!-- optional — DORA compliance (added in v1.1.0)
+     Define SBOM generation requirements for this service.
+     Governed by GOV-DORA-005 (Third-Party Governance). -->
+
+| Aspect | Value |
+|--------|-------|
+| **SBOM Format** | {CycloneDX (preferred) / SPDX} |
+| **Generation Point** | {CI/CD pipeline — ref TPL-PIPE} |
+| **Included Components** | {All direct and transitive dependencies} |
+| **Storage** | {Alongside build artifacts} |
+| **Retention** | {5 years minimum} |
+| **Update Frequency** | {Every build} |
+
 ---
 
 ## 10. Quality Attributes
@@ -1341,6 +1374,41 @@ erDiagram
 - Health checks: `/actuator/health` endpoint
 - Metrics: Response times, error rates, queue depths
 - Alerts: Error rate > 5%, response time > 500ms
+
+### 10.5 SLI/SLO Reference
+
+<!-- optional — DORA compliance (added in v1.1.0)
+     Link to the companion SLI/SLO specification for this service.
+     Governed by GOV-DORA-003 (Incident Management Policy). -->
+
+**Companion SLI/SLO Spec:** `SLO-{SUITE}-{DOMAIN}-{NNN}`
+
+| SLO | Target | Window |
+|-----|--------|--------|
+| Availability | {e.g., 99.9%} | {e.g., 30-day rolling} |
+| Latency (p95) | {e.g., < 100ms} | {e.g., 5-minute window} |
+| Error Rate | {e.g., < 0.1%} | {e.g., 1-hour window} |
+
+**Full SLI/SLO details:** See companion `sli-slo-spec-{domain}.md` (TPL-SLO)
+
+### 10.6 Resilience Requirements
+
+<!-- optional — DORA compliance (added in v1.1.0)
+     Service-level resilience requirements beyond §10.2 Availability.
+     Governed by GOV-DORA-001 (DORA Compliance Framework). -->
+
+| Aspect | Value |
+|--------|-------|
+| **RTO (Recovery Time Objective)** | {e.g., < 15 minutes} |
+| **RPO (Recovery Point Objective)** | {e.g., < 5 minutes} |
+| **MTTR Target** | {e.g., < 30 minutes} |
+| **Backup Strategy** | {full / incremental / differential} |
+| **Backup Frequency** | {e.g., daily full, hourly incremental} |
+| **Backup Retention** | {e.g., 30 days} |
+| **Restore Test Frequency** | {e.g., quarterly} |
+| **Failover Strategy** | {e.g., automatic failover to read replica} |
+
+**Resilience Testing Spec Reference:** `RES-{SUITE}-{NNN}` (TPL-RES)
 
 ---
 

@@ -1,8 +1,11 @@
 <!-- Template Meta
      Template-ID:   TPL-PROD
-     Version:       1.0.0
-     Last Updated:  2026-04-03
+     Version:       1.1.0
+     Last Updated:  2026-04-15
      Changelog:
+       1.1.0 (2026-04-15) — Added §SS21 Compliance & Operational Requirements
+                             (DORA). New section is optional (MINOR change per
+                             GOV-TPL-001).
        1.0.0 (2026-04-03) — Initial versioned baseline.
 -->
 
@@ -954,18 +957,65 @@ graph TD
 
 ---
 
+<!-- ============================================================
+     SS21 --- COMPLIANCE & OPERATIONAL REQUIREMENTS (DORA)
+     optional — DORA compliance (added in v1.1.0)
+     ============================================================ -->
+
+## SS21. Compliance & Operational Requirements
+
+<!-- optional — DORA compliance (added in v1.1.0)
+     Product-level DORA compliance posture. Documents which governance
+     policies apply, what compliance evidence this product produces,
+     and how the product maps to platform-level DORA controls.
+     Governed by GOV-DORA-001 (DORA Compliance Framework). -->
+
+### 21.1 Applicable Governance
+
+| Governance Document | Applicability | Notes |
+|--------------------|--------------:|-------|
+| GOV-DORA-001 (DORA Compliance Framework) | ✓ | {Product serves regulated financial entity} |
+| GOV-DORA-002 (ICT Risk Management) | ✓ | {Risks tracked in suite-level risk registers} |
+| GOV-DORA-003 (Incident Management) | ✓ | {Incident response via suite-level IRS} |
+| GOV-DORA-004 (Change Management) | ✓ | {All deployments follow deployment gates} |
+| GOV-DORA-005 (Third-Party Governance) | ✓ | {Third-party providers assessed per TPL-TPR} |
+
+### 21.2 Product Compliance Posture
+
+<!-- Summarize how this product demonstrates DORA compliance through
+     its selected platform features and custom services. -->
+
+| DORA Pillar | Product Evidence | Reference |
+|-------------|-----------------|-----------|
+| ICT Risk Management | {e.g., All selected features come from risk-assessed suites} | {Risk register IDs} |
+| Incident Reporting | {e.g., Product BFF routes health through platform monitoring} | {IRS IDs} |
+| Resilience Testing | {e.g., Product participates in quarterly suite-level resilience tests} | {RES IDs} |
+| Third-Party Risk | {e.g., Product uses {N} assessed third-party providers} | {TPR IDs} |
+| Change Management | {e.g., Product follows standard deployment pipeline with all gates} | GOV-DORA-004 |
+
+### 21.3 Product-Specific Compliance Requirements
+
+<!-- Any compliance requirements unique to this product's customer or
+     regulatory context that go beyond standard platform DORA controls. -->
+
+| Requirement | Source | Implementation | Status |
+|------------|--------|---------------|--------|
+| {e.g., Data residency — EU only} | {Customer contract} | {Cloud region restriction} | {Implemented / Planned} |
+
+---
+
 <!-- ================================================================
-     PART IV --- APPENDIX (SS21)
+     PART IV --- APPENDIX (SS22)
      ================================================================ -->
 
 <!-- ============================================================
-     SS21 --- APPENDIX
+     SS22 --- APPENDIX
      Change log, validation status, review, and approval.
      ============================================================ -->
 
-## SS21. Appendix
+## SS22. Appendix
 
-### 21.1 Decompose Validation Status
+### 22.1 Decompose Validation Status
 
 <!-- Updated by tooling after each validation run. -->
 
@@ -979,19 +1029,19 @@ graph TD
 | Cross-suite requires satisfied | {PASS / FAIL} | {Unsatisfied requires if FAIL} |
 | Feature gap analysis | {N gaps} | {List of selected leaf IDs without .md specs} |
 
-### 21.2 Open Questions
+### 22.2 Open Questions
 
 | ID | Question | Impact | Owner | Needed by |
 |---|---|---|---|---|
 | Q-001 | {Question} | {Validity / completeness / scope} | {Name} | {Date} |
 
-### 21.3 Change Log
+### 22.3 Change Log
 
 | Date | Version | Author | Changes |
 |---|---|---|---|
 | YYYY-MM-DD | 1.0 | {Name} | Initial product specification |
 
-### 21.4 Review & Approval
+### 22.4 Review & Approval
 
 **Status:** [DRAFT | IN REVIEW | APPROVED]
 

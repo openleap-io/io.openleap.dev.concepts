@@ -46,6 +46,14 @@ flowchart TD
         EC[Event Contract]
     end
 
+    subgraph DORA["DORA Compliance (Platform Space)"]
+        RR[ICT Risk Register]
+        SLO[SLI/SLO Spec]
+        IRS[Incident Response Spec]
+        PIPE[DevSecOps Pipeline Spec]
+        RES[Resilience Testing Spec]
+    end
+
     PS --> BP & BC
     BP --> ACT & BO & BE & BR & GT & BC & WC
     ACT --> PER
@@ -76,13 +84,24 @@ flowchart TD
     PF --> PROD
     BFF_C --> PROD
 
+    DS --> SLO
+    DS --> RR
+    SS --> RR & IRS
+    SLO --> IRS
+    SLO --> RES
+    DS --> RES
+    DS --> PIPE
+    RR --> SS
+
     classDef product fill:#e3f2fd,stroke:#1565c0
     classDef platform fill:#e8f5e9,stroke:#2e7d32
     classDef bridge fill:#fff3e0,stroke:#e65100
+    classDef dora fill:#fce4ec,stroke:#c62828
 
     class PS,BP,ACT,BO,BE,BR,BC,GT,QR,EI,KPI_A,FA,DEC,WC,PER,PROD product
     class SS,DS,PF,FM,AUI,BFF_C,FC,FCM,SFC,SCU,WS,PC,AC,EC platform
     class FR bridge
+    class RR,SLO,IRS,PIPE,RES dora
 ```
 
 ---
@@ -147,13 +166,27 @@ flowchart TD
 | Platform-Feature | Product | Product selects platform-features (via Feature Resolution). This closes the loop between the two spaces. | Product can express needs but can't receive concrete features from the platform. |
 | BFF Contract | Product | Product's BFF Configuration is derived from the BFF Contracts of selected features. | Product has no BFF config — frontend can't talk to backend through the BFF. |
 
+### DORA Compliance Edges
+
+| From | To | Purpose of Input | Without It |
+|------|-----|-----------------|-----------|
+| Domain/Service Spec | SLI/SLO Spec | Service identity, tier, and quality attributes (§10) define what SLIs to measure and what SLO targets to set. | SLOs are disconnected from the service they monitor — targets have no grounding in service architecture. |
+| Domain/Service Spec | ICT Risk Register | Service architecture, data classification (§9.1), and external dependencies inform risk identification. | Risks are assessed without understanding the service's attack surface and failure modes. |
+| Suite Spec | ICT Risk Register | Suite-level cross-cutting concerns (§7) and service landscape (§3) scope the risk register. | Risk register has no organizational boundary — risks can't be attributed to responsible teams. |
+| Suite Spec | Incident Response Spec | Suite's service landscape and cross-cutting concerns define incident scope and affected services. | Incident response covers arbitrary scope — no alignment with service ownership boundaries. |
+| SLI/SLO Spec | Incident Response Spec | SLO alerting configuration feeds incident detection. SLO breach triggers incident classification. | Incidents are detected reactively (user reports) rather than proactively (automated alerts). |
+| SLI/SLO Spec | Resilience Testing Spec | SLOs define the targets that resilience tests must validate under failure conditions. | Resilience tests have no success criteria — can't determine if the system is "resilient enough." |
+| Domain/Service Spec | Resilience Testing Spec | Service tier, availability targets (§10.2), and failure scenarios inform test scenario design. | Resilience tests don't reflect actual service architecture and failure modes. |
+| Domain/Service Spec | DevSecOps Pipeline Spec | Service technology stack, dependencies, and deployment model inform pipeline stage configuration. | Pipeline gates are generic — not tailored to the service's actual security surface. |
+| ICT Risk Register | Suite Spec | Identified risks feed back into suite-level cross-cutting concerns (§7.5) for visibility and tracking. | Suite architects are unaware of active risks affecting their services. |
+
 ---
 
 ## 3. Validation
 
 | Check | Result |
 |-------|--------|
-| Every artifact flows into at least one other | ✅ All 30 artifacts have outgoing edges |
+| Every artifact flows into at least one other | ✅ All 35 artifacts have outgoing edges (30 original + 5 DORA) |
 | Every edge has a stated purpose | ✅ All edges explain why the input is needed |
 | Every edge explains what breaks without it | ✅ All edges state the consequence of missing the input |
 | No circular dependencies between spaces | ✅ Product → Platform → Product is the intended loop (via Feature Resolution) |

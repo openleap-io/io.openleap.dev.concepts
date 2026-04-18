@@ -21,8 +21,8 @@ One consolidated template for specifying a microservice. Integrates content from
 | §6 | REST API | domain-spec (contracts.restApi) + api-contract | Base path, auth, endpoints with full request/response examples. Reference to OpenAPI file. |
 | §7 | Events & Integration | domain-spec (contracts.events + integration) | EDA pattern, published events (routing key, payload, consumers), consumed events, event flow diagrams, integration points. |
 | §8 | Data Model | domain-spec (dataModel) | Storage tech, tables with columns/types/constraints/indexes, reference data, ERD diagram. |
-| §9 | Security & Compliance | domain-spec (security) | Data classification, access control (roles → permissions), compliance requirements (GDPR, ISO, SOX). |
-| §10 | Quality Attributes | domain-spec (from Elara QualityRequirements) | Performance targets, availability SLAs, scalability, maintainability. |
+| §9 | Security & Compliance | domain-spec (security) | Data classification, access control (roles → permissions), compliance requirements (GDPR, ISO, SOX). §9.4 DORA ICT Risk References *(v1.1.0, optional)*. §9.5 SBOM Requirements *(v1.1.0, optional)*. |
+| §10 | Quality Attributes | domain-spec (from Elara QualityRequirements) | Performance targets, availability SLAs, scalability, maintainability. §10.5 SLI/SLO Reference *(v1.1.0, optional)*. §10.6 Resilience Requirements *(v1.1.0, optional)*. |
 | §11 | Feature Dependencies | *(new — from Conceptual Stack)* | Which platform-features (F-{SUITE}-{NNN}) call this service. Endpoints used per feature. BFF aggregation hints. |
 | §12 | Extension Points | *(new — from Conceptual Stack)* | Defined hooks: extension events, aggregate hooks, extension API endpoints. Open-Closed Principle. |
 | §13 | Migration & Evolution | domain-spec (implicit) | Data migration strategy, deprecation path, versioning policy. |
@@ -142,7 +142,115 @@ One consolidated template for a product — the application engineering delivera
 | §18 | BFF Configuration | product (bffConfiguration) | Deployment model, feature-gating, extension routing, view-model overrides. |
 | §19 | Navigation Architecture | product (navigationArchitecture) | How features are arranged in the UI. Entry points, navigation map. |
 | §20 | Custom Services | product (customServices) | Customer-specific services outside the platform. |
-| §21 | Appendix | — | Change log, review & approval. |
+| §21 | Compliance & Operational Requirements | *(new — DORA, v1.1.0)* | Applicable governance, product compliance posture, product-specific requirements. Optional. |
+| §22 | Appendix | — | Change log, review & approval. |
+
+---
+
+## DORA Governance Templates
+
+### Template: ICT Risk Register (`platform/governance/risk-register.md`)
+
+| Chapter | Title | Artifact Source(s) |
+|---------|-------|-------------------|
+| §0 | Risk Context | risk-register (scope, regulatory drivers) |
+| §1 | Risk Register | risk-register (entries with ID, category, probability, impact, treatment, controls) |
+| §2 | Risk Treatment Plans | risk-register (detailed mitigation actions per high/critical risk) |
+| §3 | Risk Heatmap | risk-register (probability × impact visualization) |
+| §4 | Residual Risk Assessment | risk-register (residual scores after controls) |
+| §5 | Change Log | — |
+
+**Governance:** GOV-DORA-002 (ICT Risk Management Policy)
+
+---
+
+### Template: SLI/SLO Specification (`platform/domain/sli-slo-spec.md`)
+
+| Chapter | Title | Artifact Source(s) |
+|---------|-------|-------------------|
+| §0 | Service Identity | sli-slo-spec (service reference, tier) |
+| §1 | Service Level Indicators | sli-slo-spec (metric definitions, measurement methods) |
+| §2 | Service Level Objectives | sli-slo-spec (targets, windows, breach consequences) |
+| §3 | Error Budget | sli-slo-spec (budget calculation, burn rate alerting) |
+| §4 | Alerting Configuration | sli-slo-spec (alert conditions, severity mapping) |
+| §5 | Dashboard Requirements | sli-slo-spec (visibility requirements) |
+| §6 | Review Cadence | sli-slo-spec (review frequency, adjustment criteria) |
+| §7 | Change Log | — |
+
+**Companion to:** Domain/Service Spec (TPL-SVC) §10.5
+
+---
+
+### Template: Incident Response Specification (`platform/governance/incident-response-spec.md`)
+
+| Chapter | Title | Artifact Source(s) |
+|---------|-------|-------------------|
+| §0 | Scope and Applicability | incident-response-spec (covered services/suites) |
+| §1 | Classification Matrix | incident-response-spec (severity to criteria mapping) |
+| §2 | Response Playbooks | incident-response-spec (per-severity: detection through recovery) |
+| §3 | Escalation Matrix | incident-response-spec (severity × time → action) |
+| §4 | Communication Plan | incident-response-spec (internal/external notification) |
+| §5 | DORA Regulatory Notification | incident-response-spec (trigger, timeline, format) |
+| §6 | Post-Mortem Template | incident-response-spec (structured post-mortem format) |
+| §7 | Testing and Exercises | incident-response-spec (tabletop, simulations, schedule) |
+| §8 | Change Log | — |
+
+**Governance:** GOV-DORA-003 (Incident Management Policy)
+
+---
+
+### Template: DevSecOps Pipeline Specification (`platform/governance/devsecops-pipeline-spec.md`)
+
+| Chapter | Title | Artifact Source(s) |
+|---------|-------|-------------------|
+| §0 | Pipeline Identity | pipeline-spec (scope, repositories, environments) |
+| §1 | Pipeline Stages | pipeline-spec (ordered stages with gates) |
+| §2 | Security Gates | pipeline-spec (SAST, SCA, secrets, container, IaC) |
+| §3 | SBOM Generation | pipeline-spec (format, tool, storage, retention) |
+| §4 | Policy as Code | pipeline-spec (OPA/Conftest rules) |
+| §5 | Approval Gates | pipeline-spec (change type × tier → approvals) |
+| §6 | Audit Artifacts | pipeline-spec (per-stage evidence) |
+| §7 | Compliance Thresholds | pipeline-spec (metric thresholds) |
+| §8 | Change Log | — |
+
+**Governance:** GOV-DORA-004 (Change Management & Deployment Governance)
+
+---
+
+### Template: Resilience Testing Specification (`platform/governance/resilience-testing-spec.md`)
+
+| Chapter | Title | Artifact Source(s) |
+|---------|-------|-------------------|
+| §0 | Scope | resilience-testing-spec (services, tiers, objectives) |
+| §1 | Recovery Objectives | resilience-testing-spec (RTO/RPO per tier) |
+| §2 | Failover Test Scenarios | resilience-testing-spec (scenarios with acceptance criteria) |
+| §3 | Chaos Engineering | resilience-testing-spec (experiments, blast radius, abort conditions) |
+| §4 | Load and Stress Testing | resilience-testing-spec (load profiles, success criteria) |
+| §5 | Backup and Recovery Testing | resilience-testing-spec (strategy, frequency, restore tests) |
+| §6 | DORA TLPT | resilience-testing-spec (threat-led penetration testing scope) |
+| §7 | Annual Test Schedule | resilience-testing-spec (quarterly test plan) |
+| §8 | Reporting and Evidence | resilience-testing-spec (documentation for audit) |
+| §9 | Change Log | — |
+
+**Governance:** GOV-DORA-001 (DORA Compliance Framework)
+
+---
+
+### Template: Third-Party Risk Assessment (`platform/governance/third-party-risk-assessment.md`)
+
+| Chapter | Title | Artifact Source(s) |
+|---------|-------|-------------------|
+| §0 | Provider Identity | third-party-assessment (provider, contract, criticality) |
+| §1 | Service Description | third-party-assessment (SLAs, data, locations) |
+| §2 | Risk Assessment | third-party-assessment (certifications, security posture) |
+| §3 | Contractual Review | third-party-assessment (DORA Art. 30 clause checklist) |
+| §4 | Concentration Risk | third-party-assessment (dependency analysis, alternatives) |
+| §5 | Exit Strategy | third-party-assessment (migration plan, data portability) |
+| §6 | Monitoring Plan | third-party-assessment (continuous monitoring, triggers) |
+| §7 | SBOM Integration | third-party-assessment (dependency tracking) |
+| §8 | Change Log | — |
+
+**Governance:** GOV-DORA-005 (Third-Party ICT Provider & Supply Chain Governance)
 
 ---
 

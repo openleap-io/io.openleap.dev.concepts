@@ -1,8 +1,11 @@
 <!-- Template Meta
      Template-ID:   TPL-SUITE
-     Version:       1.0.0
-     Last Updated:  2026-04-03
+     Version:       1.1.0
+     Last Updated:  2026-04-15
      Changelog:
+       1.1.0 (2026-04-15) — Added §7.5 DORA Compliance Controls, §7.6 Operational
+                             Resilience. All new sections are optional (MINOR change
+                             per GOV-TPL-001).
        1.0.0 (2026-04-03) — Initial versioned baseline.
 -->
 
@@ -666,6 +669,53 @@ graph TD
 | {e.g., Journal Entry} | {e.g., 10 years} | {e.g., HGB SS257} | `archive` / `delete` / `anonymize` |
 | {e.g., Audit Log} | {e.g., 90 days} | {e.g., Internal policy} | `delete` |
 | {e.g., User Session} | {e.g., 30 days} | {e.g., GDPR Art. 17} | `anonymize` |
+
+### 7.5 DORA Compliance Controls
+
+<!-- optional — DORA compliance (added in v1.1.0)
+     Suite-level DORA compliance requirements. Documents how this suite
+     addresses ICT risk, incident response, and third-party management.
+     Governed by GOV-DORA-001 (DORA Compliance Framework). -->
+
+**Risk Register Reference:** `RISK-{SUITE}-REG` (see TPL-RISK)
+
+| DORA Control Area | Suite-Level Approach | Governance Reference |
+|-------------------|---------------------|---------------------|
+| ICT Risk Management | {e.g., Risk register maintained per suite, reviewed quarterly} | GOV-DORA-002 |
+| Incident Response | {e.g., Suite-level IRS covering all {N} services} | GOV-DORA-003 |
+| Third-Party Risk | {e.g., {N} critical third-party providers assessed} | GOV-DORA-005 |
+| Change Management | {e.g., All changes follow GOV-DORA-004 deployment gates} | GOV-DORA-004 |
+| SBOM Coverage | {e.g., All {N} services produce CycloneDX SBOMs per build} | GOV-DORA-005 §5 |
+
+**Incident Response Spec:** `IRS-{SUITE}-{NNN}` (see TPL-IRS)
+**Third-Party Assessments:** {List TPR-{PROVIDER}-{NNN} references for critical providers}
+
+### 7.6 Operational Resilience
+
+<!-- optional — DORA compliance (added in v1.1.0)
+     Suite-level resilience posture: aggregate RTO/RPO, inter-service
+     failover, data recovery strategy.
+     Governed by GOV-DORA-001 (DORA Compliance Framework). -->
+
+**Suite-Level Recovery Objectives:**
+
+| Metric | Target | Rationale |
+|--------|--------|-----------|
+| Suite RTO | {e.g., < 30 minutes} | {All services restored within this window} |
+| Suite RPO | {e.g., < 10 minutes} | {Maximum acceptable data loss across suite} |
+| Suite MTTR | {e.g., < 1 hour} | {Mean time to restore full suite functionality} |
+
+**Inter-Service Failover:**
+- {Describe how services within this suite handle partial failures}
+- {e.g., "If {service-A} is unavailable, {service-B} continues with cached data"}
+- {e.g., "Circuit breakers configured with 30s timeout, 5 failure threshold"}
+
+**Data Recovery Strategy:**
+- {Describe suite-level backup coordination}
+- {e.g., "All services use daily full + hourly incremental backups"}
+- {e.g., "Cross-service restore tested quarterly as a unit"}
+
+**Resilience Testing Spec:** `RES-{SUITE}-{NNN}` (see TPL-RES)
 
 ---
 

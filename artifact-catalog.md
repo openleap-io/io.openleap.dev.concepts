@@ -572,6 +572,141 @@ Standard README for implementation repositories. Covers operational and develope
 
 ---
 
+### 3.14 ICT Risk Register
+
+Documents identified ICT risks, their assessment, treatment, and monitoring status. Risk registers exist at suite level (risks specific to a suite's services) and platform level (cross-cutting infrastructure and operational risks). Governed by GOV-DORA-002 (ICT Risk Management Policy).
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| id | string | ✓ | Pattern: `RISK-{SUITE}-{NNN}` (suite-level) or `RISK-PLAT-{NNN}` (platform-wide) |
+| title | string | ✓ | Concise risk title |
+| category | enum | ✓ | `infrastructure` · `application` · `data` · `third_party` · `operational` |
+| description | string | ✓ | What could go wrong — the risk scenario |
+| probability | enum | ✓ | `rare` · `unlikely` · `possible` · `likely` · `almost_certain` (1–5) |
+| impact | enum | ✓ | `negligible` · `minor` · `moderate` · `major` · `catastrophic` (1–5) |
+| riskScore | integer | ✓ | Computed: probability × impact (1–25) |
+| affectedServices | ref[] | ✓ | Domain/Service Spec IDs affected by this risk |
+| affectedTiers | enum[] | ✓ | `T1` · `T2` · `T3` · `T4` |
+| treatment | enum | ✓ | `mitigate` · `accept` · `transfer` · `avoid` |
+| controls | string[] | ✓ | Implemented or planned controls |
+| owner | string | ✓ | Risk owner (person or team) |
+| reviewDate | date | ✓ | Next scheduled review |
+| status | enum | ✓ | `open` · `mitigated` · `accepted` · `closed` |
+
+**Format:** Markdown
+
+**Lives in:** Suite specification repository or platform governance repository
+
+**Relationship:** Referenced by Domain/Service Spec §9.4; aggregated in Suite Spec §7.5. Governed by GOV-DORA-002.
+
+**Template:** `risk-register.md` (TPL-RISK)
+
+---
+
+### 3.15 SLI/SLO Specification
+
+Defines Service Level Indicators and Service Level Objectives for a specific service. Companion to the Domain/Service Spec — one SLI/SLO spec per service. Feeds incident detection (TPL-IRS) and resilience testing (TPL-RES).
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| id | string | ✓ | Pattern: `SLO-{SUITE}-{DOMAIN}-{NNN}` |
+| serviceRef | ref | ✓ | Domain/Service Spec ID this SLO covers |
+| serviceTier | enum | ✓ | `T1` · `T2` · `T3` · `T4` |
+| slis | SLI[] | ✓ | Service Level Indicators: metric name, definition, measurement method, data source, unit, good event definition |
+| slos | SLO[] | ✓ | Service Level Objectives: SLI reference, target, measurement window, consequence of breach |
+| errorBudget | ErrorBudget | ✓ | Budget calculation, burn rate alerting thresholds, budget exhaustion policy |
+| alerting | AlertConfig[] | ✓ | Alert conditions, severity mapping (to GOV-DORA-003), channels, escalation |
+| dashboardRef | string | | Reference to monitoring dashboard |
+| reviewCadence | string | ✓ | How often SLOs are reviewed (quarterly recommended) |
+
+**Format:** Markdown
+
+**Lives in:** Suite specification repository, alongside Domain/Service Spec
+
+**Relationship:** Companion to Domain/Service Spec (§3.2); referenced by §10.3. Feeds Incident Response Spec (§3.16) detection. Referenced by Resilience Testing Spec (§3.18).
+
+**Template:** `sli-slo-spec.md` (TPL-SLO)
+
+---
+
+### 3.16 Incident Response Specification
+
+Defines incident classification, response playbooks, escalation, communication, and DORA regulatory notification for a suite or platform-wide scope. Instantiates GOV-DORA-003 (Incident Management Policy) at the operational level.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| id | string | ✓ | Pattern: `IRS-{SUITE}-{NNN}` (suite-level) or `IRS-PLAT-{NNN}` (platform-wide) |
+| scope | string | ✓ | Suite-level or platform-wide |
+| classificationMatrix | ClassificationEntry[] | ✓ | Severity (SEV-1 to SEV-4) to criteria mapping |
+| responsePlaybooks | Playbook[] | ✓ | Per severity: detection, triage, containment, eradication, recovery, communication steps with SLAs |
+| escalationMatrix | EscalationEntry[] | ✓ | Severity × time elapsed → action and notification |
+| communicationPlan | CommPlan | ✓ | Internal and external notification procedures |
+| doraNotification | DoraNotification | | Regulatory notification triggers, timelines, format (only for major ICT incidents per DORA Art. 19) |
+| postMortemTemplate | ref | ✓ | Structured post-mortem format reference |
+| testingSchedule | string | ✓ | How often incident response is tested (tabletop exercises, simulated incidents) |
+
+**Format:** Markdown
+
+**Lives in:** Suite specification repository or platform governance repository
+
+**Relationship:** References Domain/Service Specs, SLI/SLO Specs (§3.15) for alert-based detection. Governed by GOV-DORA-003.
+
+**Template:** `incident-response-spec.md` (TPL-IRS)
+
+---
+
+### 3.17 DevSecOps Pipeline Specification
+
+Specifies the CI/CD pipeline stages, security gates, SBOM generation, policy checks, and approval gates for a service, suite, or platform scope. Produces the audit artifacts required by DORA for change management evidence.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| id | string | ✓ | Pattern: `PIPE-{SUITE}-{NNN}` (suite-level) or `PIPE-PLAT-{NNN}` (platform-wide) |
+| scope | enum | ✓ | `platform` · `suite` · `service` |
+| stages | PipelineStage[] | ✓ | Ordered pipeline stages: name, description, trigger, artifacts produced, gate type |
+| securityGates | SecurityGate[] | ✓ | SAST, SCA, secrets detection, container scan, IaC scan — each with tool, config, pass/fail criteria |
+| sbomGeneration | SBOMConfig | ✓ | Format (CycloneDX/SPDX), tool, storage, retention |
+| policyChecks | PolicyCheck[] | ✓ | OPA/Conftest rules: ID, rule description, enforcement, exception process |
+| approvalGates | ApprovalGate[] | ✓ | Change type × service tier → approval requirements |
+| auditArtifacts | AuditArtifact[] | ✓ | Per stage: artifact name, format, retention period, purpose |
+| complianceThresholds | Threshold[] | ✓ | Metric, threshold value, action on breach |
+
+**Format:** Markdown
+
+**Lives in:** Suite specification repository or platform governance repository
+
+**Relationship:** Cross-cuts all Domain/Service Specs. Governed by GOV-DORA-004 (Change Management & Deployment Governance). References GOV-DORA-005 §5 for SBOM requirements.
+
+**Template:** `devsecops-pipeline-spec.md` (TPL-PIPE)
+
+---
+
+### 3.18 Resilience Testing Specification
+
+Defines resilience testing scenarios, recovery objectives, backup testing, and (where applicable) DORA Threat-Led Penetration Testing (TLPT) scope. Validates that services meet their SLO commitments under failure conditions.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| id | string | ✓ | Pattern: `RES-{SUITE}-{NNN}` (suite-level) or `RES-PLAT-{NNN}` (platform-wide) |
+| scope | enum | ✓ | `platform` · `suite` · `service` |
+| testCategories | enum[] | ✓ | `failover` · `chaos` · `load` · `recovery` · `backup_restore` |
+| scenarios | TestScenario[] | ✓ | Per scenario: ID, name, trigger, expected behavior, acceptance criteria, frequency |
+| threatLedTestingScope | string | | DORA TLPT requirements if applicable (Art. 26-27) |
+| recoveryObjectives | RecoveryObjective[] | ✓ | Per service/tier: RTO, RPO, MTTR target, availability target |
+| backupSpecification | BackupSpec | ✓ | Strategy, frequency, retention, restore procedure, restore test schedule |
+| testSchedule | string | ✓ | Annual test plan |
+| reportingFormat | string | ✓ | How test results are documented for audit evidence |
+
+**Format:** Markdown
+
+**Lives in:** Suite specification repository or platform governance repository
+
+**Relationship:** References Domain/Service Specs §10.2 (availability/recovery targets), SLI/SLO Specs (§3.15). Governed by GOV-DORA-001.
+
+**Template:** `resilience-testing-spec.md` (TPL-RES)
+
+---
+
 ## 4. Gap Summary
 
 | Artifact | Existing Definition | Template/Schema | Gap |
