@@ -15,6 +15,7 @@ This is the **meta-layer** that defines HOW to write specifications. The actual 
 | [conceptual-stack.md](conceptual-stack.md) | Authoritative SPLE platform model: Platform/Product spaces, conceptual layers, scientific foundations. All other documents derive from this. | Authoritative |
 | [artifact-catalog.md](artifact-catalog.md) | Normative definition of every artifact in the platform — fields, relationships, constraints, format. | Authoritative |
 | [reconciliation.md](reconciliation.md) | Formal mapping of 4-Tier Service Model, 5-Layer Specification Model, and 3-Space Perspective. Unified glossary. | Authoritative |
+| [operating-model/L0-operating-doctrine.md](operating-model/L0-operating-doctrine.md) | Binding operating doctrine (GOV-OM-001): roles, phases, gates, artifact chain, RACI. Tool-neutral, dual-mode (solo + team). Hub for the nine L1 detail specs. | Authoritative |
 
 ### Templates (`templates/`)
 
